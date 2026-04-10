@@ -17,6 +17,10 @@ const DIAMOND_Y = (20.4989 / 36.1324) * LOGO_HEIGHT; // 41.0
 const LOGO_CENTER_X = LOGO_WIDTH / 2;
 const LOGO_CENTER_Y = LOGO_HEIGHT / 2;
 
+// While assembling: flex-centers the logo box; offset shifts drawing so diamond matches ring (then → 0 for bbox-centered)
+const DIAMOND_ALIGN_X = LOGO_CENTER_X - DIAMOND_X;
+const DIAMOND_ALIGN_Y = LOGO_CENTER_Y - DIAMOND_Y;
+
 // Ring + compass mark sizing
 const RING_SIZE = 112;     // outer container
 const RING_CX = 56;
@@ -94,12 +98,12 @@ export function LoadingScreen({ onComplete, onReveal }: LoadingScreenProps) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[9999] bg-[#113637] overflow-hidden"
+      className="fixed inset-0 z-[9999] bg-[#113637] overflow-hidden min-h-[100dvh]"
       initial={{ y: 0 }}
       animate={{ y: exiting ? "-100%" : 0 }}
       transition={{ duration: 0.34, ease: EASE_DRAWER }}
     >
-      <div className="relative w-full h-full">
+      <div className="relative w-full h-full min-h-[100dvh]">
 
         {/* ── Phase 1: Ring + spinning compass mark ─────────────────
             Centered on screen. Fades out with blur as letters arrive. */}
@@ -191,22 +195,22 @@ export function LoadingScreen({ onComplete, onReveal }: LoadingScreenProps) {
           </motion.div>
         </motion.div>
 
-        {/* ── Phase 2: Logo assembly — diamond aligns with ring; then re-center full wordmark ── */}
-        <motion.div
-          style={{
-            position: "absolute",
-            left: "50%",
-            top: "50%",
-            width: LOGO_WIDTH,
-            height: LOGO_HEIGHT,
-          }}
-          initial={false}
-          animate={{
-            x: showLogo ? -LOGO_CENTER_X : -DIAMOND_X,
-            y: showLogo ? -LOGO_CENTER_Y : -DIAMOND_Y,
-          }}
-          transition={{ duration: 0.28, ease: EASE_STRONG }}
-        >
+        {/* ── Phase 2: Flex-centers logo bbox (reliable on iOS); animate diamond offset → 0 ── */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <motion.div
+            className="relative shrink-0"
+            style={{
+              width: LOGO_WIDTH,
+              height: LOGO_HEIGHT,
+              willChange: "transform",
+            }}
+            initial={false}
+            animate={{
+              x: showLogo ? 0 : DIAMOND_ALIGN_X,
+              y: showLogo ? 0 : DIAMOND_ALIGN_Y,
+            }}
+            transition={{ duration: 0.28, ease: EASE_STRONG }}
+          >
           {/* V — slides in from the left */}
           <motion.div
             style={{ position: "absolute", inset: 0 }}
@@ -256,7 +260,8 @@ export function LoadingScreen({ onComplete, onReveal }: LoadingScreenProps) {
               <path d={svgPaths.p1838f370} fill="#f3f2ee" />
             </svg>
           </motion.div>
-        </motion.div>
+          </motion.div>
+        </div>
 
       </div>
     </motion.div>
