@@ -9,9 +9,13 @@ const EASE_DRAWER: [number, number, number, number] = [0.32, 0.72, 0, 1];
 const LOGO_WIDTH = 230;
 const LOGO_HEIGHT = 230 * (36.1324 / 115); // 72.26
 
-// Diamond center within the logo container (in display pixels)
+// Diamond center within the logo container (in display pixels) — used while assembling
 const DIAMOND_X = (34.1644 / 115) * LOGO_WIDTH;  // 68.35
 const DIAMOND_Y = (20.4989 / 36.1324) * LOGO_HEIGHT; // 41.0
+
+// True center of the logo bounding box (wordmark visually centered on screen after assembly)
+const LOGO_CENTER_X = LOGO_WIDTH / 2;
+const LOGO_CENTER_Y = LOGO_HEIGHT / 2;
 
 // Ring + compass mark sizing
 const RING_SIZE = 112;     // outer container
@@ -187,19 +191,21 @@ export function LoadingScreen({ onComplete, onReveal }: LoadingScreenProps) {
           </motion.div>
         </motion.div>
 
-        {/* ── Phase 2: Logo assembly — diamond is anchor at screen center ──
-            Logo container is offset so its internal diamond sits exactly
-            where the ring's diamond was.                                 */}
-        <div
+        {/* ── Phase 2: Logo assembly — diamond aligns with ring; then re-center full wordmark ── */}
+        <motion.div
           style={{
             position: "absolute",
             left: "50%",
             top: "50%",
-            // Shift container so diamond (at DIAMOND_X, DIAMOND_Y inside) = screen center
-            transform: `translate(${-DIAMOND_X}px, ${-DIAMOND_Y}px)`,
             width: LOGO_WIDTH,
             height: LOGO_HEIGHT,
           }}
+          initial={false}
+          animate={{
+            x: showLogo ? -LOGO_CENTER_X : -DIAMOND_X,
+            y: showLogo ? -LOGO_CENTER_Y : -DIAMOND_Y,
+          }}
+          transition={{ duration: 0.28, ease: EASE_STRONG }}
         >
           {/* V — slides in from the left */}
           <motion.div
@@ -250,7 +256,7 @@ export function LoadingScreen({ onComplete, onReveal }: LoadingScreenProps) {
               <path d={svgPaths.p1838f370} fill="#f3f2ee" />
             </svg>
           </motion.div>
-        </div>
+        </motion.div>
 
       </div>
     </motion.div>
