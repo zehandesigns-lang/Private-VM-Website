@@ -1,122 +1,86 @@
 import { motion } from "motion/react";
-import svgPaths from "../../imports/svg-mp9yadf4j7";
+import { ArrowUpRight } from "lucide-react";
+import { AnimatedDitherBackground } from "./AnimatedDitherBackground";
 
+const EASE: [number, number, number, number] = [0.23, 1, 0.32, 1];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  visible: (d = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.65, delay: d, ease: EASE },
+  }),
+};
+
+/**
+ * Shared CTA: dark green canvas, radial depth, animated dither — used on Home and Wayship.
+ */
 export function CTASection() {
   return (
-    <section className="relative overflow-hidden bg-[#0d2f30]" id="cta">
-      {/* Wavy paper tear at bottom */}
+    <section id="cta" className="relative z-[70] w-full overflow-hidden">
+      <div className="absolute inset-0 bg-[#0e3233]" aria-hidden />
       <div
-        className="absolute bottom-0 left-0 right-0 pointer-events-none"
-        style={{ height: 160, transform: "translateY(2px)" }}
-      >
-        <svg
-          viewBox="0 0 1355.68 171.659"
-          preserveAspectRatio="none"
-          fill="none"
-          className="w-full h-full"
+        className="absolute inset-0"
+        aria-hidden
+        style={{
+          background: `
+            radial-gradient(ellipse 130% 70% at 50% -35%, rgba(252, 247, 227, 0.16), transparent 52%),
+            radial-gradient(ellipse 55% 45% at 100% 105%, rgba(0, 0, 0, 0.45), transparent 50%),
+            radial-gradient(ellipse 50% 40% at 0% 80%, rgba(65, 102, 104, 0.35), transparent 55%),
+            linear-gradient(168deg, #0e3233 0%, #0b282a 42%, #0d2f30 100%)
+          `,
+        }}
+      />
+      <AnimatedDitherBackground className="pointer-events-none z-[1] opacity-[0.72]" ditherMix={0.34} />
+
+      <div className="relative z-10 mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px] py-24 md:py-32">
+        <motion.div
+          className="max-w-[580px] mx-auto text-center"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
         >
-          <g filter="url(#cta-filter)">
-            <path d={svgPaths.p300e9500} fill="#f3f2ee" />
-          </g>
-          <defs>
-            <filter
-              colorInterpolationFilters="sRGB"
-              filterUnits="userSpaceOnUse"
-              height="171.659"
-              id="cta-filter"
-              width="1355.68"
-              x="0"
-              y="0"
-            >
-              <feFlood floodOpacity="0" result="BackgroundImageFix" />
-              <feBlend in="SourceGraphic" in2="BackgroundImageFix" mode="normal" result="shape" />
-              <feTurbulence
-                baseFrequency="0.1176 0.1176"
-                numOctaves={3}
-                seed={8572}
-                type="fractalNoise"
-              />
-              <feDisplacementMap
-                height="100%"
-                in="shape"
-                result="displacedImage"
-                scale={11.6}
-                width="100%"
-                xChannelSelector="R"
-                yChannelSelector="G"
-              />
-              <feMerge result="effect1">
-                <feMergeNode in="displacedImage" />
-              </feMerge>
-            </filter>
-          </defs>
-        </svg>
-      </div>
-
-      {/* Ship illustration */}
-      <div className="absolute bottom-[100px] right-[-30px] md:right-[5%] pointer-events-none opacity-30 md:opacity-50">
-        <svg
-          viewBox="0 0 224 68"
-          fill="none"
-          className="w-[200px] md:w-[300px] lg:w-[380px]"
-        >
-          <path d={svgPaths.p38470e80} fill="#D9D9D9" />
-        </svg>
-      </div>
-
-      {/* Content */}
-      <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px] relative z-10">
-        <div className="py-24 md:py-36 max-w-[760px]">
-
-          <motion.h2
-            className="text-[#fcf7e3] leading-[1.0] tracking-tight mb-10"
-            style={{ fontSize: "clamp(38px, 5vw, 70px)" }}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          <h2
+            className="text-[#fcf7e3] leading-[1.1] tracking-[-1.5px] mb-5"
+            style={{
+              fontFamily: "'TT Hoves Pro', sans-serif",
+              fontWeight: 500,
+              fontSize: "clamp(32px, 3.5vw, 52px)",
+              textShadow: "0 1px 24px rgba(0,0,0,0.25)",
+            }}
           >
-            <span
-              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, display: "block" }}
-            >
-              Built for the people
-            </span>
-            <span
-              style={{
-                fontFamily: "'LT Cushion', serif",
-                fontWeight: 300,
-                display: "block",
-              }}
-            >
-              who keep the world moving
-            </span>
-          </motion.h2>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            Start capturing what your fleet{" "}
+            <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "italic" }}>already knows</span>
+          </h2>
+          <p
+            className="text-[#f3f2ee]/80 leading-[1.65] mb-10"
+            style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.1vw, 17px)" }}
           >
-            <motion.a
+            Most fleets are 30 days from their first structured crew handover and a crew that actually has time to do their job. Let&apos;s show you how it works on your vessel type.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-6">
+            <a
               href="#"
-              className="inline-flex items-center gap-2 border border-black bg-[#cfcbb9] text-[#172727] px-6 py-3 will-change-transform transition-[background-color,box-shadow,color,border-color,opacity] duration-150 ease-out motion-reduce:transition-none"
-              style={{
-                fontFamily: "'TT Hoves Pro', sans-serif",
-                fontWeight: 600,
-                fontSize: 16,
-                letterSpacing: "0.03em",
-              }}
-              whileHover={{
-                backgroundColor: "#e0dccb",
-                transition: { duration: 0.14, ease: [0.23, 1, 0.32, 1] },
-              }}
-              whileTap={{ scale: 0.985, transition: { duration: 0.12, ease: [0.23, 1, 0.32, 1] } }}
+              className="bg-[#fcf7e3] text-[#0e3233] px-7 py-3 hover:bg-white transition-colors duration-150 inline-flex items-center gap-2 shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
             >
-              TALK TO SALES
-            </motion.a>
-          </motion.div>
-        </div>
+              Request a demo
+              <ArrowUpRight size={15} />
+            </a>
+            <a
+              href="#"
+              className="text-[#fcf7e3]/90 border border-[#fcf7e3]/25 px-7 py-3 hover:border-[#fcf7e3]/45 hover:bg-[#fcf7e3]/5 transition-colors duration-150"
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}
+            >
+              Talk to a specialist
+            </a>
+          </div>
+          <p className="text-[#fcf7e3]/45 font-mono text-[11px]">
+            No commitment · Live on 200+ vessels · ABS, Liberia, Bahamas, Malta, Singapore
+          </p>
+        </motion.div>
       </div>
     </section>
   );

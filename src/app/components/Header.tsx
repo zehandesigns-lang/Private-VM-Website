@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import { VolteoLogo } from "./VolteoLogo";
 import { RailDivider } from "./RailDivider";
-import imgWayshipProduct from "figma:asset/24459bb564e7c9daaa4155984b2e0f003ef27003.png";
+import { ProductWalkthroughPreview } from "./ProductWalkthroughPreview";
 
 const navLinks = [
   {
@@ -92,8 +92,6 @@ const products: Record<
   {
     label: string;
     description: string;
-    imageAlt: string;
-    imageSrc: string;
     walkthroughTitle: string;
     walkthroughDescription: string;
     hash: string;
@@ -104,8 +102,6 @@ const products: Record<
     label: "Wayship",
     description:
       "Voice AI, LLM chat, and digital logbooks for the modern fleet — ABS approved, trusted by 200+ vessels.",
-    imageAlt: "Wayship product preview",
-    imageSrc: imgWayshipProduct,
     walkthroughTitle: "Product walkthrough video",
     walkthroughDescription: "A guided tour of Wayship’s core workflows and on-board experience.",
     hash: "#wayship",
@@ -115,8 +111,6 @@ const products: Record<
     label: "Smartport",
     description:
       "Port intelligence built to keep operations moving — from berth planning to arrivals, revenue, and compliance.",
-    imageAlt: "Smartport product preview",
-    imageSrc: imgWayshipProduct,
     walkthroughTitle: "Product walkthrough video",
     walkthroughDescription: "A quick walkthrough of Smartport’s planning and live-ops surfaces.",
     hash: "#smartport",
@@ -126,13 +120,14 @@ const products: Record<
 function ProductsMegaMenu({
   visible,
   onNavigate,
+  onCloseMenu,
 }: {
   visible: boolean;
   onNavigate: (hash: string) => void;
+  onCloseMenu: () => void;
 }) {
   const [activeProduct, setActiveProduct] = useState<ProductKey>("wayship");
   const [hoveredProduct, setHoveredProduct] = useState<ProductKey | null>(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (visible) {
@@ -172,65 +167,83 @@ function ProductsMegaMenu({
                   const p = products[key];
                   const isHovered = hoveredProduct === key;
                   const shouldDim = hoveredProduct !== null && !isHovered;
-                  return (
-                    <div
-                      key={key}
-                      onMouseEnter={() => {
-                        setHoveredProduct(key);
-                        setActiveProduct(key);
-                      }}
-                      onMouseLeave={() => setHoveredProduct(null)}
-                      className={`group -mx-2 px-2 py-2 transition-opacity duration-150 ease-out ${
-                        shouldDim ? "opacity-50" : "opacity-100"
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <p
-                          className="text-[#0e3233] leading-tight"
-                          style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 18 }}
-                        >
-                          {p.label}
-                        </p>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            if (p.href) {
-                              navigate(p.href);
-                            } else {
-                              onNavigate(p.hash);
-                            }
-                          }}
-                          className={`inline-flex items-center justify-center transition-[opacity,transform,color] duration-150 ease-out ${
-                            isHovered
-                              ? "opacity-100 translate-x-0 translate-y-0 scale-100"
-                              : "opacity-0 -translate-x-[6px] translate-y-[6px] scale-[0.98]"
-                          } text-[#0e3233]/70 hover:text-[#0e3233]`}
-                          aria-label={`Go to ${p.label}`}
-                        >
-                          <ArrowUpRight size={16} />
-                        </button>
-                      </div>
+                  const rowHandlers = {
+                    onMouseEnter: () => {
+                      setHoveredProduct(key);
+                      setActiveProduct(key);
+                    },
+                    onMouseLeave: () => setHoveredProduct(null),
+                  };
+                  const baseRowClass = `group -mx-2 px-2 py-2 rounded-sm transition-[opacity,background-color] duration-150 ease-out w-full text-left text-inherit ${
+                    shouldDim ? "opacity-50" : "opacity-100"
+                  } hover:bg-[#e8e6e0]/55 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0e3233]/35`;
+
+                  const titleAndArrow = (
+                    <div className="flex items-center gap-2">
                       <p
-                        className="text-[#464646] mt-2 leading-[1.55] max-w-[380px]"
-                        style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 14 }}
+                        className="text-[#0e3233] leading-tight"
+                        style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 18 }}
                       >
-                        {p.description}
+                        {p.label}
                       </p>
+                      <span
+                        className={`inline-flex items-center justify-center shrink-0 transition-[opacity,transform,color] duration-150 ease-out pointer-events-none ${
+                          isHovered
+                            ? "opacity-100 translate-x-0 translate-y-0 scale-100"
+                            : "opacity-0 -translate-x-[6px] translate-y-[6px] scale-[0.98]"
+                        } text-[#0e3233]/70 group-hover:text-[#0e3233]`}
+                        aria-hidden
+                      >
+                        <ArrowUpRight size={16} />
+                      </span>
                     </div>
+                  );
+
+                  const description = (
+                    <p
+                      className="text-[#464646] mt-2 leading-[1.55] max-w-[380px]"
+                      style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 14 }}
+                    >
+                      {p.description}
+                    </p>
+                  );
+
+                  if (p.href) {
+                    return (
+                      <Link
+                        key={key}
+                        to={p.href}
+                        className={`${baseRowClass} block no-underline text-inherit cursor-pointer`}
+                        onClick={() => onCloseMenu()}
+                        {...rowHandlers}
+                      >
+                        {titleAndArrow}
+                        {description}
+                      </Link>
+                    );
+                  }
+
+                  return (
+                    <button
+                      key={key}
+                      type="button"
+                      className={`${baseRowClass} bg-transparent border-0 cursor-pointer font-inherit`}
+                      onClick={() => {
+                        onCloseMenu();
+                        onNavigate(p.hash);
+                      }}
+                      {...rowHandlers}
+                    >
+                      {titleAndArrow}
+                      {description}
+                    </button>
                   );
                 })}
               </div>
             </div>
 
             <div className="flex flex-col">
-              <div className="border border-[#D9D9D9] bg-[#eeece5] overflow-hidden">
-                <img
-                  src={active.imageSrc}
-                  alt={active.imageAlt}
-                  className="w-full h-[180px] object-cover"
-                />
-              </div>
+              <ProductWalkthroughPreview product={activeProduct} />
               <div className="mt-4">
                 <p
                   className="text-[#0e3233]"
@@ -320,13 +333,9 @@ export function Header() {
       <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px]">
         <div className="flex items-center justify-between h-[72px]">
           {/* Logo */}
-          <a
-            href="#hero"
-            onClick={(e) => { e.preventDefault(); smoothScrollTo("#hero"); }}
-            className="flex items-center"
-          >
+          <Link to="/" className="flex items-center">
             <VolteoLogo color="#113637" />
-          </a>
+          </Link>
 
           {/* Desktop Nav */}
           <nav
@@ -367,9 +376,11 @@ export function Header() {
                 />
                 <ProductsMegaMenu
                   visible={openDropdown === link.label && link.label === "Products"}
-                  onNavigate={(hash) => {
+                  onCloseMenu={() => {
                     setOpenDropdown(null);
                     setHoveredNav(null);
+                  }}
+                  onNavigate={(hash) => {
                     if (hash) window.location.hash = hash;
                     smoothScrollTo("#advantage");
                   }}

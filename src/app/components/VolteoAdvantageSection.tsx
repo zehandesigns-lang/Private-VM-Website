@@ -79,12 +79,31 @@ const tabs = [
   },
 ];
 
-// ── Shared card wrapper ────────────────────────────────────────────────
+// ── Shared card wrappers ───────────────────────────────────────────────
+// Light card — for Wayship features (site theme: cream, no radius)
+function UICardLight({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center p-8 md:p-10">
+      <div
+        className="w-full max-w-[450px] overflow-hidden"
+        style={{
+          background: "#f3f2ee",
+          border: "1px solid #D9D9D9",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04)",
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
+
+// Dark card — for SmartPort features (keeps existing dark theme)
 function UICard({ children }: { children: React.ReactNode }) {
   return (
-    <div className="absolute inset-0 flex items-center justify-center p-6 md:p-8">
+    <div className="absolute inset-0 flex items-center justify-center p-8 md:p-10">
       <div
-        className="w-full max-w-[288px] rounded-xl overflow-hidden"
+        className="w-full max-w-[432px] rounded-xl overflow-hidden"
         style={{
           background: "#0e2626",
           border: "1px solid rgba(255,255,255,0.07)",
@@ -97,323 +116,323 @@ function UICard({ children }: { children: React.ReactNode }) {
   );
 }
 
-// ── 1. Voice command UI ────────────────────────────────────────────────
-const WAVE_HEIGHTS = [6, 12, 8, 20, 14, 24, 10, 18, 22, 8, 16, 24, 10, 14, 6, 20, 12, 8];
+// ── Shared light row ────────────────────────────────────────────────────
+function LRow({ label, value, delay = 0, accent = false }: { label: string; value: string; delay?: number; accent?: boolean }) {
+  return (
+    <motion.div
+      className="flex justify-between items-baseline px-3 py-1.5 border-b border-[#D9D9D9] last:border-0"
+      initial={{ opacity: 0, x: -4 }} animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.16, delay, ease: [0.23, 1, 0.32, 1] }}
+    >
+      <span className="text-[#464646] text-[9px] font-mono tracking-wide">{label}</span>
+      <span className={`text-[10px] ${accent ? "text-[#103435]" : "text-[#1d1d1d]"}`}
+        style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: accent ? 600 : 500 }}>{value}</span>
+    </motion.div>
+  );
+}
+
+function LHeader({ title, meta, pulse }: { title: string; meta: string; pulse?: boolean }) {
+  return (
+    <div className="flex items-center justify-between px-3 py-2.5 border-b border-[#D9D9D9]" style={{ background: "#eeece5" }}>
+      <p className="text-[#103435] text-[9px] uppercase tracking-[0.1em]"
+        style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600 }}>{title}</p>
+      <div className="flex items-center gap-1.5">
+        {pulse && (
+          <motion.span className="w-1.5 h-1.5 bg-red-500"
+            animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 0.9, repeat: Infinity }} />
+        )}
+        <span className="text-[#464646] text-[9px]">{meta}</span>
+      </div>
+    </div>
+  );
+}
+
+// ── 1. Voice AI capture UI ─────────────────────────────────────────────
+const WAVE_HEIGHTS = [5, 10, 7, 17, 12, 22, 9, 16, 20, 7, 14, 22, 9, 12, 5, 18, 10, 7];
 
 function VoiceCommandUI() {
-  return (
-    <UICard>
-      <div className="p-5 space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-white/40 text-[9px] uppercase tracking-widest">Captain Voice</p>
-            <p className="text-white text-xs font-medium mt-0.5">Active Session</p>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <motion.div
-              className="w-1.5 h-1.5 rounded-full bg-emerald-400"
-              animate={{ opacity: [1, 0.3, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            />
-            <span className="text-white/40 text-[10px]">Live</span>
-          </div>
-        </div>
+  const [phase, setPhase] = useState<"recording" | "structured">("recording");
 
-        {/* Mic + ripple rings */}
-        <div className="flex justify-center py-3">
-          <div className="relative w-[72px] h-[72px] flex items-center justify-center">
-            {[0, 1, 2].map((i) => (
-              <motion.div
-                key={i}
-                className="absolute rounded-full border border-emerald-400/25"
-                style={{ width: 36 + i * 18, height: 36 + i * 18 }}
-                animate={{ scale: [1, 1.18, 1], opacity: [0.5, 0.1, 0.5] }}
-                transition={{ duration: 1.8, delay: i * 0.45, repeat: Infinity, ease: "easeOut" }}
-              />
-            ))}
-            <div className="w-9 h-9 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center">
-              <svg width="14" height="16" viewBox="0 0 14 16" fill="none">
-                <rect x="4" y="0" width="6" height="9" rx="3" fill="#34d399" />
-                <path d="M1 7c0 3.3 2.7 6 6 6s6-2.7 6-6" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="7" y1="13" x2="7" y2="15" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-            </div>
-          </div>
+  useEffect(() => {
+    const t = setTimeout(() => setPhase("structured"), 1800);
+    return () => clearTimeout(t);
+  }, []);
+
+  return (
+    <UICardLight>
+      <LHeader title="Voice AI · Recording" meta="Rec" pulse />
+      <div className="px-3 pt-3 pb-3 space-y-2.5">
+        {/* Context pill */}
+        <div className="border border-[#D9D9D9] px-3 py-2" style={{ background: "#eeece5" }}>
+          <p className="text-[#103435] text-[10px]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>
+            Aux engine #2 · 02:14 · Chief Engineer
+          </p>
+          <p className="text-[#464646] text-[9px] mt-0.5">Port of Colombo approach</p>
         </div>
 
         {/* Waveform */}
-        <div className="flex items-center justify-center gap-0.5 h-7">
+        <div className="flex items-center gap-[2px] h-7 px-1">
           {WAVE_HEIGHTS.map((h, i) => (
-            <motion.div
-              key={i}
-              className="rounded-full bg-white/40"
-              style={{ width: 2.5 }}
-              animate={{ height: [3, h, 3] }}
-              transition={{ duration: 0.5 + (i % 5) * 0.12, repeat: Infinity, ease: "easeInOut", delay: i * 0.04 }}
+            <motion.div key={i}
+              style={{ width: 2.5, background: "#103435" }}
+              animate={phase === "recording" ? { height: [2, h, 2] } : { height: 2, opacity: 0.2 }}
+              transition={{ duration: 0.35 + (i % 4) * 0.06, repeat: phase === "recording" ? Infinity : 0, ease: "easeInOut", delay: i * 0.025 }}
             />
           ))}
         </div>
 
-        {/* Command */}
-        <div className="bg-white/[0.05] rounded-lg p-3 space-y-1.5">
-          <p className="text-white/30 text-[9px] uppercase tracking-widest">Last command</p>
-          <p className="text-white/90 text-xs">"Navigate to port slot 7B"</p>
-          <div className="flex items-center gap-1.5">
-            <motion.div
-              className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0"
-              animate={{ scale: [1, 1.4, 1] }}
-              transition={{ duration: 0.9, repeat: Infinity }}
-            />
-            <p className="text-emerald-400 text-[10px]">Slot 7B confirmed · 10:47</p>
-          </div>
-        </div>
-      </div>
-    </UICard>
-  );
-}
+        {/* Spoken */}
+        <p className="text-[#464646] text-[10px] leading-[1.5] italic border-l-2 border-[#103435] pl-2">
+          "Aux two running warm — lube oil temp up 8 degrees. Happened once before in April."
+        </p>
 
-// ── 2. Predictive maintenance UI ───────────────────────────────────────
-const MAINTENANCE_ITEMS = [
-  { name: "Engine", value: 96, color: "#34d399" },
-  { name: "Propeller", value: 82, color: "#34d399" },
-  { name: "Navigation", value: 88, color: "#34d399" },
-  { name: "Fuel Pump", value: 34, color: "#fbbf24", alert: true },
-];
+        {/* Divider */}
+        <AnimatePresence>
+          {phase === "structured" && (
+            <motion.div className="flex items-center gap-2"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.14 }}>
+              <div className="flex-1 h-px bg-[#D9D9D9]" />
+              <span className="text-[#103435] text-[8px] uppercase tracking-widest"
+                style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>structured instantly</span>
+              <div className="flex-1 h-px bg-[#D9D9D9]" />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-function PredictiveMaintenanceUI() {
-  return (
-    <UICard>
-      <div className="p-5 space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-white/40 text-[9px] uppercase tracking-widest">System Health</p>
-            <p className="text-white text-xs font-medium mt-0.5">MV Pacific Rover</p>
-          </div>
-          <span className="text-white/30 text-[10px]">2m ago</span>
-        </div>
-
-        <div className="space-y-3">
-          {MAINTENANCE_ITEMS.map((item, i) => (
-            <div key={item.name}>
-              <div className="flex items-center justify-between mb-1">
-                <div className="flex items-center gap-1.5">
-                  {item.alert && (
-                    <motion.div
-                      className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0"
-                      animate={{ opacity: [1, 0.2, 1] }}
-                      transition={{ duration: 0.7, repeat: Infinity }}
-                    />
-                  )}
-                  <span className="text-white/60 text-[10px]">{item.name}</span>
-                </div>
-                <span className="text-[10px] tabular-nums" style={{ color: item.color }}>
-                  {item.value}%
+        {/* Structured entry */}
+        <AnimatePresence>
+          {phase === "structured" && (
+            <motion.div className="border border-[#D9D9D9]"
+              initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}>
+              <div className="flex items-center justify-between px-3 py-2 border-b border-[#D9D9D9]" style={{ background: "#eeece5" }}>
+                <span className="text-[#103435] text-[9px] uppercase tracking-widest"
+                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600 }}>Entry logged</span>
+                <span className="text-emerald-700 text-[9px] flex items-center gap-1">
+                  <motion.span className="w-1 h-1 bg-emerald-600 inline-block"
+                    animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.1, repeat: Infinity }} />
+                  Live
                 </span>
               </div>
-              <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-                <motion.div
-                  className="h-full rounded-full"
-                  style={{ background: item.color }}
-                  initial={{ width: 0 }}
-                  animate={{ width: `${item.value}%` }}
-                  transition={{ duration: 0.65, delay: i * 0.1, ease: [0.23, 1, 0.32, 1] }}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <motion.div
-          className="flex items-start gap-2 rounded-lg p-3"
-          style={{ background: "rgba(251,191,36,0.08)", border: "1px solid rgba(251,191,36,0.2)" }}
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.55, ease: [0.23, 1, 0.32, 1] }}
-        >
-          <motion.div
-            className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0 mt-0.5"
-            animate={{ opacity: [1, 0.2, 1] }}
-            transition={{ duration: 1, repeat: Infinity }}
-          />
-          <div>
-            <p className="text-amber-400 text-[10px] font-medium">Critical alert</p>
-            <p className="text-white/40 text-[10px] mt-0.5">Fuel pump inspection within 18h</p>
-          </div>
-        </motion.div>
-      </div>
-    </UICard>
-  );
-}
-
-// ── 3. Fleet analytics UI ──────────────────────────────────────────────
-const CHART_POINTS: [number, number][] = [
-  [0, 70], [22, 54], [40, 62], [56, 38], [72, 48], [88, 26], [104, 38], [124, 16], [144, 28], [164, 10], [182, 20],
-];
-const chartLine = CHART_POINTS.map((p, i) => `${i === 0 ? "M" : "L"}${p[0]},${p[1]}`).join(" ");
-const chartArea = `${chartLine} L182,82 L0,82 Z`;
-
-const FLEET_METRICS = [
-  { label: "Speed", value: "14.2kn" },
-  { label: "Fuel eff.", value: "87%" },
-  { label: "On-time", value: "94%" },
-];
-
-function FleetAnalyticsUI() {
-  return (
-    <UICard>
-      <div className="p-5 space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-white/40 text-[9px] uppercase tracking-widest">Fleet Performance</p>
-            <p className="text-white text-xs font-medium mt-0.5">12 vessels · Live</p>
-          </div>
-          <div className="flex items-center gap-1 text-emerald-400">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-              <path d="M1 8L4 4.5L7 6.5L9.5 2" stroke="#34d399" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <span className="text-[10px] font-semibold">+12.4%</span>
-          </div>
-        </div>
-
-        <div className="relative h-[64px] rounded-lg overflow-hidden" style={{ background: "rgba(255,255,255,0.04)" }}>
-          <svg viewBox="0 0 182 82" preserveAspectRatio="none" className="absolute inset-0 w-full h-full">
-            <defs>
-              <linearGradient id="aGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#34d399" stopOpacity="0.22" />
-                <stop offset="100%" stopColor="#34d399" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <motion.path
-              d={chartArea}
-              fill="url(#aGrad)"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-            />
-            <motion.path
-              d={chartLine}
-              stroke="#34d399"
-              strokeWidth="1.5"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-            />
-          </svg>
-        </div>
-
-        <div className="grid grid-cols-3 gap-2">
-          {FLEET_METRICS.map((m, i) => (
-            <motion.div
-              key={m.label}
-              className="rounded-lg p-2 text-center"
-              style={{ background: "rgba(255,255,255,0.05)" }}
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.28, delay: 0.3 + i * 0.07, ease: [0.23, 1, 0.32, 1] }}
-            >
-              <p className="text-white text-xs font-semibold tabular-nums">{m.value}</p>
-              <p className="text-white/35 text-[9px] mt-0.5">{m.label}</p>
+              {[["System", "Auxiliary engine #2"], ["Category", "#machinery · #advisory"], ["Observation", "Lube oil temp +8°C"], ["Logged by", "Chief Engineer · 02:14"]].map(([k, v], i) => (
+                <LRow key={k} label={k} value={v} delay={i * 0.05} />
+              ))}
             </motion.div>
-          ))}
-        </div>
+          )}
+        </AnimatePresence>
       </div>
-    </UICard>
+    </UICardLight>
   );
 }
 
-// ── 4. Crew hub UI ─────────────────────────────────────────────────────
-const CREW_MESSAGES = [
-  { avatar: "CK", color: "#6366f1", name: "Chief Officer Kim", text: "ETA updated for slot 7B", time: "10:24" },
-  { avatar: "ME", color: "#0891b2", name: "Chief Engineer", text: "Fuel check complete ✓", time: "10:31" },
-  { avatar: "BR", color: "#059669", name: "Bridge Officer", text: "Moorings cleared, ready", time: "10:38" },
+// ── 2. LLM chat UI ─────────────────────────────────────────────────────
+const CHAT_QA = [
+  { q: "What's the status of aux engine 2?", a: "3 observations logged. Lube oil temp elevated +8°C at last rounds — tagged #advisory. Same pattern from April. No critical flags." },
+  { q: "What did the outgoing crew recommend?", a: "From April 18 handover: \"Recommend oil change at Colombo — resolved it last time. Escalate if temp exceeds 85°C before arrival.\"" },
 ];
 
-function CrewHubUI() {
-  const [visibleCount, setVisibleCount] = useState(0);
-  const [showTyping, setShowTyping] = useState(false);
+function LLMChatUI() {
+  const [step, setStep] = useState(0);
 
   useEffect(() => {
-    const timers = [
-      setTimeout(() => setVisibleCount(1), 250),
-      setTimeout(() => setShowTyping(true), 900),
-      setTimeout(() => { setShowTyping(false); setVisibleCount(2); }, 1700),
-      setTimeout(() => setShowTyping(true), 2300),
-      setTimeout(() => { setShowTyping(false); setVisibleCount(3); }, 3100),
-    ];
+    const t1 = setTimeout(() => setStep(1), 400);
+    const t2 = setTimeout(() => setStep(2), 1400);
+    const t3 = setTimeout(() => setStep(3), 2200);
+    const t4 = setTimeout(() => setStep(4), 3200);
+    return () => { [t1, t2, t3, t4].forEach(clearTimeout); };
+  }, []);
+
+  return (
+    <UICardLight>
+      <LHeader title="Chat with Wayship · Nordic Swan" meta="Online" />
+      <div className="px-3 pt-2.5 pb-3 space-y-2 min-h-[258px]">
+        <AnimatePresence>
+          {step >= 1 && (
+            <motion.div className="ml-auto max-w-[80%]"
+              initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.15, ease: [0.23, 1, 0.32, 1] }}>
+              <div className="bg-[#103435] px-3 py-2">
+                <p className="text-white text-[10px] leading-[1.5]">{CHAT_QA[0].q}</p>
+              </div>
+              <p className="text-[#464646] text-[9px] mt-0.5 text-right font-mono">Capt. Mwangi · 06:12</p>
+            </motion.div>
+          )}
+          {step >= 2 && (
+            <motion.div className="mr-auto max-w-[88%]"
+              initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.15, ease: [0.23, 1, 0.32, 1] }}>
+              <div className="border border-[#D9D9D9] px-3 py-2" style={{ background: "#eeece5" }}>
+                <p className="text-[#1d1d1d] text-[10px] leading-[1.55]">{CHAT_QA[0].a}</p>
+              </div>
+              <p className="text-[#464646] text-[9px] mt-0.5 font-mono">Wayship · 06:12</p>
+            </motion.div>
+          )}
+          {step >= 3 && (
+            <motion.div className="ml-auto max-w-[80%]"
+              initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.15, ease: [0.23, 1, 0.32, 1] }}>
+              <div className="bg-[#103435] px-3 py-2">
+                <p className="text-white text-[10px] leading-[1.5]">{CHAT_QA[1].q}</p>
+              </div>
+              <p className="text-[#464646] text-[9px] mt-0.5 text-right font-mono">Capt. Mwangi · 06:13</p>
+            </motion.div>
+          )}
+          {step >= 4 && (
+            <motion.div className="mr-auto max-w-[88%]"
+              initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.15, ease: [0.23, 1, 0.32, 1] }}>
+              <div className="border border-[#D9D9D9] px-3 py-2" style={{ background: "#eeece5" }}>
+                <p className="text-[#1d1d1d] text-[10px] leading-[1.55] italic">{CHAT_QA[1].a}</p>
+              </div>
+              <p className="text-[#464646] text-[9px] mt-0.5 font-mono">Wayship · 06:13</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Input */}
+        <div className="flex items-center gap-2 border-t border-[#D9D9D9] pt-2 mt-1">
+          <div className="flex-1 border border-[#D9D9D9] px-2 py-1.5" style={{ background: "#eeece5" }}>
+            <p className="text-[#464646]/50 text-[9px]">Ask about any system or prior observation…</p>
+          </div>
+          <div className="w-6 h-6 bg-[#103435] flex items-center justify-center shrink-0">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+              <path d="M1 5h8M6 2l3 3-3 3" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </UICardLight>
+  );
+}
+
+// ── 3. Digital logbooks & MARPOL UI ────────────────────────────────────
+const LOGBOOK_ROWS = [
+  { book: "Bridge Logbook", ref: "BL-2024-0418", status: "Signed", ok: true },
+  { book: "Engine Room Log", ref: "ERL-2024-0418", status: "Signed", ok: true },
+  { book: "ORB Part I", ref: "MEPC 312(74)", status: "Current", ok: true },
+  { book: "Ballast Record Book", ref: "MEPC 369(80)", status: "Current", ok: true },
+  { book: "SIRE Package", ref: "Auto-generated", status: "Ready", ok: true },
+];
+
+function DigitalLogbooksUI() {
+  return (
+    <UICardLight>
+      <LHeader title="E-Logbooks · Nordic Swan" meta="ABS Approved" />
+      <div className="divide-y divide-[#D9D9D9]">
+        {LOGBOOK_ROWS.map((row, i) => (
+          <motion.div key={row.book}
+            className="flex items-center justify-between px-3 py-2"
+            initial={{ opacity: 0, x: -5 }} animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.15, delay: i * 0.07, ease: [0.23, 1, 0.32, 1] }}>
+            <div>
+              <p className="text-[#1d1d1d] text-[10px]"
+                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>{row.book}</p>
+              <p className="text-[#464646] text-[9px] font-mono mt-0.5">{row.ref}</p>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-emerald-700 text-[9px]">{row.status}</span>
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M2 5l2.5 2.5L8 2.5" stroke="#059669" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+      <motion.div className="flex items-center justify-between px-3 py-2.5 border-t border-[#D9D9D9]"
+        style={{ background: "#eeece5" }}
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+        transition={{ duration: 0.2, delay: 0.42 }}>
+        <span className="text-[#103435] text-[9px] uppercase tracking-widest"
+          style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600 }}>ISO 21745 · MARPOL · 5 Flag States</span>
+        <div className="flex items-center gap-1">
+          <motion.span className="w-1.5 h-1.5 bg-emerald-600"
+            animate={{ opacity: [1, 0.4, 1] }} transition={{ duration: 1.4, repeat: Infinity }} />
+          <span className="text-emerald-700 text-[9px]">Audit ready</span>
+        </div>
+      </motion.div>
+    </UICardLight>
+  );
+}
+
+// ── 4. Structured handovers UI ─────────────────────────────────────────
+const HANDOVER_ITEMS = [
+  "247 machinery observations transferred",
+  "Aux engine #2 history — 3 entries",
+  "Port notes: Colombo, Singapore, Rotterdam",
+  "Open advisory: lube oil temp watch",
+  "12 defect records with resolution notes",
+];
+
+function StructuredHandoversUI() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const timers = HANDOVER_ITEMS.map((_, i) => setTimeout(() => setCount(i + 1), 300 + i * 350));
     return () => timers.forEach(clearTimeout);
   }, []);
 
   return (
-    <UICard>
-      <div className="p-5 space-y-3">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-white/40 text-[9px] uppercase tracking-widest">Crew Hub</p>
-            <p className="text-white text-xs font-medium mt-0.5">Bridge Channel</p>
+    <UICardLight>
+      <LHeader title="Crew Handover · Nordic Swan" meta="18 Apr 2024" />
+      <div className="px-3 pt-2.5 pb-1 space-y-1.5">
+        {/* Transfer bar */}
+        <div className="flex items-center justify-between mb-2">
+          <div className="text-center">
+            <p className="text-[#103435] text-[9px] uppercase tracking-wide"
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600 }}>Capt. Eriksson</p>
+            <p className="text-[#464646] text-[8px]">Outgoing</p>
           </div>
-          <div className="flex items-center gap-1.5">
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-            <span className="text-white/40 text-[10px]">3 online</span>
+          <div className="flex-1 mx-3">
+            <div className="h-px bg-[#D9D9D9] relative">
+              <motion.div className="absolute top-1/2 -translate-y-1/2 left-0 h-px bg-[#103435]"
+                initial={{ width: 0 }} animate={{ width: `${(count / HANDOVER_ITEMS.length) * 100}%` }}
+                transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }} />
+              <motion.div className="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-[#103435]"
+                style={{ left: `${(count / HANDOVER_ITEMS.length) * 100}%`, translateX: "-50%", translateY: "-50%" }}
+                animate={{ left: `${(count / HANDOVER_ITEMS.length) * 100}%` }}
+                transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }} />
+            </div>
+            <p className="text-[#103435] text-[8px] text-center mt-1 font-mono">{count}/{HANDOVER_ITEMS.length} transferred</p>
+          </div>
+          <div className="text-center">
+            <p className="text-[#103435] text-[9px] uppercase tracking-wide"
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600 }}>Capt. Mwangi</p>
+            <p className="text-[#464646] text-[8px]">Incoming</p>
           </div>
         </div>
 
-        <div className="space-y-2.5 min-h-[120px]">
-          {CREW_MESSAGES.slice(0, visibleCount).map((msg, i) => (
-            <motion.div
-              key={i}
-              className="flex gap-2"
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}
-            >
-              <div
-                className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[9px] font-bold text-white"
-                style={{ background: msg.color }}
-              >
-                {msg.avatar}
-              </div>
-              <div className="flex-1">
-                <div className="flex items-baseline gap-1.5">
-                  <span className="text-white/60 text-[10px] font-medium">{msg.name}</span>
-                  <span className="text-white/25 text-[9px]">{msg.time}</span>
-                </div>
-                <p className="text-white/80 text-[11px] mt-0.5">{msg.text}</p>
-              </div>
-            </motion.div>
+        {/* Items */}
+        <div className="border border-[#D9D9D9] divide-y divide-[#D9D9D9]">
+          {HANDOVER_ITEMS.map((item, i) => (
+            <AnimatePresence key={item}>
+              {i < count && (
+                <motion.div className="flex items-center gap-2 px-3 py-1.5"
+                  initial={{ opacity: 0, x: -4 }} animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.14, ease: [0.23, 1, 0.32, 1] }}>
+                  <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
+                    <path d="M1.5 4.5l2 2L7.5 2" stroke="#059669" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <span className="text-[#1d1d1d] text-[9px]"
+                    style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400 }}>{item}</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
           ))}
-
-          <AnimatePresence>
-            {showTyping && (
-              <motion.div
-                className="flex gap-2 items-center"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.18 }}
-              >
-                <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center shrink-0" />
-                <div
-                  className="flex items-center gap-1 px-3 py-1.5 rounded-full"
-                  style={{ background: "rgba(255,255,255,0.07)" }}
-                >
-                  {[0, 1, 2].map((d) => (
-                    <motion.div
-                      key={d}
-                      className="w-1 h-1 rounded-full bg-white/40"
-                      animate={{ y: [0, -3, 0] }}
-                      transition={{ duration: 0.5, delay: d * 0.12, repeat: Infinity }}
-                    />
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       </div>
-    </UICard>
+      <AnimatePresence>
+        {count === HANDOVER_ITEMS.length && (
+          <motion.div className="mx-3 mb-3 px-3 py-2 border border-[#103435]/20 flex items-center justify-between"
+            style={{ background: "rgba(16,52,53,0.05)" }}
+            initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}>
+            <span className="text-[#103435] text-[9px]"
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Handover complete</span>
+            <span className="text-emerald-700 text-[9px]">Knowledge stays on the ship ✓</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </UICardLight>
   );
 }
 
@@ -721,15 +740,32 @@ function ComplianceUI() {
 
 // ── Feature UI map ─────────────────────────────────────────────────────
 const FEATURE_UIS: Record<string, React.FC[]> = {
-  wayship: [VoiceCommandUI, PredictiveMaintenanceUI, FleetAnalyticsUI, CrewHubUI],
+  wayship: [VoiceCommandUI, LLMChatUI, DigitalLogbooksUI, StructuredHandoversUI],
   smartport: [BerthSchedulingUI, VesselArrivalUI, RevenueIntelUI, ComplianceUI],
 };
+
+function useIsLargeViewport() {
+  const [isLg, setIsLg] = useState(() =>
+    typeof window !== "undefined" ? window.matchMedia("(min-width: 1024px)").matches : false
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const onChange = () => setIsLg(mq.matches);
+    onChange();
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  return isLg;
+}
 
 // ── Main section ───────────────────────────────────────────────────────
 export function VolteoAdvantageSection() {
   const [activeTab, setActiveTab] = useState("wayship");
   const [openFeature, setOpenFeature] = useState(0);
   const [previewFeature, setPreviewFeature] = useState(0);
+  const isLg = useIsLargeViewport();
 
   const activeData = tabs.find((t) => t.key === activeTab)!;
 
@@ -758,6 +794,11 @@ export function VolteoAdvantageSection() {
       setOpenFeature(i);
       setPreviewFeature(i);
     }
+  };
+
+  const handleMobileFeatureTab = (i: number) => {
+    setPreviewFeature(i);
+    setOpenFeature(i);
   };
 
   const handleTabChange = (key: string) => {
@@ -905,91 +946,161 @@ export function VolteoAdvantageSection() {
 
               </div>
 
-              {/* ── Row 2: Feature list (left) | Animated UI (right) ── */}
-              <div className="flex flex-col lg:flex-row min-h-[380px]">
+              {/* ── Row 2: mobile = preview on top + horizontal tabs; desktop = accordion | preview ── */}
+              {isLg ? (
+                <div className="flex flex-row min-h-[570px]">
+                  <div className="lg:w-1/2 lg:border-r border-[#D9D9D9]">
+                    {activeData.features.map((feature, i) => {
+                      const isOpen = openFeature === i;
+                      const isPreview = previewFeature === i;
+                      return (
+                        <div key={i} className="border-b border-[#D9D9D9] last:border-b-0">
+                          <button
+                            onClick={() => handleFeatureClick(i)}
+                            className={`w-full flex items-center justify-between px-8 py-4 text-left transition-colors duration-200 group ${
+                              isPreview ? "bg-[#eeece5]" : "hover:bg-[#eeece5]/60"
+                            }`}
+                          >
+                            <span
+                              className={`transition-colors duration-150 ${isPreview ? "text-[#1d1d1d]" : "text-[#464646] group-hover:text-[#1d1d1d]"}`}
+                              style={{
+                                fontFamily: "'TT Hoves Pro', sans-serif",
+                                fontWeight: isPreview ? 500 : 400,
+                                fontSize: "clamp(13px, 1vw, 16px)",
+                              }}
+                            >
+                              {feature.label}
+                            </span>
+                            <motion.div
+                              animate={{ rotate: isOpen ? 45 : 0 }}
+                              transition={{ type: "spring", duration: 0.3, bounce: 0.15 }}
+                              className="shrink-0 ml-4"
+                            >
+                              <Plus
+                                size={18}
+                                className={`transition-colors duration-150 ${isOpen ? "text-[#103435]" : "text-[#2f615a]"}`}
+                              />
+                            </motion.div>
+                          </button>
 
-                {/* Feature accordion */}
-                <div className="lg:w-1/2 lg:border-r border-[#D9D9D9]">
-                  {activeData.features.map((feature, i) => {
-                    const isOpen = openFeature === i;
-                    const isPreview = previewFeature === i;
-                    return (
-                      <div key={i} className="border-b border-[#D9D9D9] last:border-b-0">
-                        <button
-                          onClick={() => handleFeatureClick(i)}
-                          className={`w-full flex items-center justify-between px-8 py-4 text-left transition-colors duration-200 group ${
-                            isPreview ? "bg-[#eeece5]" : "hover:bg-[#eeece5]/60"
-                          }`}
-                        >
-                          <span
-                            className={`transition-colors duration-150 ${isPreview ? "text-[#1d1d1d]" : "text-[#464646] group-hover:text-[#1d1d1d]"}`}
+                          <AnimatePresence>
+                            {isOpen && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+                                style={{ overflow: "hidden" }}
+                              >
+                                <p
+                                  className="px-8 pb-5 text-[#5a5a5a] leading-[1.6]"
+                                  style={{
+                                    fontFamily: "'TT Hoves Pro', sans-serif",
+                                    fontWeight: 400,
+                                    fontSize: "clamp(12px, 0.95vw, 14px)",
+                                  }}
+                                >
+                                  {feature.description}
+                                </p>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div
+                    className="lg:w-1/2 overflow-hidden relative min-h-[480px]"
+                    style={{ background: "#eeece5" }}
+                  >
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={`${activeTab}-${previewFeature}`}
+                        className="absolute inset-0"
+                        initial={{ opacity: 0, scale: 0.97 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 1.02 }}
+                        transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+                      >
+                        {FeatureUI && <FeatureUI />}
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-col border-t border-[#D9D9D9]">
+                  <div
+                    className="relative w-full overflow-hidden min-h-[300px] sm:min-h-[360px]"
+                    style={{ background: "#eeece5" }}
+                  >
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={`m-${activeTab}-${previewFeature}`}
+                        className="absolute inset-0"
+                        initial={{ opacity: 0, scale: 0.98 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 1.01 }}
+                        transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
+                      >
+                        {FeatureUI && <FeatureUI />}
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+
+                  <div className="border-t border-[#D9D9D9] bg-[#f3f2ee]">
+                    <div
+                      className="flex gap-2 overflow-x-auto overscroll-x-contain px-4 py-3 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                      role="tablist"
+                      aria-label="Product features"
+                    >
+                      {activeData.features.map((feature, i) => {
+                        const selected = previewFeature === i;
+                        return (
+                          <button
+                            key={i}
+                            type="button"
+                            role="tab"
+                            aria-selected={selected}
+                            id={`advantage-feature-tab-${activeTab}-${i}`}
+                            onClick={() => handleMobileFeatureTab(i)}
+                            className={`shrink-0 snap-start max-w-[min(280px,78vw)] rounded-none border px-3 py-2.5 text-left transition-colors duration-150 ${
+                              selected
+                                ? "border-[#103435] bg-[#eeece5] shadow-sm"
+                                : "border-[#D9D9D9] bg-white/80 active:bg-[#eeece5]/80"
+                            }`}
                             style={{
                               fontFamily: "'TT Hoves Pro', sans-serif",
-                              fontWeight: isPreview ? 500 : 400,
-                              fontSize: "clamp(13px, 1vw, 16px)",
+                              fontWeight: selected ? 500 : 400,
+                              fontSize: 12,
+                              lineHeight: 1.35,
+                              color: selected ? "#1d1d1d" : "#464646",
                             }}
                           >
                             {feature.label}
-                          </span>
-                          <motion.div
-                            animate={{ rotate: isOpen ? 45 : 0 }}
-                            transition={{ type: "spring", duration: 0.3, bounce: 0.15 }}
-                            className="shrink-0 ml-4"
-                          >
-                            <Plus
-                              size={18}
-                              className={`transition-colors duration-150 ${isOpen ? "text-[#103435]" : "text-[#2f615a]"}`}
-                            />
-                          </motion.div>
-                        </button>
-
-                        <AnimatePresence>
-                          {isOpen && (
-                            <motion.div
-                              initial={{ height: 0, opacity: 0 }}
-                              animate={{ height: "auto", opacity: 1 }}
-                              exit={{ height: 0, opacity: 0 }}
-                              transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-                              style={{ overflow: "hidden" }}
-                            >
-                              <p
-                                className="px-8 pb-5 text-[#5a5a5a] leading-[1.6]"
-                                style={{
-                                  fontFamily: "'TT Hoves Pro', sans-serif",
-                                  fontWeight: 400,
-                                  fontSize: "clamp(12px, 0.95vw, 14px)",
-                                }}
-                              >
-                                {feature.description}
-                              </p>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* Animated feature UI */}
-                <div
-                  className="lg:w-1/2 overflow-hidden relative min-h-[320px]"
-                  style={{ background: "linear-gradient(145deg, #0e2828 0%, #091e1e 100%)" }}
-                >
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={`${activeTab}-${previewFeature}`}
-                      className="absolute inset-0"
-                      initial={{ opacity: 0, scale: 0.97 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 1.02 }}
-                      transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <div
+                      className="px-4 pb-5 pt-1 border-t border-[#D9D9D9]/80"
+                      role="tabpanel"
+                      aria-labelledby={`advantage-feature-tab-${activeTab}-${previewFeature}`}
                     >
-                      {FeatureUI && <FeatureUI />}
-                    </motion.div>
-                  </AnimatePresence>
+                      <p
+                        className="text-[#5a5a5a] leading-[1.65]"
+                        style={{
+                          fontFamily: "'TT Hoves Pro', sans-serif",
+                          fontWeight: 400,
+                          fontSize: 14,
+                        }}
+                      >
+                        {activeData.features[previewFeature]?.description}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-
-              </div>
+              )}
 
             </motion.div>
           </AnimatePresence>
