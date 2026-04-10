@@ -61,6 +61,7 @@ export function HeroSection() {
                 style={{
                   fontFamily: "'LT Cushion', serif",
                   fontWeight: 300,
+                  fontStyle: "normal",
                 }}
               >
                 reimagining maritime

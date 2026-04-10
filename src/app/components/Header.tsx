@@ -1,37 +1,40 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import { VolteoLogo } from "./VolteoLogo";
 import { RailDivider } from "./RailDivider";
 import { ProductWalkthroughPreview } from "./ProductWalkthroughPreview";
 
-const navLinks = [
-  {
-    label: "Products",
-    href: "#advantage",
-    items: [
-      { label: "Wayship", href: "#advantage" },
-      { label: "Smartport", href: "#advantage" },
-    ],
-  },
-  {
-    label: "Resources",
-    href: "#quick-rewind",
-    items: [
-      { label: "Customer stories", href: "#quick-rewind" },
-      { label: "Demo videos", href: "#quick-rewind" },
-    ],
-  },
-  {
-    label: "About",
-    href: "#footer",
-    items: [
-      { label: "Careers", href: "#footer" },
-      { label: "Our story", href: "#footer" },
-    ],
-  },
-];
+function buildNavLinks(pathname: string) {
+  const isHomeV2 = pathname === "/home-v2";
+  return [
+    {
+      label: "Products",
+      href: "#advantage",
+      items: [
+        { label: "Wayship", href: "#advantage" },
+        { label: "Smartport", href: "#advantage" },
+      ],
+    },
+    {
+      label: "Resources",
+      href: isHomeV2 ? "#insights" : "#quick-rewind",
+      items: [
+        { label: "Customer stories", href: isHomeV2 ? "#insights" : "#quick-rewind" },
+        { label: "Demo videos", href: isHomeV2 ? "#insights" : "#quick-rewind" },
+      ],
+    },
+    {
+      label: "About",
+      href: isHomeV2 ? "#rewind" : "#footer",
+      items: [
+        { label: "Careers", href: "#footer" },
+        { label: "Our story", href: isHomeV2 ? "#rewind" : "#footer" },
+      ],
+    },
+  ];
+}
 
 const HEADER_HEIGHT = 72;
 
@@ -267,6 +270,12 @@ function ProductsMegaMenu({
 }
 
 export function Header() {
+  const location = useLocation();
+  const navLinks = buildNavLinks(location.pathname);
+  const showHomeSwitcher = location.pathname === "/" || location.pathname === "/home-v2";
+  /** Match Home v2 layout: no pill rounding on that route */
+  const homeTabShape = location.pathname === "/home-v2" ? "rounded-none" : "rounded-full";
+
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -333,9 +342,40 @@ export function Header() {
       <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px]">
         <div className="flex items-center justify-between h-[72px]">
           {/* Logo */}
-          <Link to="/" className="flex items-center">
+          <Link to="/" className="flex items-center shrink-0">
             <VolteoLogo color="#113637" />
           </Link>
+
+          {showHomeSwitcher && (
+            <div
+              className={`hidden md:flex items-center border border-[#D9D9D9] p-0.5 mx-3 lg:mx-6 shrink-0 ${homeTabShape}`}
+              role="tablist"
+              aria-label="Home page version"
+            >
+              <Link
+                to="/"
+                role="tab"
+                aria-selected={location.pathname === "/"}
+                className={`px-3 py-1.5 text-[13px] transition-colors ${homeTabShape} ${
+                  location.pathname === "/" ? "bg-[#e8e6e0] text-[#0e3233]" : "text-[#615D5D] hover:text-[#103435]"
+                }`}
+                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}
+              >
+                Home
+              </Link>
+              <Link
+                to="/home-v2"
+                role="tab"
+                aria-selected={location.pathname === "/home-v2"}
+                className={`px-3 py-1.5 text-[13px] transition-colors whitespace-nowrap ${homeTabShape} ${
+                  location.pathname === "/home-v2" ? "bg-[#e8e6e0] text-[#0e3233]" : "text-[#615D5D] hover:text-[#103435]"
+                }`}
+                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}
+              >
+                Home page v2
+              </Link>
+            </div>
+          )}
 
           {/* Desktop Nav */}
           <nav
@@ -426,6 +466,30 @@ export function Header() {
             transition={{ duration: 0.3 }}
           >
             <nav className="flex flex-col">
+              {showHomeSwitcher && (
+                <div className={`flex border border-[#D9D9D9] p-0.5 mb-4 gap-0.5 ${homeTabShape}`} role="tablist" aria-label="Home page version">
+                  <Link
+                    to="/"
+                    className={`flex-1 text-center py-2.5 text-[14px] transition-colors ${homeTabShape} ${
+                      location.pathname === "/" ? "bg-[#e8e6e0] text-[#0e3233]" : "text-[#615D5D]"
+                    }`}
+                    style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    Home
+                  </Link>
+                  <Link
+                    to="/home-v2"
+                    className={`flex-1 text-center py-2.5 text-[14px] transition-colors ${homeTabShape} ${
+                      location.pathname === "/home-v2" ? "bg-[#e8e6e0] text-[#0e3233]" : "text-[#615D5D]"
+                    }`}
+                    style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    Home page v2
+                  </Link>
+                </div>
+              )}
               {navLinks.map((link) => (
                 <div key={link.label} className="border-b border-[#E4E2DC] last:border-none">
                   <button

@@ -10,6 +10,7 @@ import { Footer } from "./components/Footer";
 import { RailDivider } from "./components/RailDivider";
 import { LoadingScreen } from "./components/LoadingScreen";
 import { WayshipPage } from "./components/WayshipPage";
+import { HomePageV2 } from "./components/HomePageV2";
 import { PageRouteTransition } from "./components/PageRouteTransition";
 
 const EASE_STRONG: [number, number, number, number] = [0.23, 1, 0.32, 1];
@@ -91,6 +92,7 @@ export default function App() {
   const routeElement = useRoutes(
     [
       { path: "/", element: <HomePage revealed={homeContentRevealed} /> },
+      { path: "/home-v2", element: <HomePageV2 /> },
       { path: "/wayship", element: <WayshipPage /> },
     ],
     location

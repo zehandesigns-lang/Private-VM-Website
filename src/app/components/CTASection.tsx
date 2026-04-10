@@ -52,7 +52,7 @@ export function CTASection() {
             }}
           >
             Start capturing what your fleet{" "}
-            <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "italic" }}>already knows</span>
+            <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>already knows</span>
           </h2>
           <p
             className="text-[#f3f2ee]/80 leading-[1.65] mb-10"

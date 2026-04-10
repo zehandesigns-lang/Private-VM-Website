@@ -14,3 +14,19 @@ export function RailDivider({ className = "" }: { className?: string }) {
     </div>
   );
 }
+
+/**
+ * Horizontal rule that only spans the centered main column — same max-width and
+ * horizontal padding as section content (`max-w-[1512px]` + px-8 / md:px-16 / lg:px-[115px]).
+ * Does not extend full viewport; stops at the content container edges.
+ */
+export function ContentDivider({ className = "" }: { className?: string }) {
+  return (
+    <div
+      className={`mx-auto w-full max-w-[1512px] px-8 md:px-16 lg:px-[115px] pointer-events-none ${className}`}
+      aria-hidden
+    >
+      <div className="h-px w-full bg-[#D9D9D9]" />
+    </div>
+  );
+}
