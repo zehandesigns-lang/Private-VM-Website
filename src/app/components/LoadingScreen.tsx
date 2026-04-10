@@ -98,12 +98,14 @@ export function LoadingScreen({ onComplete, onReveal }: LoadingScreenProps) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[9999] bg-[#113637] overflow-hidden min-h-[100dvh]"
+      className={`fixed inset-0 z-[9999] bg-[#113637] overflow-hidden ${exiting ? "pointer-events-none" : ""}`}
       initial={{ y: 0 }}
       animate={{ y: exiting ? "-100%" : 0 }}
       transition={{ duration: 0.34, ease: EASE_DRAWER }}
+      style={{ backfaceVisibility: "hidden" }}
     >
-      <div className="relative w-full h-full min-h-[100dvh]">
+      {/* inset-0 only — avoid min-h-dvh here; extra height + translate on iOS caused green strips at top/bottom during exit */}
+      <div className="relative h-full w-full">
 
         {/* ── Phase 1: Ring + spinning compass mark ─────────────────
             Centered on screen. Fades out with blur as letters arrive. */}

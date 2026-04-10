@@ -16,6 +16,8 @@ const EASE_STRONG: [number, number, number, number] = [0.23, 1, 0.32, 1];
 function HomePage() {
   const [loadingDone, setLoadingDone] = useState(false);
   const [revealed, setRevealed] = useState(false);
+  /** Unlocks scroll as soon as hero is revealed — must not wait for loader exit animation (was blocking touch for ~340ms on mobile). */
+  const [scrollUnlocked, setScrollUnlocked] = useState(false);
 
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
@@ -23,15 +25,18 @@ function HomePage() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = loadingDone ? "" : "hidden";
+    document.body.style.overflow = scrollUnlocked ? "" : "hidden";
     return () => { document.body.style.overflow = ""; };
-  }, [loadingDone]);
+  }, [scrollUnlocked]);
 
   return (
     <>
       {!loadingDone && (
         <LoadingScreen
-          onReveal={() => setRevealed(true)}
+          onReveal={() => {
+            setRevealed(true);
+            setScrollUnlocked(true);
+          }}
           onComplete={() => setLoadingDone(true)}
         />
       )}
