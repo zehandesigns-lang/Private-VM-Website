@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import svgPaths from "../../imports/svg-mp9yadf4j7";
+import { AnimatedDitherBackground } from "./AnimatedDitherBackground";
+
+/** Same radial stack as CTASection — pairs with AnimatedDitherBackground */
+const CTA_RADIAL_STACK = `
+  radial-gradient(ellipse 130% 70% at 50% -35%, rgba(252, 247, 227, 0.16), transparent 52%),
+  radial-gradient(ellipse 55% 45% at 100% 105%, rgba(0, 0, 0, 0.45), transparent 50%),
+  radial-gradient(ellipse 50% 40% at 0% 80%, rgba(65, 102, 104, 0.35), transparent 55%),
+  linear-gradient(168deg, #0e3233 0%, #0b282a 42%, #0d2f30 100%)
+`;
 
 const EASE_STRONG: [number, number, number, number] = [0.23, 1, 0.32, 1];
 const EASE_DRAWER: [number, number, number, number] = [0.32, 0.72, 0, 1];
@@ -87,7 +96,7 @@ export function LoadingScreen({ onComplete, onReveal }: LoadingScreenProps) {
   if (prefersReducedMotion) {
     return (
       <motion.div
-        className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#113637]"
+        className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-[#0e3233]"
         animate={{ opacity: 0 }}
         transition={{ duration: 0.3, delay: 0.4 }}
       >
@@ -98,14 +107,24 @@ export function LoadingScreen({ onComplete, onReveal }: LoadingScreenProps) {
 
   return (
     <motion.div
-      className={`fixed inset-0 z-[9999] bg-[#113637] overflow-hidden ${exiting ? "pointer-events-none" : ""}`}
+      className={`fixed inset-0 z-[9999] overflow-hidden ${exiting ? "pointer-events-none" : ""}`}
       initial={{ y: 0 }}
       animate={{ y: exiting ? "-100%" : 0 }}
       transition={{ duration: 0.34, ease: EASE_DRAWER }}
       style={{ backfaceVisibility: "hidden" }}
     >
+      <div className="absolute inset-0 bg-[#0e3233]" aria-hidden />
+      <div
+        className="absolute inset-0"
+        aria-hidden
+        style={{ background: CTA_RADIAL_STACK }}
+      />
+      <AnimatedDitherBackground
+        className="pointer-events-none z-[1] opacity-[0.2]"
+        ditherMix={0.34}
+      />
       {/* inset-0 only — avoid min-h-dvh here; extra height + translate on iOS caused green strips at top/bottom during exit */}
-      <div className="relative h-full w-full">
+      <div className="relative z-[2] h-full w-full">
 
         {/* ── Phase 1: Ring + spinning compass mark ─────────────────
             Centered on screen. Fades out with blur as letters arrive. */}
