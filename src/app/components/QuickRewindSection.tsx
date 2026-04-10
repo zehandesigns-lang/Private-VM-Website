@@ -104,8 +104,7 @@ function LogoRow({ logos }: { logos: typeof LOGOS[number][] }) {
           <img
             src={logo.src}
             alt={logo.alt}
-            className={`${logo.maxH} w-auto object-contain`}
-            style={{ mixBlendMode: "luminosity", opacity: 0.9 }}
+            className={`${logo.maxH} w-auto object-contain grayscale opacity-90`}
             loading="lazy"
             decoding="async"
           />

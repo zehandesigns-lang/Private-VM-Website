@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
-import { ArrowUpRight } from "lucide-react";
 import epsLogo from "@/assets/logos/eastern-pacific.png";
+import { VolteoTextLink } from "./VolteoTextLink";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -36,15 +36,9 @@ export function HeroSection() {
             >
               NEW
             </span>
-            <div className="flex items-center gap-2">
-              <span
-                className="text-[#2f615a] text-[15px] md:text-[17px]"
-                style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}
-              >
-                Visit us at Singapore Maritime Week 2026
-              </span>
-              <ArrowUpRight size={18} className="text-[#2f615a]" />
-            </div>
+            <VolteoTextLink href="https://www.singaporemaritimeweek.com/">
+              Visit us at Singapore Maritime Week 2026
+            </VolteoTextLink>
           </motion.div>
 
           {/* Row 1: Heading — occupies left ~60% */}

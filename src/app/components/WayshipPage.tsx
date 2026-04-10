@@ -162,8 +162,7 @@ function WayshipHero() {
                 { src: imgTk, alt: "Teekay", h: "h-8" },
               ].map((logo) => (
                 <img key={logo.alt} src={logo.src} alt={logo.alt}
-                  className={`${logo.h} w-auto object-contain`}
-                  style={{ mixBlendMode: "luminosity", opacity: 0.7 }} />
+                  className={`${logo.h} w-auto object-contain grayscale opacity-70`} />
               ))}
             </div>
             <div className="hidden md:flex items-center gap-3 ml-auto flex-wrap">
@@ -877,13 +876,12 @@ function DeployStrip() {
 // ── Main export ──────────────────────────────────────────────────────────
 export function WayshipPage() {
   useEffect(() => {
-    window.scrollTo(0, 0);
     document.title = "Wayship — Operational Intelligence for the Modern Fleet";
     return () => { document.title = "Volteo Home Page Design"; };
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#f3f2ee]">
+    <div className="relative min-h-screen">
       {/* Page rails (match home page) */}
       <div className="absolute inset-0 pointer-events-none z-[60]">
         <div className="relative h-full max-w-[1512px] mx-auto">

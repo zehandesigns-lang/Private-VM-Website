@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
 import { motion, AnimatePresence } from "motion/react";
-import { Plus, ArrowUpRight } from "lucide-react";
+import { Plus } from "lucide-react";
+import { VolteoTextLink } from "./VolteoTextLink";
 
 // ── Types ──────────────────────────────────────────────────────────────
 interface Feature {
@@ -909,25 +909,7 @@ export function VolteoAdvantageSection() {
                   >
                     {activeData.title}
                   </h3>
-                  {activeData.href?.startsWith("/") ? (
-                    <Link
-                      to={activeData.href}
-                      className="inline-flex items-center gap-1.5 border-b border-[#2f615a] pb-0.5 text-[#2f615a] transition-opacity hover:opacity-70"
-                      style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}
-                    >
-                      {activeData.subtitle}
-                      <ArrowUpRight size={15} />
-                    </Link>
-                  ) : (
-                    <a
-                      href={activeData.href ?? "#"}
-                      className="inline-flex items-center gap-1.5 border-b border-[#2f615a] pb-0.5 text-[#2f615a] transition-opacity hover:opacity-70"
-                      style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}
-                    >
-                      {activeData.subtitle}
-                      <ArrowUpRight size={15} />
-                    </a>
-                  )}
+                  <VolteoTextLink href={activeData.href ?? "#"}>{activeData.subtitle}</VolteoTextLink>
                 </div>
 
                 {/* Right: description */}
