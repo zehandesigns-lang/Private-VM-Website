@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import { VolteoLogo } from "./VolteoLogo";
@@ -8,30 +8,30 @@ import { ProductWalkthroughPreview } from "./ProductWalkthroughPreview";
 
 function buildNavLinks(pathname: string) {
   const isHomeV2 = pathname === "/home-v2";
+  const isHomeLike = pathname === "/" || pathname === "/home-v2";
+  const productsHref = isHomeLike ? "#advantage" : "/#advantage";
+  const resourcesHref = isHomeV2 ? "#insights" : isHomeLike ? "#quick-rewind" : "/#quick-rewind";
   return [
     {
       label: "Products",
-      href: "#advantage",
+      href: productsHref,
       items: [
-        { label: "Wayship", href: "#advantage" },
-        { label: "Smartport", href: "#advantage" },
+        { label: "Wayship", href: productsHref },
+        { label: "Smartport", href: productsHref },
       ],
     },
     {
       label: "Resources",
-      href: isHomeV2 ? "#insights" : "#quick-rewind",
+      href: resourcesHref,
       items: [
-        { label: "Customer stories", href: isHomeV2 ? "#insights" : "#quick-rewind" },
-        { label: "Demo videos", href: isHomeV2 ? "#insights" : "#quick-rewind" },
+        { label: "Customer stories", href: resourcesHref },
+        { label: "Demo videos", href: resourcesHref },
       ],
     },
     {
       label: "About",
-      href: isHomeV2 ? "#rewind" : "#footer",
-      items: [
-        { label: "Careers", href: "#footer" },
-        { label: "Our story", href: isHomeV2 ? "#rewind" : "#footer" },
-      ],
+      href: "/about",
+      items: [],
     },
   ];
 }
@@ -48,9 +48,11 @@ function smoothScrollTo(id: string) {
 function DropdownMenu({
   items,
   visible,
+  onItemClick,
 }: {
   items: { label: string; href: string }[];
   visible: boolean;
+  onItemClick: (href: string) => void;
 }) {
   return (
     <AnimatePresence>
@@ -68,7 +70,7 @@ function DropdownMenu({
               href={item.href}
               onClick={(e) => {
                 e.preventDefault();
-                smoothScrollTo(item.href);
+                onItemClick(item.href);
               }}
               className={`flex items-center px-5 py-3 text-[#262627] hover:bg-[#e8e6e0] hover:text-[#0e3233] transition-colors duration-150 ${
                 i < items.length - 1 ? "border-b border-[#E4E2DC]" : ""
@@ -107,7 +109,7 @@ const products: Record<
       "Voice AI, LLM chat, and digital logbooks for the modern fleet — ABS approved, trusted by 200+ vessels.",
     walkthroughTitle: "Product walkthrough video",
     walkthroughDescription: "A guided tour of Wayship’s core workflows and on-board experience.",
-    hash: "#wayship",
+    hash: "#advantage",
     href: "/wayship",
   },
   smartport: {
@@ -116,7 +118,7 @@ const products: Record<
       "Port intelligence built to keep operations moving — from berth planning to arrivals, revenue, and compliance.",
     walkthroughTitle: "Product walkthrough video",
     walkthroughDescription: "A quick walkthrough of Smartport’s planning and live-ops surfaces.",
-    hash: "#smartport",
+    hash: "#advantage",
   },
 };
 
@@ -271,6 +273,7 @@ function ProductsMegaMenu({
 
 export function Header() {
   const location = useLocation();
+  const navigate = useNavigate();
   const navLinks = buildNavLinks(location.pathname);
   const showHomeSwitcher = location.pathname === "/" || location.pathname === "/home-v2";
   /** Match Home v2 layout: no pill rounding on that route */
@@ -328,6 +331,19 @@ export function Header() {
     closeTimer.current = window.setTimeout(() => setOpenDropdown(null), 120);
   };
 
+  const handleHrefNavigation = (href: string) => {
+    if (!href) return;
+    if (href.startsWith("#")) {
+      smoothScrollTo(href);
+      return;
+    }
+    if (href.startsWith("/#")) {
+      navigate(href);
+      return;
+    }
+    navigate(href);
+  };
+
   return (
     <motion.header
       className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300"
@@ -382,51 +398,71 @@ export function Header() {
             className="hidden md:flex items-center gap-8"
             onMouseLeave={() => setHoveredNav(null)}
           >
-            {navLinks.map((link) => (
-              <div
-                key={link.label}
-                className="relative h-[72px] flex items-center"
-                onMouseEnter={() => handleMouseEnter(link.label)}
-                onMouseLeave={handleMouseLeave}
-              >
-                <button
-                  className="group flex items-center gap-1 text-[#262627] hover:text-[#0e3233] transition-colors duration-150 ease-out bg-transparent border-none cursor-pointer"
-                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 16, fontWeight: 500 }}
+            {navLinks.map((link) => {
+              const hasDropdown = link.items.length > 0;
+              const isAboutLink = link.href === "/about";
+              const showUnderline =
+                (openDropdown === link.label || hoveredNav === link.label) ||
+                (isAboutLink && location.pathname === "/about");
+
+              return (
+                <div
+                  key={link.label}
+                  className="relative h-[72px] flex items-center"
+                  onMouseEnter={() => {
+                    if (hasDropdown) handleMouseEnter(link.label);
+                  }}
+                  onMouseLeave={() => {
+                    if (hasDropdown) handleMouseLeave();
+                  }}
                 >
-                  {link.label}
-                  <motion.span
-                    initial={{ rotate: 0 }}
-                    animate={{ rotate: openDropdown === link.label ? 180 : 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex"
-                  >
-                    <ChevronDown size={16} className="opacity-60" />
-                  </motion.span>
-                </button>
-                {(openDropdown === link.label || hoveredNav === link.label) && (
-                  <motion.div
-                    layoutId="nav-underline"
-                    className="absolute left-0 right-0 -bottom-px h-[2px] bg-[#615D5D]"
-                    transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
+                  {hasDropdown ? (
+                    <button
+                      className="group flex items-center gap-1 text-[#262627] hover:text-[#0e3233] transition-colors duration-150 ease-out bg-transparent border-none cursor-pointer"
+                      style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 16, fontWeight: 500 }}
+                    >
+                      {link.label}
+                      <motion.span
+                        initial={{ rotate: 0 }}
+                        animate={{ rotate: openDropdown === link.label ? 180 : 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="flex"
+                      >
+                        <ChevronDown size={16} className="opacity-60" />
+                      </motion.span>
+                    </button>
+                  ) : (
+                    <Link
+                      to={link.href}
+                      className="text-[#262627] hover:text-[#0e3233] transition-colors duration-150 ease-out"
+                      style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 16, fontWeight: 500 }}
+                    >
+                      {link.label}
+                    </Link>
+                  )}
+                  {showUnderline && (
+                    <motion.div
+                      layoutId="nav-underline"
+                      className="absolute left-0 right-0 -bottom-px h-[2px] bg-[#615D5D]"
+                      transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
+                    />
+                  )}
+                  <DropdownMenu
+                    items={link.items}
+                    visible={openDropdown === link.label && link.label !== "Products"}
+                    onItemClick={handleHrefNavigation}
                   />
-                )}
-                <DropdownMenu
-                  items={link.items}
-                  visible={openDropdown === link.label && link.label !== "Products"}
-                />
-                <ProductsMegaMenu
-                  visible={openDropdown === link.label && link.label === "Products"}
-                  onCloseMenu={() => {
-                    setOpenDropdown(null);
-                    setHoveredNav(null);
-                  }}
-                  onNavigate={(hash) => {
-                    if (hash) window.location.hash = hash;
-                    smoothScrollTo("#advantage");
-                  }}
-                />
-              </div>
-            ))}
+                  <ProductsMegaMenu
+                    visible={openDropdown === link.label && link.label === "Products"}
+                    onCloseMenu={() => {
+                      setOpenDropdown(null);
+                      setHoveredNav(null);
+                    }}
+                    onNavigate={handleHrefNavigation}
+                  />
+                </div>
+              );
+            })}
           </nav>
 
           {/* Book Demo Button */}
@@ -490,54 +526,70 @@ export function Header() {
                   </Link>
                 </div>
               )}
-              {navLinks.map((link) => (
-                <div key={link.label} className="border-b border-[#E4E2DC] last:border-none">
-                  <button
-                    className="flex items-center justify-between w-full py-3 text-[#262627] bg-transparent border-none cursor-pointer"
-                    style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 16, fontWeight: 500 }}
-                    onClick={() =>
-                      setMobileExpanded(mobileExpanded === link.label ? null : link.label)
-                    }
-                  >
-                    {link.label}
-                    <motion.span
-                      initial={{ rotate: 0 }}
-                      animate={{ rotate: mobileExpanded === link.label ? 180 : 0 }}
-                      transition={{ duration: 0.2 }}
-                      className="flex"
-                    >
-                      <ChevronDown size={16} className="opacity-60" />
-                    </motion.span>
-                  </button>
-                  <AnimatePresence>
-                    {mobileExpanded === link.label && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="pl-3 pb-3 flex flex-col gap-2"
-                      >
-                        {link.items.map((item) => (
-                          <a
-                            key={item.label}
-                            href={item.href}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              smoothScrollTo(item.href);
-                              setMobileOpen(false);
-                            }}
-                            className="text-[#464646] hover:text-[#0e3233] py-1"
-                            style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 15, fontWeight: 400 }}
+              {navLinks.map((link) => {
+                const hasDropdown = link.items.length > 0;
+                return (
+                  <div key={link.label} className="border-b border-[#E4E2DC] last:border-none">
+                    {hasDropdown ? (
+                      <>
+                        <button
+                          className="flex items-center justify-between w-full py-3 text-[#262627] bg-transparent border-none cursor-pointer"
+                          style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 16, fontWeight: 500 }}
+                          onClick={() =>
+                            setMobileExpanded(mobileExpanded === link.label ? null : link.label)
+                          }
+                        >
+                          {link.label}
+                          <motion.span
+                            initial={{ rotate: 0 }}
+                            animate={{ rotate: mobileExpanded === link.label ? 180 : 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="flex"
                           >
-                            {item.label}
-                          </a>
-                        ))}
-                      </motion.div>
+                            <ChevronDown size={16} className="opacity-60" />
+                          </motion.span>
+                        </button>
+                        <AnimatePresence>
+                          {mobileExpanded === link.label && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: "auto" }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="pl-3 pb-3 flex flex-col gap-2"
+                            >
+                              {link.items.map((item) => (
+                                <a
+                                  key={item.label}
+                                  href={item.href}
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    handleHrefNavigation(item.href);
+                                    setMobileOpen(false);
+                                  }}
+                                  className="text-[#464646] hover:text-[#0e3233] py-1"
+                                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 15, fontWeight: 400 }}
+                                >
+                                  {item.label}
+                                </a>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </>
+                    ) : (
+                      <Link
+                        to={link.href}
+                        className="block w-full py-3 text-[#262627] hover:text-[#0e3233] transition-colors duration-150"
+                        style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 16, fontWeight: 500 }}
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        {link.label}
+                      </Link>
                     )}
-                  </AnimatePresence>
-                </div>
-              ))}
+                  </div>
+                );
+              })}
 
               <a
                 href="#cta"

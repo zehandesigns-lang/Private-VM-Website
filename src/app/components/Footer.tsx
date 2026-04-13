@@ -11,13 +11,13 @@ const footerLinks = {
 };
 
 export function Footer() {
-  const sailRef = useRef<HTMLDivElement>(null);
+  const taglineRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fit = () => {
       const container = containerRef.current;
-      const text = sailRef.current;
+      const text = taglineRef.current;
       if (!container || !text) return;
       text.style.fontSize = "100px";
       const ratio = container.offsetWidth / text.scrollWidth;
@@ -71,7 +71,7 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Big "Sail better" Text — full width between rails */}
+      {/* Big tagline — full width between rails */}
       <RailDivider />
       <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px] pt-8 pb-0 overflow-hidden">
         <motion.div
@@ -83,7 +83,7 @@ export function Footer() {
           transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
         >
           <div
-            ref={sailRef}
+            ref={taglineRef}
             className="leading-none tracking-tight select-none whitespace-nowrap"
             style={{ display: "inline-block" }}
           >
@@ -91,7 +91,7 @@ export function Footer() {
               className="text-[#103435]"
               style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}
             >
-              Sail{" "}
+              #NoPaper
             </span>
             <span
               className="text-[#103435]"
@@ -100,7 +100,7 @@ export function Footer() {
                 fontWeight: 300,
               }}
             >
-              better
+              ForWork
             </span>
           </div>
         </motion.div>
