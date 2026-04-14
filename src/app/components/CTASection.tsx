@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { Link } from "react-router";
 import { ArrowUpRight } from "lucide-react";
 import { AnimatedDitherBackground } from "./AnimatedDitherBackground";
 
@@ -13,10 +14,19 @@ const fadeUp = {
   }),
 };
 
+export type CTASectionVariant = "default" | "team";
+
+type CTASectionProps = {
+  /** `team`: recruiting-focused copy for About and similar pages. */
+  variant?: CTASectionVariant;
+};
+
 /**
- * Shared CTA: dark green canvas, radial depth, animated dither — used on Home and Wayship.
+ * Shared CTA: dark green canvas, radial depth, animated dither — used on Home, Wayship, and About.
  */
-export function CTASection() {
+export function CTASection({ variant = "default" }: CTASectionProps) {
+  const isTeam = variant === "team";
+
   return (
     <section id="cta" className="relative z-[70] w-full overflow-hidden">
       <div className="absolute inset-0 bg-[#0e3233]" aria-hidden />
@@ -51,34 +61,70 @@ export function CTASection() {
               textShadow: "0 1px 24px rgba(0,0,0,0.25)",
             }}
           >
-            Start capturing what your fleet{" "}
-            <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>already knows</span>
+            {isTeam ? (
+              <>
+                Join{" "}
+                <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>our team</span>
+              </>
+            ) : (
+              <>
+                Start capturing what your fleet{" "}
+                <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>already knows</span>
+              </>
+            )}
           </h2>
           <p
             className="text-[#f3f2ee]/80 leading-[1.65] mb-10"
             style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.1vw, 17px)" }}
           >
-            Most fleets are 30 days from their first structured crew handover and a crew that actually has time to do their job. Let&apos;s show you how it works on your vessel type.
+            {isTeam ? (
+              <>
+                We&apos;re growing the crew behind maritime intelligence — product, design, and people who ship with
+                operators at sea. If that sounds like your next chapter, we&apos;d love to hear from you.
+              </>
+            ) : (
+              <>
+                Most fleets are 30 days from their first structured crew handover and a crew that actually has time to
+                do their job. Let&apos;s show you how it works on your vessel type.
+              </>
+            )}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 mb-6">
-            <a
-              href="#"
-              className="bg-[#fcf7e3] text-[#0e3233] px-7 py-3 hover:bg-white transition-colors duration-150 inline-flex items-center gap-2 shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
-              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
-            >
-              Request a demo
-              <ArrowUpRight size={15} />
-            </a>
-            <a
-              href="#"
-              className="text-[#fcf7e3]/90 border border-[#fcf7e3]/25 px-7 py-3 hover:border-[#fcf7e3]/45 hover:bg-[#fcf7e3]/5 transition-colors duration-150"
-              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}
-            >
-              Talk to a specialist
-            </a>
+            {isTeam ? (
+              <a
+                href="mailto:careers@volteo.com?subject=Careers%20inquiry"
+                className="bg-[#fcf7e3] text-[#0e3233] px-7 py-3 hover:bg-white transition-colors duration-150 inline-flex items-center gap-2 shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
+                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
+              >
+                Join our team
+                <ArrowUpRight size={15} />
+              </a>
+            ) : (
+              <>
+                <Link
+                  to="/book-demo"
+                  className="bg-[#fcf7e3] text-[#0e3233] px-7 py-3 hover:bg-white transition-colors duration-150 inline-flex items-center gap-2 shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
+                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
+                >
+                  Request a demo
+                  <ArrowUpRight size={15} />
+                </Link>
+                <a
+                  href="#"
+                  className="text-[#fcf7e3]/90 border border-[#fcf7e3]/25 px-7 py-3 hover:border-[#fcf7e3]/45 hover:bg-[#fcf7e3]/5 transition-colors duration-150"
+                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}
+                >
+                  Talk to a specialist
+                </a>
+              </>
+            )}
           </div>
           <p className="text-[#fcf7e3]/45 font-mono text-[11px]">
-            No commitment · Live on 200+ vessels · ABS, Liberia, Bahamas, Malta, Singapore
+            {isTeam ? (
+              <>Product · Design · Maritime operations · Remote-friendly</>
+            ) : (
+              <>No commitment · Live on 200+ vessels · ABS, Liberia, Bahamas, Malta, Singapore</>
+            )}
           </p>
         </motion.div>
       </div>

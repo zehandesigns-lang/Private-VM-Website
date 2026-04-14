@@ -1,9 +1,10 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import { motion } from "motion/react";
+import { Link } from "react-router";
 import { ArrowUpRight } from "lucide-react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import { ContentDivider } from "./RailDivider";
+import { ContentDivider, SideRailOverlay } from "./RailDivider";
 import { VolteoTextLink } from "./VolteoTextLink";
 import { AnimatedDitherBackground } from "./AnimatedDitherBackground";
 import imgEasternPacific from "@/assets/logos/eastern-pacific.png";
@@ -297,14 +298,14 @@ function AdvantageTabs() {
                 </li>
               ))}
             </ul>
-            <a
-              href="#cta"
+            <Link
+              to="/smartport"
               className="inline-flex items-center gap-2 text-[#2f615a] font-medium border-b border-[#2f615a] pb-0.5 hover:opacity-70 transition-opacity"
               style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 14 }}
             >
               Learn more about Smartport
               <ArrowUpRight size={15} />
-            </a>
+            </Link>
           </div>
           <div className="bg-[#ebe9e3] p-6 md:p-8">
             <div className="border border-[#D9D9D9] bg-[#f3f2ee] overflow-hidden">
@@ -405,14 +406,14 @@ function HomeV2CTA() {
             Whether you operate 5 vessels or 500, Volteo Maritime has the platform to help your fleet run with more clarity, more confidence, and less friction.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 mb-6">
-            <a
-              href="#"
+            <Link
+              to="/book-demo"
               className="bg-[#fcf7e3] text-[#0e3233] px-7 py-3 hover:bg-white transition-colors duration-150 inline-flex items-center gap-2 shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
               style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
             >
               Get a demo
               <ArrowUpRight size={15} />
-            </a>
+            </Link>
             <a
               href="#"
               className="text-[#fcf7e3]/90 border border-[#fcf7e3]/25 px-7 py-3 hover:border-[#fcf7e3]/45 hover:bg-[#fcf7e3]/5 transition-colors duration-150"
@@ -441,12 +442,6 @@ export function HomePageV2() {
   return (
     <motion.div className="relative min-h-screen" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.45, ease: EASE }}>
       <div className="relative">
-        <div className="absolute inset-0 pointer-events-none z-[60]">
-          <div className="relative h-full max-w-[1512px] mx-auto">
-            <div className="absolute top-0 bottom-0 left-[12px] md:left-[44px] lg:left-[95px] w-px bg-[#D9D9D9]" />
-            <div className="absolute top-0 bottom-0 right-[12px] md:right-[44px] lg:right-[95px] w-px bg-[#D9D9D9]" />
-          </div>
-        </div>
         <Header />
         <main className="pt-[72px]">
           {/* Hero */}
@@ -526,6 +521,9 @@ export function HomePageV2() {
           </section>
 
           <ContentDivider />
+
+          <div className="relative">
+            <SideRailOverlay />
 
           {/* Quick rewind */}
           <section id="rewind" className="relative py-20 md:py-28">
@@ -735,18 +733,14 @@ export function HomePageV2() {
               </div>
             </div>
           </section>
+          </div>
         </main>
       </div>
 
       <HomeV2CTA />
 
       <div className="relative">
-        <div className="absolute inset-0 pointer-events-none z-[60]">
-          <div className="relative h-full max-w-[1512px] mx-auto">
-            <div className="absolute top-0 bottom-0 left-[12px] md:left-[44px] lg:left-[95px] w-px bg-[#D9D9D9]" />
-            <div className="absolute top-0 bottom-0 right-[12px] md:right-[44px] lg:right-[95px] w-px bg-[#D9D9D9]" />
-          </div>
-        </div>
+        <SideRailOverlay />
         <Footer />
       </div>
     </motion.div>

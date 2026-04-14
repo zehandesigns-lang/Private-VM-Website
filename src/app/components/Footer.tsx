@@ -1,11 +1,14 @@
 import { motion } from "motion/react";
 import { useEffect, useRef } from "react";
+import { Link } from "react-router";
 import { VolteoLogo } from "./VolteoLogo";
 import { RailDivider } from "./RailDivider";
 
-const footerLinks = {
+type FooterLink = string | { label: string; href: string };
+
+const footerLinks: Record<string, FooterLink[]> = {
   Products: ["Wayship", "Smart Port"],
-  Resources: ["Customer stories", "Benchmarks"],
+  Resources: [{ label: "Browse resources", href: "/resources" }, "Benchmarks"],
   About: ["Careers", "Our story"],
   Socials: ["LinkedIn", "Twitter/X"],
 };
@@ -53,17 +56,31 @@ export function Footer() {
                   {category}
                 </p>
                 <ul className="flex flex-col gap-2.5">
-                  {links.map((link) => (
-                    <li key={link}>
-                      <a
-                        href="#"
-                        className="text-[#464646] hover:text-[#103435] transition-colors duration-200"
-                        style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 14 }}
-                      >
-                        {link}
-                      </a>
-                    </li>
-                  ))}
+                  {links.map((link) => {
+                    const label = typeof link === "string" ? link : link.label;
+                    const href = typeof link === "string" ? "#" : link.href;
+                    const isInternal = href.startsWith("/");
+                    const className =
+                      "text-[#464646] hover:text-[#103435] transition-colors duration-200";
+                    const style = {
+                      fontFamily: "'TT Hoves Pro', sans-serif",
+                      fontWeight: 400,
+                      fontSize: 14,
+                    } as const;
+                    return (
+                      <li key={label}>
+                        {isInternal ? (
+                          <Link to={href} className={className} style={style}>
+                            {label}
+                          </Link>
+                        ) : (
+                          <a href={href} className={className} style={style}>
+                            {label}
+                          </a>
+                        )}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ))}

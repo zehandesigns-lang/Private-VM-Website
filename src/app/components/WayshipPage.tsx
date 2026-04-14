@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useInView } from "motion/react";
 import { ArrowUpRight, Plus, Check } from "lucide-react";
+import { Link } from "react-router";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { CTASection } from "./CTASection";
+import { ContentDivider } from "./RailDivider";
 import epsLogo from "@/assets/logos/eastern-pacific.png";
 import imgTorm from "@/assets/logos/torm.png";
 import imgTk from "@/assets/logos/tk.png";
@@ -111,12 +113,14 @@ function WayshipHero() {
 
             <motion.div className="flex flex-wrap items-center gap-4 mb-10"
               variants={fadeUp} initial="hidden" animate="visible" custom={0.24}>
-              <a href="#cta"
+              <Link
+                to="/book-demo"
                 className="bg-[#0e3233] hover:bg-[#1a5052] text-white px-6 py-3 transition-colors duration-150 inline-flex items-center gap-2"
-                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}>
+                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
+              >
                 Request a demo
                 <ArrowUpRight size={15} />
-              </a>
+              </Link>
               <a href="#voice"
                 className="text-[#2f615a] border-b border-[#2f615a] pb-0.5 hover:opacity-70 transition-opacity inline-flex items-center gap-1.5"
                 style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}>
@@ -892,19 +896,28 @@ export function WayshipPage() {
 
       <Header />
 
-      <main>
+      <main className="bg-[#f3f2ee]">
         {/* Anchor aliases so the home header links still land somewhere sensible */}
         <div id="advantage" />
         <WayshipHero />
+        <ContentDivider />
         <ProblemSection />
+        <ContentDivider />
         <VoiceSection />
+        <ContentDivider />
         <div id="quick-rewind" />
         <ChatSection />
+        <ContentDivider />
         <FeaturesSection />
+        <ContentDivider />
         <ComplianceSection />
+        <ContentDivider />
         <ROISection />
+        <ContentDivider />
         <TestimonialSection />
+        <ContentDivider />
         <DeployStrip />
+        <ContentDivider />
         <CTASection />
       </main>
 

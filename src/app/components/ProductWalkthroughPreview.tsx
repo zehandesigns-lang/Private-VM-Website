@@ -1,5 +1,5 @@
 /**
- * Animated preview for the Products mega-menu walkthrough slot.
+ * Animated preview for the Products mega-menu.
  * Wayship: voice waveform, LLM chat snippet, digital logbook rows.
  * Smartport: berth / live-ops style timeline bars.
  */

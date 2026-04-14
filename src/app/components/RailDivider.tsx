@@ -30,3 +30,18 @@ export function ContentDivider({ className = "" }: { className?: string }) {
     </div>
   );
 }
+
+/**
+ * Full-height vertical lines aligned to the same insets as RailDivider.
+ * Place inside a `relative` container that spans the sections where rails should appear.
+ */
+export function SideRailOverlay({ className = "" }: { className?: string }) {
+  return (
+    <div className={`absolute inset-0 pointer-events-none z-[60] ${className}`} aria-hidden>
+      <div className="relative h-full max-w-[1512px] mx-auto">
+        <div className="absolute top-0 bottom-0 left-[12px] md:left-[44px] lg:left-[95px] w-px bg-[#D9D9D9]" />
+        <div className="absolute top-0 bottom-0 right-[12px] md:right-[44px] lg:right-[95px] w-px bg-[#D9D9D9]" />
+      </div>
+    </div>
+  );
+}

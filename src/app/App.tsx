@@ -13,6 +13,9 @@ import { WayshipPage } from "./components/WayshipPage";
 import { HomePageV2 } from "./components/HomePageV2";
 import { PageRouteTransition } from "./components/PageRouteTransition";
 import { AboutPageV2 } from "./components/AboutPageV2";
+import { BookDemoPage } from "./components/BookDemoPage";
+import { SmartportPage } from "./components/SmartportPage";
+import { ResourcesPage } from "./components/ResourcesPage";
 
 const EASE_STRONG: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
@@ -95,7 +98,10 @@ export default function App() {
       { path: "/", element: <HomePage revealed={homeContentRevealed} /> },
       { path: "/home-v2", element: <HomePageV2 /> },
       { path: "/wayship", element: <WayshipPage /> },
+      { path: "/smartport", element: <SmartportPage /> },
       { path: "/about", element: <AboutPageV2 /> },
+      { path: "/book-demo", element: <BookDemoPage /> },
+      { path: "/resources", element: <ResourcesPage /> },
     ],
     location
   );

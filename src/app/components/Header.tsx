@@ -10,23 +10,19 @@ function buildNavLinks(pathname: string) {
   const isHomeV2 = pathname === "/home-v2";
   const isHomeLike = pathname === "/" || pathname === "/home-v2";
   const productsHref = isHomeLike ? "#advantage" : "/#advantage";
-  const resourcesHref = isHomeV2 ? "#insights" : isHomeLike ? "#quick-rewind" : "/#quick-rewind";
   return [
     {
       label: "Products",
       href: productsHref,
       items: [
-        { label: "Wayship", href: productsHref },
-        { label: "Smartport", href: productsHref },
+        { label: "Wayship", href: "/wayship" },
+        { label: "Smartport", href: "/smartport" },
       ],
     },
     {
       label: "Resources",
-      href: resourcesHref,
-      items: [
-        { label: "Customer stories", href: resourcesHref },
-        { label: "Demo videos", href: resourcesHref },
-      ],
+      href: "/resources",
+      items: [],
     },
     {
       label: "About",
@@ -97,8 +93,6 @@ const products: Record<
   {
     label: string;
     description: string;
-    walkthroughTitle: string;
-    walkthroughDescription: string;
     hash: string;
     href?: string;
   }
@@ -107,8 +101,6 @@ const products: Record<
     label: "Wayship",
     description:
       "Voice AI, LLM chat, and digital logbooks for the modern fleet — ABS approved, trusted by 200+ vessels.",
-    walkthroughTitle: "Product walkthrough video",
-    walkthroughDescription: "A guided tour of Wayship’s core workflows and on-board experience.",
     hash: "#advantage",
     href: "/wayship",
   },
@@ -116,9 +108,8 @@ const products: Record<
     label: "Smartport",
     description:
       "Port intelligence built to keep operations moving — from berth planning to arrivals, revenue, and compliance.",
-    walkthroughTitle: "Product walkthrough video",
-    walkthroughDescription: "A quick walkthrough of Smartport’s planning and live-ops surfaces.",
     hash: "#advantage",
+    href: "/smartport",
   },
 };
 
@@ -140,8 +131,6 @@ function ProductsMegaMenu({
       setHoveredProduct(null);
     }
   }, [visible]);
-
-  const active = products[activeProduct];
 
   return (
     <AnimatePresence>
@@ -249,20 +238,6 @@ function ProductsMegaMenu({
 
             <div className="flex flex-col">
               <ProductWalkthroughPreview product={activeProduct} />
-              <div className="mt-4">
-                <p
-                  className="text-[#0e3233]"
-                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600, fontSize: 14 }}
-                >
-                  {active.walkthroughTitle}
-                </p>
-                <p
-                  className="text-[#464646] mt-1 leading-[1.45]"
-                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 14 }}
-                >
-                  {active.walkthroughDescription}
-                </p>
-              </div>
             </div>
           </div>
         </motion.div>
@@ -401,9 +376,11 @@ export function Header() {
             {navLinks.map((link) => {
               const hasDropdown = link.items.length > 0;
               const isAboutLink = link.href === "/about";
+              const isResourcesLink = link.href === "/resources";
               const showUnderline =
                 (openDropdown === link.label || hoveredNav === link.label) ||
-                (isAboutLink && location.pathname === "/about");
+                (isAboutLink && location.pathname === "/about") ||
+                (isResourcesLink && location.pathname === "/resources");
 
               return (
                 <div
@@ -467,15 +444,21 @@ export function Header() {
 
           {/* Book Demo Button */}
           <div className="hidden md:flex items-center gap-3">
-            <motion.a
-              href="#cta"
-              onClick={(e) => { e.preventDefault(); smoothScrollTo("#cta"); }}
-              className="bg-[#0e3233] hover:bg-[#416668] text-white px-5 py-2.5 text-[15px] will-change-transform transition-none"
-              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, letterSpacing: "0.02em" }}
-              whileTap={{ scale: 0.985, transition: { duration: 0.12, ease: [0.23, 1, 0.32, 1] } }}
-            >
-              Book a demo
-            </motion.a>
+            <motion.div whileTap={{ scale: 0.985, transition: { duration: 0.12, ease: [0.23, 1, 0.32, 1] } }}>
+              <Link
+                to="/book-demo"
+                onClick={(e) => {
+                  if (location.pathname === "/book-demo") {
+                    e.preventDefault();
+                    smoothScrollTo("#form");
+                  }
+                }}
+                className="bg-[#0e3233] hover:bg-[#416668] text-white px-5 py-2.5 text-[15px] will-change-transform transition-none inline-block"
+                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, letterSpacing: "0.02em" }}
+              >
+                Book a demo
+              </Link>
+            </motion.div>
           </div>
 
           {/* Mobile Hamburger */}
@@ -591,18 +574,20 @@ export function Header() {
                 );
               })}
 
-              <a
-                href="#cta"
+              <Link
+                to="/book-demo"
                 onClick={(e) => {
-                  e.preventDefault();
-                  smoothScrollTo("#cta");
+                  if (location.pathname === "/book-demo") {
+                    e.preventDefault();
+                    smoothScrollTo("#form");
+                  }
                   setMobileOpen(false);
                 }}
-                className="bg-[#0e3233] hover:bg-[#416668] text-white px-5 py-3 text-center mt-4 transition-none"
+                className="bg-[#0e3233] hover:bg-[#416668] text-white px-5 py-3 text-center mt-4 transition-none block"
                 style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}
               >
                 Book a demo
-              </a>
+              </Link>
             </nav>
           </motion.div>
         )}
