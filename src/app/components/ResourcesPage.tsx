@@ -14,12 +14,11 @@ const lc = { fontFamily: "'LT Cushion', serif", fontWeight: 300 as const };
 const tt = { fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400 as const };
 const ttMed = { fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 as const };
 
-type ResourceTab = "case-studies" | "news" | "on-our-mind";
+type ResourceTab = "case-studies" | "insights";
 
 const TABS: { id: ResourceTab; label: string }[] = [
   { id: "case-studies", label: "Case studies" },
-  { id: "news", label: "News" },
-  { id: "on-our-mind", label: "On our mind" },
+  { id: "insights", label: "Insights" },
 ];
 
 type CardVisual = "maritime" | "port" | "ops" | "product" | "team";
@@ -121,14 +120,15 @@ const ON_OUR_MIND: ResourceCardData[] = [
   },
 ];
 
+const INSIGHTS: ResourceCardData[] = [...NEWS, ...ON_OUR_MIND];
+
 const TAB_CONTENT: Record<ResourceTab, ResourceCardData[]> = {
   "case-studies": CASE_STUDIES,
-  news: NEWS,
-  "on-our-mind": ON_OUR_MIND,
+  insights: INSIGHTS,
 };
 
 function isResourceTab(s: string | null): s is ResourceTab {
-  return s === "case-studies" || s === "news" || s === "on-our-mind";
+  return s === "case-studies" || s === "insights";
 }
 
 function CardMedia({ visual }: { visual: CardVisual }) {
@@ -294,13 +294,13 @@ export function ResourcesPage() {
           </motion.div>
         </section>
 
-        {/* Tabs: rectangular, rail-aligned, directly above the horizontal divider */}
+        {/* Tabs: rectangular, centered, directly above the horizontal divider */}
         <div className="mx-auto max-w-[1512px] w-full relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.05, ease: EASE }}
-            className="pl-[12px] md:pl-[44px] lg:pl-[95px] pr-8 md:pr-16 lg:pr-[115px] pb-0"
+            className="px-8 md:px-16 lg:px-[115px] pb-0 flex justify-center"
           >
             <div
               className="inline-flex max-w-full flex-nowrap overflow-x-auto sm:overflow-visible items-stretch border border-[#D9D9D9] bg-[#f3f2ee] divide-x divide-[#D9D9D9]"

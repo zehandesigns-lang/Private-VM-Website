@@ -1,16 +1,26 @@
 import { motion } from "motion/react";
 import { useEffect, useRef } from "react";
 import { Link } from "react-router";
+import { Linkedin } from "lucide-react";
 import { VolteoLogo } from "./VolteoLogo";
 import { RailDivider } from "./RailDivider";
 
 type FooterLink = string | { label: string; href: string };
 
 const footerLinks: Record<string, FooterLink[]> = {
-  Products: ["Wayship", "Smart Port"],
-  Resources: [{ label: "Browse resources", href: "/resources" }, "Benchmarks"],
-  About: ["Careers", "Our story"],
-  Socials: ["LinkedIn", "Twitter/X"],
+  Products: [
+    { label: "Wayship", href: "/wayship" },
+    { label: "Smart Port", href: "/smartport" },
+  ],
+  Resources: [
+    { label: "Case studies", href: "/resources?tab=case-studies" },
+    { label: "Insights", href: "/resources?tab=insights" },
+  ],
+  About: [
+    { label: "Our story", href: "/about#founder-note" },
+    { label: "Careers", href: "/about#join-our-team" },
+  ],
+  Socials: [{ label: "LinkedIn", href: "https://www.linkedin.com" }],
 };
 
 export function Footer() {
@@ -74,8 +84,15 @@ export function Footer() {
                             {label}
                           </Link>
                         ) : (
-                          <a href={href} className={className} style={style}>
-                            {label}
+                          <a
+                            href={href}
+                            className={`${className} inline-flex items-center gap-2`}
+                            style={style}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {label === "LinkedIn" ? <Linkedin size={16} aria-hidden /> : null}
+                            <span>{label}</span>
                           </a>
                         )}
                       </li>

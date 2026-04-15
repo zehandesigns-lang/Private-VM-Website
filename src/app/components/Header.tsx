@@ -7,7 +7,6 @@ import { RailDivider } from "./RailDivider";
 import { ProductWalkthroughPreview } from "./ProductWalkthroughPreview";
 
 function buildNavLinks(pathname: string) {
-  const isHomeV2 = pathname === "/home-v2";
   const isHomeLike = pathname === "/" || pathname === "/home-v2";
   const productsHref = isHomeLike ? "#advantage" : "/#advantage";
   return [
@@ -142,7 +141,7 @@ function ProductsMegaMenu({
           exit={{ opacity: 0, y: -6 }}
           transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-10 p-8">
+          <div className="grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] items-stretch gap-10 p-8">
             <div>
               <p
                 className="text-[#262627] mb-3"
@@ -236,8 +235,10 @@ function ProductsMegaMenu({
               </div>
             </div>
 
-            <div className="flex flex-col">
-              <ProductWalkthroughPreview product={activeProduct} />
+            <div className="flex flex-col self-stretch">
+              <div className="flex-1 min-h-0">
+                <ProductWalkthroughPreview product={activeProduct} />
+              </div>
             </div>
           </div>
         </motion.div>
@@ -250,9 +251,6 @@ export function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const navLinks = buildNavLinks(location.pathname);
-  const showHomeSwitcher = location.pathname === "/" || location.pathname === "/home-v2";
-  /** Match Home v2 layout: no pill rounding on that route */
-  const homeTabShape = location.pathname === "/home-v2" ? "rounded-none" : "rounded-full";
 
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -330,43 +328,20 @@ export function Header() {
         backdropFilter: "blur(12px)",
       }}
     >
+      {/* Side rails (header segment) */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden>
+        <div className="relative h-full max-w-[1512px] mx-auto">
+          <div className="absolute top-0 bottom-0 left-[12px] md:left-[44px] lg:left-[95px] w-px bg-[#D9D9D9]" />
+          <div className="absolute top-0 bottom-0 right-[12px] md:right-[44px] lg:right-[95px] w-px bg-[#D9D9D9]" />
+        </div>
+      </div>
+
       <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px]">
         <div className="flex items-center justify-between h-[72px]">
           {/* Logo */}
           <Link to="/" className="flex items-center shrink-0">
             <VolteoLogo color="#113637" />
           </Link>
-
-          {showHomeSwitcher && (
-            <div
-              className={`hidden md:flex items-center border border-[#D9D9D9] p-0.5 mx-3 lg:mx-6 shrink-0 ${homeTabShape}`}
-              role="tablist"
-              aria-label="Home page version"
-            >
-              <Link
-                to="/"
-                role="tab"
-                aria-selected={location.pathname === "/"}
-                className={`px-3 py-1.5 text-[13px] transition-colors ${homeTabShape} ${
-                  location.pathname === "/" ? "bg-[#e8e6e0] text-[#0e3233]" : "text-[#615D5D] hover:text-[#103435]"
-                }`}
-                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}
-              >
-                Home
-              </Link>
-              <Link
-                to="/home-v2"
-                role="tab"
-                aria-selected={location.pathname === "/home-v2"}
-                className={`px-3 py-1.5 text-[13px] transition-colors whitespace-nowrap ${homeTabShape} ${
-                  location.pathname === "/home-v2" ? "bg-[#e8e6e0] text-[#0e3233]" : "text-[#615D5D] hover:text-[#103435]"
-                }`}
-                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}
-              >
-                Home page v2
-              </Link>
-            </div>
-          )}
 
           {/* Desktop Nav */}
           <nav
@@ -387,6 +362,7 @@ export function Header() {
                   key={link.label}
                   className="relative h-[72px] flex items-center"
                   onMouseEnter={() => {
+                    setHoveredNav(link.label);
                     if (hasDropdown) handleMouseEnter(link.label);
                   }}
                   onMouseLeave={() => {
@@ -485,30 +461,6 @@ export function Header() {
             transition={{ duration: 0.3 }}
           >
             <nav className="flex flex-col">
-              {showHomeSwitcher && (
-                <div className={`flex border border-[#D9D9D9] p-0.5 mb-4 gap-0.5 ${homeTabShape}`} role="tablist" aria-label="Home page version">
-                  <Link
-                    to="/"
-                    className={`flex-1 text-center py-2.5 text-[14px] transition-colors ${homeTabShape} ${
-                      location.pathname === "/" ? "bg-[#e8e6e0] text-[#0e3233]" : "text-[#615D5D]"
-                    }`}
-                    style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    Home
-                  </Link>
-                  <Link
-                    to="/home-v2"
-                    className={`flex-1 text-center py-2.5 text-[14px] transition-colors ${homeTabShape} ${
-                      location.pathname === "/home-v2" ? "bg-[#e8e6e0] text-[#0e3233]" : "text-[#615D5D]"
-                    }`}
-                    style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    Home page v2
-                  </Link>
-                </div>
-              )}
               {navLinks.map((link) => {
                 const hasDropdown = link.items.length > 0;
                 return (

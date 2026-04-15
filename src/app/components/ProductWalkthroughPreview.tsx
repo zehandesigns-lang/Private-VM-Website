@@ -76,7 +76,7 @@ function VoiceBars() {
 function WayshipPreview() {
   return (
     <div
-      className="relative h-[180px] w-full overflow-hidden bg-gradient-to-br from-[#faf9f6] via-[#f3f1eb] to-[#e8e6df] p-3 flex flex-col gap-2"
+      className="relative h-full min-h-[220px] w-full overflow-hidden bg-gradient-to-br from-[#faf9f6] via-[#f3f1eb] to-[#e8e6df] p-3 flex flex-col gap-2"
       role="img"
       aria-label="Wayship preview: voice assistant, AI chat, and digital logbook"
     >
@@ -179,7 +179,7 @@ function WayshipPreview() {
 function SmartportPreview() {
   return (
     <div
-      className="relative h-[180px] w-full overflow-hidden bg-gradient-to-br from-[#f8f9fa] via-[#eef2f3] to-[#e4e8ea] p-3 flex flex-col gap-2"
+      className="relative h-full min-h-[220px] w-full overflow-hidden bg-gradient-to-br from-[#f8f9fa] via-[#eef2f3] to-[#e4e8ea] p-3 flex flex-col gap-2"
       role="img"
       aria-label="Smartport preview: berth occupancy and port timeline"
     >
@@ -236,7 +236,7 @@ export function ProductWalkthroughPreview({ product }: { product: ProductWalkthr
   return (
     <>
       <style>{previewStyles}</style>
-      <div className="border border-[#D9D9D9] bg-[#eeece5] overflow-hidden rounded-none">
+      <div className="border border-[#D9D9D9] bg-[#eeece5] overflow-hidden rounded-none h-full">
         {product === "wayship" ? <WayshipPreview /> : <SmartportPreview />}
       </div>
     </>

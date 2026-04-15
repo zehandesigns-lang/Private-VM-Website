@@ -85,12 +85,6 @@ export function BookDemoPage() {
         <Wrap className="relative z-10 pt-12 md:pt-16">
           <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-16 xl:gap-20 items-start">
             <div>
-              <p
-                className="inline-flex items-center gap-2 border border-[#fcf7e3]/20 bg-[#fcf7e3]/10 px-3 py-1.5 mb-8 font-mono text-[10px] uppercase tracking-[0.08em] text-[#fcf7e3]/85"
-              >
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#5aa89e] animate-pulse" aria-hidden />
-                Request a demo
-              </p>
               <h1
                 className="text-[#fcf7e3] leading-[1.05] tracking-[-2px] mb-6"
                 style={{ fontSize: "clamp(36px, 4.5vw, 52px)", ...tt, fontWeight: 500 }}
@@ -131,12 +125,6 @@ export function BookDemoPage() {
             </div>
 
             <div className="rounded-xl border border-[#D9D9D9] bg-white overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.14)]">
-              <div className="flex items-center justify-between border-b border-[#D9D9D9] bg-[#f3f2ee] px-5 py-3.5">
-                <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-[#615D5D]">
-                  Request a demo · Volteo Maritime
-                </span>
-              </div>
-
               {!submitted ? (
                 <form onSubmit={onSubmit} className="p-6 md:p-7 space-y-3 bg-white">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

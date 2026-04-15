@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { CTASection } from "./CTASection";
+import { RailDivider } from "./RailDivider";
 import imgEasternPacific from "@/assets/logos/eastern-pacific.png";
 import imgTorm from "@/assets/logos/torm.png";
 import imgCmaCgm from "@/assets/logos/cma-cgm.png";
@@ -361,7 +362,7 @@ function FounderNoteSection() {
   ];
 
   return (
-    <section className="relative bg-[#f3f2ee] pt-14 md:pt-20 pb-20 md:pb-28">
+    <section id="founder-note" className="relative bg-[#f3f2ee] pt-14 md:pt-20 pb-20 md:pb-28">
       <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px]">
         <div className="mx-auto max-w-[640px] text-center">
           <motion.p
@@ -421,7 +422,10 @@ function OurInvestorsSection() {
   ] as const;
 
   return (
-    <section className="relative bg-[#f3f2ee] py-20 md:py-28 border-t border-[#D9D9D9]">
+    <section className="relative bg-[#f3f2ee] py-20 md:py-28">
+      <div className="absolute top-0 left-0 right-0" aria-hidden>
+        <RailDivider />
+      </div>
       <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px]">
         <div className="mx-auto max-w-[640px] text-center mb-12 md:mb-14">
           <motion.p
@@ -472,79 +476,6 @@ function OurInvestorsSection() {
                 {inv.line}
               </p>
             </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Impact numbers                                                    */
-/* ------------------------------------------------------------------ */
-
-function ImpactNumbersSection() {
-  // Each row: one number alternates left / right; the opposite cell is empty
-  const rows = [
-    { value: "350+",   label: "Vessels running Volteo daily",  side: "left"  },
-    { value: "6+ YRS", label: "Continuously deployed at sea",  side: "right" },
-    { value: "99%",    label: "Fleet uptime, year on year",    side: "left"  },
-    { value: "2019",   label: "Year we set sail",              side: "right" },
-  ] as const;
-
-  const numStyle: CSSProperties = {
-    ...ttHovesMedium,
-    fontSize: "clamp(48px, 7vw, 108px)",
-    letterSpacing: "-2px",
-    lineHeight: 1,
-    color: "#0e3233",
-  };
-
-  return (
-    <section className="bg-[#f3f2ee] py-16 md:py-20">
-      <div className="mx-auto max-w-[1512px] px-[12px] md:px-[44px] lg:px-[95px]">
-        <div className="border border-[#D9D9D9]">
-          {rows.map((row, i) => (
-            <div
-              key={i}
-              className={`grid grid-cols-2${i > 0 ? " border-t border-[#D9D9D9]" : ""}`}
-            >
-              {/* Left cell */}
-              <motion.div
-                className="p-10 md:p-14 lg:p-16 border-r border-[#D9D9D9]"
-                initial={{ opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.6, delay: i * 0.13, ease: EASE_STRONG }}
-              >
-                {row.side === "left" && (
-                  <>
-                    <p style={numStyle}>{row.value}</p>
-                    <p className="mt-3 text-[#615D5D]" style={{ ...ttHoves, fontSize: 13 }}>
-                      {row.label}
-                    </p>
-                  </>
-                )}
-              </motion.div>
-
-              {/* Right cell */}
-              <motion.div
-                className="p-10 md:p-14 lg:p-16 flex flex-col items-end text-right"
-                initial={{ opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.6, delay: i * 0.13 + 0.06, ease: EASE_STRONG }}
-              >
-                {row.side === "right" && (
-                  <>
-                    <p style={numStyle}>{row.value}</p>
-                    <p className="mt-3 text-[#615D5D]" style={{ ...ttHoves, fontSize: 13 }}>
-                      {row.label}
-                    </p>
-                  </>
-                )}
-              </motion.div>
-            </div>
           ))}
         </div>
       </div>
@@ -930,126 +861,6 @@ function CTABanner() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  News & insights                                                   */
-/* ------------------------------------------------------------------ */
-
-const NEWS_CARDS = [
-  {
-    accent: "#0e3233",
-    tag: "Insight",
-    tagClass:
-      "border border-[#D9D9D9] bg-transparent text-[#2f615a]",
-    title: "Why structured handovers beat longer checklists",
-    excerpt:
-      "Six years of fleet deployments show where knowledge actually leaks — and why capturing decisions in context beats adding another form to the stack.",
-    meta: "Volteo Maritime · Jan 2026",
-  },
-  {
-    accent: "#2f615a",
-    tag: "Product",
-    tagClass:
-      "border border-[#2f615a]/25 bg-[#2f615a]/10 text-[#0e3233]",
-    title: "From voice notes to audit-ready logs in one flow",
-    excerpt:
-      "How operators are turning bridge and engine-room conversations into searchable, compliant records without slowing the crew down.",
-    meta: "Wayship · Dec 2025",
-  },
-  {
-    accent: "#0e3233",
-    tag: "Industry",
-    tagClass:
-      "border border-[#D9D9D9] bg-transparent text-[#2f615a]",
-    title: "What regulators are asking for in 2026",
-    excerpt:
-      "A practical read on documentation expectations across flag states — and how digital evidence trails are becoming table stakes.",
-    meta: "Compliance brief · Nov 2025",
-  },
-] as const;
-
-function NewsAndInsightsSection() {
-  return (
-    <section
-      id="news-insights"
-      className="relative z-10 bg-[#f3f2ee] py-20 md:py-28"
-    >
-      <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px]">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
-          <div>
-            <span className="block font-mono text-[10px] uppercase tracking-[0.1em] text-[#615D5D] mb-3">
-              Stay informed
-            </span>
-            <h2
-              className="text-[#103435] leading-[1.15]"
-              style={{ fontSize: "clamp(28px, 3.2vw, 40px)", letterSpacing: "-0.02em" }}
-            >
-              <span style={ttHovesMedium}>News and </span>
-              <span style={ltCushion}>insights</span>
-            </h2>
-            <p
-              className="text-[#464646] mt-4 max-w-xl leading-[1.75]"
-              style={{ ...ttHoves, fontSize: 15 }}
-            >
-              Perspectives from our team on maritime operations, product, and the shift to
-              decision-ready information.
-            </p>
-          </div>
-          <a
-            href="#"
-            className="inline-flex items-center gap-1 text-[#2f615a] shrink-0 hover:gap-2 transition-all text-[13px] font-medium"
-            style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}
-          >
-            View all articles →
-          </a>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {NEWS_CARDS.map((card, i) => (
-            <motion.article
-              key={card.title}
-              className="border border-[#D9D9D9] bg-[#f3f2ee] overflow-hidden flex flex-col hover:border-[#0e3233]/25 transition-colors"
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.45, delay: i * 0.08, ease: EASE }}
-            >
-              <div className="h-1" style={{ background: card.accent }} aria-hidden />
-              <div className="p-6 md:p-7 flex flex-col flex-1">
-                <span
-                  className={`inline-block w-fit px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider mb-4 ${card.tagClass}`}
-                >
-                  {card.tag}
-                </span>
-                <h3
-                  className="text-[#103435] text-lg md:text-xl mb-3 leading-snug"
-                  style={ltCushion}
-                >
-                  {card.title}
-                </h3>
-                <p
-                  className="text-[#464646] text-[13.5px] leading-relaxed flex-1 mb-6"
-                  style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}
-                >
-                  {card.excerpt}
-                </p>
-                <div className="flex items-center justify-between border-t border-[#D9D9D9] pt-4 mt-auto">
-                  <span className="font-mono text-[11px] text-[#615D5D]">{card.meta}</span>
-                  <a
-                    href="#"
-                    className="text-[#2f615a] text-sm inline-flex items-center gap-1 hover:gap-2 transition-all"
-                  >
-                    Read →
-                  </a>
-                </div>
-              </div>
-            </motion.article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
 /*  Main export                                                       */
 /* ------------------------------------------------------------------ */
 
@@ -1086,11 +897,11 @@ export function AboutPageV2() {
         <LogoTicker />
         <FounderNoteSection />
         <OurInvestorsSection />
-        <ImpactNumbersSection />
       </main>
 
-      <CTASection variant="team" />
-      <NewsAndInsightsSection />
+      <div id="join-our-team">
+        <CTASection variant="team" />
+      </div>
 
       <Footer />
     </motion.div>

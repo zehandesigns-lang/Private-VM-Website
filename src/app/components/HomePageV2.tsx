@@ -446,7 +446,8 @@ export function HomePageV2() {
         <main className="pt-[72px]">
           {/* Hero */}
           <section id="hero" className="relative overflow-hidden">
-            <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px] py-14 md:py-20 lg:py-24">
+            <SideRailOverlay className="z-[0]" />
+            <div className="relative z-[1] mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px] py-14 md:py-20 lg:py-24">
               <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-start">
                 <div>
                   <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.05} className="mb-6">

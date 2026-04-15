@@ -37,7 +37,7 @@ export function ContentDivider({ className = "" }: { className?: string }) {
  */
 export function SideRailOverlay({ className = "" }: { className?: string }) {
   return (
-    <div className={`absolute inset-0 pointer-events-none z-[60] ${className}`} aria-hidden>
+    <div className={`absolute inset-0 pointer-events-none z-[40] ${className}`} aria-hidden>
       <div className="relative h-full max-w-[1512px] mx-auto">
         <div className="absolute top-0 bottom-0 left-[12px] md:left-[44px] lg:left-[95px] w-px bg-[#D9D9D9]" />
         <div className="absolute top-0 bottom-0 right-[12px] md:right-[44px] lg:right-[95px] w-px bg-[#D9D9D9]" />

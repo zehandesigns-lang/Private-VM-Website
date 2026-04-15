@@ -321,7 +321,7 @@ function PlatformSection() {
   return (
     <Section id="platform" className="relative py-20 md:py-28">
       <Wrap>
-        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-20">
+        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
           <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}>
             <Label>How it works</Label>
             <SectionTitle className="mb-4">
@@ -362,10 +362,10 @@ function PlatformSection() {
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
             custom={0.1}
-            className="rounded-2xl border border-[#D9D9D9] bg-[#eeece5] p-7 md:p-8"
+            className="border border-[#D9D9D9] bg-[#eeece5] p-7 md:p-8 min-h-[520px] md:min-h-[560px] flex flex-col justify-center"
           >
             <p className="mb-6 font-mono text-[9.5px] uppercase tracking-[0.08em] text-[#615D5D]">Unified stakeholder ecosystem</p>
-            <div className="mb-4 rounded-lg border border-[#2f615a]/30 bg-[#2f615a]/10 px-4 py-3 text-center">
+            <div className="mb-4 border border-[#2f615a]/30 bg-[#2f615a]/10 px-4 py-3 text-center">
               <p className="text-[13px] font-medium text-[#0e3233]" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>
                 SMARTPORT
               </p>
@@ -385,7 +385,7 @@ function PlatformSection() {
                 ["Finance", "Tally XML · DCB"],
                 ["Private Ports", "IES · Data reporting"],
               ].map(([nn, ns]) => (
-                <div key={nn} className="rounded-lg border border-[#D9D9D9] bg-[#f3f2ee] px-3 py-2.5">
+                <div key={nn} className="border border-[#D9D9D9] bg-[#f3f2ee] px-3 py-2.5">
                   <p className="text-[12px] font-medium text-[#464646]" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>
                     {nn}
                   </p>
@@ -393,7 +393,7 @@ function PlatformSection() {
                 </div>
               ))}
             </div>
-            <div className="grid grid-cols-3 gap-px overflow-hidden rounded-lg border border-[#D9D9D9] bg-[#D9D9D9]">
+            <div className="grid grid-cols-3 gap-px overflow-hidden border border-[#D9D9D9] bg-[#D9D9D9]">
               {[
                 ["$42.35M", "Revenue"],
                 ["43,839", "Gate passes"],
@@ -437,7 +437,7 @@ function CaseStudySection() {
           </SectionTitle>
         </motion.div>
 
-        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
           <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} custom={0.05}>
             <blockquote
               className="mb-6 border-l-2 border-[#2f615a] pl-5 leading-[1.5] text-[#464646]"
@@ -468,7 +468,14 @@ function CaseStudySection() {
             </div>
           </motion.div>
 
-          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} custom={0.1} className="flex flex-col gap-4">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            custom={0.1}
+            className="flex flex-col gap-4 lg:justify-center"
+          >
             <div className="overflow-hidden border border-[#D9D9D9] bg-[#f3f2ee]">
               <div className="h-0.5 bg-[#2f615a]" />
               <div className="p-7 md:p-8">
@@ -515,7 +522,7 @@ function CaseStudySection() {
                 </p>
               </div>
             </div>
-            <div className="flex flex-col gap-4 rounded-xl border border-[#2f615a]/25 bg-[#2f615a]/10 p-6 md:flex-row md:items-center md:gap-6">
+            <div className="flex flex-col gap-4 border border-[#2f615a]/25 bg-[#2f615a]/10 p-6 md:flex-row md:items-center md:gap-6">
               <div className="shrink-0 leading-none text-[#2f615a]" style={{ ...lc, fontSize: 40 }}>
                 34<em className="not-italic">+</em>
               </div>
