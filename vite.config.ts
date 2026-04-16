@@ -1,7 +1,28 @@
-import { defineConfig, type Plugin } from 'vite'
+import { defineConfig, loadEnv, type Plugin } from 'vite'
 import path from 'path'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
+
+/** Full HTTP POST URL from Power Automate (may include `sig=`). Not exposed to the browser — use without `VITE_` prefix. */
+function powerAutomateProxyTarget(
+  fullInvokeUrl: string | undefined,
+): { target: string; path: string } {
+  const fallbackHost =
+    'https://defaultd0d9a0dbf53a4cf8845539afdeef41.d3.environment.api.powerplatform.com'
+  const fallbackPath =
+    '/powerautomate/automations/direct/workflows/a307a861ae224d9c80ed0d0ce4448324/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=bQkpvb3adcAzKIcI8TB4bOBgHDL8nqf80eXZgJ3um20'
+  const raw = fullInvokeUrl?.trim()
+  if (!raw) return { target: fallbackHost, path: fallbackPath }
+  try {
+    const u = new URL(raw)
+    return {
+      target: `${u.protocol}//${u.host}`,
+      path: `${u.pathname}${u.search}`,
+    }
+  } catch {
+    return { target: fallbackHost, path: fallbackPath }
+  }
+}
 
 function figmaAssetFallback(): Plugin {
   const PLACEHOLDER_PNG_BASE64 =
@@ -28,7 +49,11 @@ function figmaAssetFallback(): Plugin {
   }
 }
 
-export default defineConfig({
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '')
+  const pa = powerAutomateProxyTarget(env.POWER_AUTOMATE_HTTP_URL)
+
+  return {
   plugins: [
     // The React and Tailwind plugins are both required for Make, even if
     // Tailwind is not being actively used – do not remove them
@@ -48,5 +73,16 @@ export default defineConfig({
 
   server: {
     historyApiFallback: true,
+    proxy: {
+      // Dev-only: browser → same-origin → proxy → Power Automate (avoids CORS on localhost).
+      // Set POWER_AUTOMATE_HTTP_URL to the full POST URL from the trigger (after "Anyone" + save, includes sig=).
+      "/api/powerautomate-demo": {
+        target: pa.target,
+        changeOrigin: true,
+        secure: true,
+        rewrite: () => pa.path,
+      },
+    },
   },
+}
 })

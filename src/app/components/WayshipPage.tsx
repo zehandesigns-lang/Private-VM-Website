@@ -151,30 +151,32 @@ function WayshipHero() {
           </motion.div>
         </div>
 
-        {/* Trust strip */}
+        {/* Trust strip — padding below content; single divider above */}
         <motion.div
-          className="mt-16 pt-8"
+          className="mt-16"
           variants={fadeUp} initial="hidden" animate="visible" custom={0.4}
         >
           <Divider />
-          <div className="pt-6 flex flex-wrap items-center gap-x-10 gap-y-4">
-            <p className="text-[#464646] uppercase tracking-widest text-[10px]" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>Trusted by</p>
-            <div className="flex items-center gap-8 flex-wrap">
-              {[
-                { src: epsLogo, alt: "Eastern Pacific Shipping", h: "h-10" },
-                { src: imgTorm, alt: "TORM", h: "h-8" },
-                { src: imgTk, alt: "Teekay", h: "h-8" },
-              ].map((logo) => (
-                <img key={logo.alt} src={logo.src} alt={logo.alt}
-                  className={`${logo.h} w-auto object-contain grayscale opacity-70`} />
-              ))}
+          <div className="py-6 md:py-8 flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
+            <div className="flex flex-wrap items-center gap-x-10 gap-y-4 min-w-0">
+              <p className="text-[#464646] uppercase tracking-widest text-[10px] shrink-0 self-center" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>Trusted by</p>
+              <div className="flex items-center gap-8 flex-wrap">
+                {[
+                  { src: epsLogo, alt: "Eastern Pacific Shipping", h: "h-10" },
+                  { src: imgTorm, alt: "TORM", h: "h-8" },
+                  { src: imgTk, alt: "Teekay", h: "h-8" },
+                ].map((logo) => (
+                  <img key={logo.alt} src={logo.src} alt={logo.alt}
+                    className={`${logo.h} w-auto object-contain grayscale opacity-70`} />
+                ))}
+              </div>
             </div>
-            <div className="hidden md:flex items-center gap-3 ml-auto flex-wrap">
+            <div className="hidden md:flex items-center gap-3 flex-wrap w-full md:w-auto md:justify-end">
               {["ABS Type Approved", "ISO 21745 Certified", "MARPOL Compliant"].map((badge) => (
                 <span key={badge}
                   className="inline-flex items-center gap-1.5 border border-[#D9D9D9] px-3 py-1"
                   style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 11, color: "#464646" }}>
-                  <Check size={10} className="text-emerald-600" />
+                  <Check size={10} className="text-emerald-600 shrink-0" />
                   {badge}
                 </span>
               ))}
@@ -900,7 +902,6 @@ export function WayshipPage() {
         {/* Anchor aliases so the home header links still land somewhere sensible */}
         <div id="advantage" />
         <WayshipHero />
-        <ContentDivider />
         <ProblemSection />
         <ContentDivider />
         <VoiceSection />

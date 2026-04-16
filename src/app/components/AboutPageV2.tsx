@@ -265,35 +265,43 @@ const LOGOS = [
 function LogoTicker() {
   return (
     <div className="bg-[#f3f2ee] py-7">
-      {/* Constrain to the same width as the side rails */}
-      <div className="mx-auto max-w-[1512px] px-[12px] md:px-[44px] lg:px-[95px]">
-        <div className="relative overflow-hidden">
-          {/* Left + right fade — anchored to the rail edges */}
-          <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-[#f3f2ee] to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-[#f3f2ee] to-transparent z-10 pointer-events-none" />
-
-          {/* Two sets of logos for seamless loop */}
-          <div
-            className="flex items-center gap-16 w-max"
-            style={{ animation: "volteo-ticker 36s linear infinite" }}
+      {/* Constrain to the same width as the side rails — label + marquee like Wayship */}
+      <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px]">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-x-6 md:gap-x-10 sm:gap-y-4">
+          <p
+            className="text-[#464646] uppercase tracking-widest text-[10px] shrink-0 sm:self-center"
+            style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}
           >
-            {[...LOGOS, ...LOGOS].map((logo, i) => (
-              <img
-                key={i}
-                src={logo.src}
-                alt={logo.alt}
-                className={`${logo.h} w-auto object-contain grayscale opacity-40 shrink-0 select-none`}
-                draggable={false}
-              />
-            ))}
-          </div>
+            Trusted by
+          </p>
+          <div className="relative overflow-hidden w-full sm:flex-1 sm:min-w-0">
+            {/* Left + right fade — inside the marquee track */}
+            <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-[#f3f2ee] to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-[#f3f2ee] to-transparent z-10 pointer-events-none" />
 
-          <style>{`
+            {/* Two sets of logos for seamless loop */}
+            <div
+              className="flex items-center gap-16 w-max"
+              style={{ animation: "volteo-ticker 36s linear infinite" }}
+            >
+              {[...LOGOS, ...LOGOS].map((logo, i) => (
+                <img
+                  key={i}
+                  src={logo.src}
+                  alt={logo.alt}
+                  className={`${logo.h} w-auto object-contain grayscale opacity-40 shrink-0 select-none`}
+                  draggable={false}
+                />
+              ))}
+            </div>
+
+            <style>{`
             @keyframes volteo-ticker {
               0%   { transform: translateX(0); }
               100% { transform: translateX(-50%); }
             }
           `}</style>
+          </div>
         </div>
       </div>
     </div>
@@ -325,6 +333,31 @@ function HeroSection() {
               <span style={ltCushion}>transform the way they work.</span>
             </LineReveal>
           </h1>
+          <div className="mt-8 md:mt-10 pb-8 md:pb-10">
+            <LineReveal delay={0.32}>
+              <span
+                className="block text-[#0e3233]"
+                style={{ ...ttHovesMedium, fontSize: "clamp(18px, 1.8vw, 24px)" }}
+              >
+                — Surendra Lingareddy
+              </span>
+            </LineReveal>
+            <div className="mt-2">
+              <LineReveal delay={0.4}>
+                <span
+                  className="block text-[#5c5a58]/85"
+                  style={{
+                    fontFamily: "monospace",
+                    fontSize: 11,
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Founder & CEO
+                </span>
+              </LineReveal>
+            </div>
+          </div>
         </div>
 
         {/* Right: portrait — bottom edge aligns with hero bottom (divider sits flush below) */}
@@ -346,7 +379,7 @@ function HeroSection() {
       </div>
 
       <div className="relative z-10">
-        <div className="mx-auto max-w-[1512px] px-[12px] md:px-[44px] lg:px-[95px]">
+        <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px]">
           <div className="h-px w-full bg-[#D9D9D9]" aria-hidden />
         </div>
       </div>
@@ -478,6 +511,87 @@ function OurInvestorsSection() {
             </motion.div>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function WhereWeAreSection() {
+  /** OpenStreetMap embed — Singapore overview (west, south, east, north). */
+  const singaporeMapSrc =
+    "https://www.openstreetmap.org/export/embed.html?bbox=103.58%2C1.15%2C104.12%2C1.50&layer=mapnik";
+
+  return (
+    <section className="relative bg-[#f3f2ee] py-20 md:py-28">
+      <div className="absolute top-0 left-0 right-0" aria-hidden>
+        <RailDivider />
+      </div>
+      <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px]">
+        <div className="mx-auto max-w-[640px] text-center mb-10 md:mb-12">
+          <motion.p
+            className="text-[#5c5a58]/85 mb-4"
+            style={{ fontFamily: "monospace", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase" }}
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.45, ease: EASE }}
+          >
+            Where we are
+          </motion.p>
+          <motion.h3
+            className="text-[#0e3233] leading-[1.2] tracking-[-0.02em] mb-4"
+            style={{ fontSize: "clamp(22px, 2.6vw, 32px)" }}
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.5, delay: 0.05, ease: EASE }}
+          >
+            <span style={ttHovesMedium}>Headquartered in </span>
+            <span style={ltCushion}>Singapore</span>
+          </motion.h3>
+          <motion.p
+            className="text-[#5c5a58] leading-[1.75]"
+            style={{ ...ttHoves, fontSize: "clamp(16px, 1.1vw, 18px)" }}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.45, delay: 0.08, ease: EASE }}
+          >
+            We build Volteo from one of the world&apos;s busiest maritime hubs — close to operators, class, and the rhythms of real fleet life.
+          </motion.p>
+        </div>
+
+        <motion.div
+          className="mx-auto max-w-[960px] border border-[#D9D9D9] bg-white overflow-hidden shadow-[0_8px_40px_rgba(14,50,51,0.06)]"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.55, delay: 0.06, ease: EASE }}
+        >
+          <div className="relative w-full aspect-[4/3] md:aspect-[21/9] min-h-[240px]">
+            <iframe
+              title="Map of Singapore"
+              className="absolute inset-0 h-full w-full border-0"
+              src={singaporeMapSrc}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+          <p
+            className="border-t border-[#D9D9D9]/80 bg-[#faf9f6] px-4 py-2.5 text-center text-[#5c5a58]/75"
+            style={{ ...ttHoves, fontSize: 11 }}
+          >
+            Map data ©{" "}
+            <a
+              href="https://www.openstreetmap.org/copyright"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#0e3233]/80 underline underline-offset-2 hover:text-[#0e3233]"
+            >
+              OpenStreetMap contributors
+            </a>
+          </p>
+        </motion.div>
       </div>
     </section>
   );
@@ -897,6 +1011,7 @@ export function AboutPageV2() {
         <LogoTicker />
         <FounderNoteSection />
         <OurInvestorsSection />
+        <WhereWeAreSection />
       </main>
 
       <div id="join-our-team">

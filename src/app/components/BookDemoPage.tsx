@@ -34,6 +34,35 @@ function Wrap({ children, className = "" }: { children: React.ReactNode; classNa
   return <div className={`mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px] ${className}`}>{children}</div>;
 }
 
+/** Payload keys must match Power Automate "When an HTTP request is received" JSON schema. */
+function buildDemoRequestPayload(input: {
+  firstName: string;
+  lastName: string;
+  workEmail: string;
+  company: string;
+  fleetSize: string;
+  role: string;
+  product: "wayship" | "smartport";
+  comments: string;
+}) {
+  return {
+    "first name": input.firstName,
+    "last name": input.lastName,
+    "work email": input.workEmail,
+    company: input.company,
+    "fleet size": input.fleetSize,
+    role: input.role,
+    product: input.product,
+    comments: input.comments,
+  };
+}
+
+function demoSubmitEndpoint(): string {
+  if (import.meta.env.DEV) return "/api/powerautomate-demo";
+  const url = import.meta.env.VITE_POWER_AUTOMATE_DEMO_URL;
+  return typeof url === "string" ? url.trim() : "";
+}
+
 export function BookDemoPage() {
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
@@ -45,20 +74,79 @@ export function BookDemoPage() {
   const [interest, setInterest] = useState<"wayship" | "smartport">("wayship");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [first, setFirst] = useState("");
+  const [last, setLast] = useState("");
   const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
+  const [fleetSize, setFleetSize] = useState("");
+  const [role, setRole] = useState("");
+  const [comments, setComments] = useState("");
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError(null);
     const f = first.trim();
+    const l = last.trim();
     const em = email.trim();
-    if (!f) return;
+    const co = company.trim();
+    if (!f || !l) return;
     if (!em || !em.includes("@")) return;
+    if (!co) return;
+    if (!fleetSize) return;
+    if (!role) return;
+
+    const endpoint = demoSubmitEndpoint();
+    if (!endpoint) {
+      setSubmitError("Demo form is not configured for this environment. Please try again later.");
+      return;
+    }
+
+    const body = buildDemoRequestPayload({
+      firstName: f,
+      lastName: l,
+      workEmail: em,
+      company: co,
+      fleetSize,
+      role,
+      product: interest,
+      comments: comments.trim(),
+    });
+
     setLoading(true);
-    window.setTimeout(() => {
-      setLoading(false);
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) {
+        let detail = "";
+        try {
+          const text = await res.text();
+          const parsed = JSON.parse(text) as { error?: { code?: string; message?: string } };
+          if (parsed?.error?.code === "DirectApiAuthorizationRequired") {
+            detail =
+              " Microsoft returned an auth error: set the HTTP trigger to “Anyone” (or use a signed URL with sig=), save the flow, then paste the new POST URL into POWER_AUTOMATE_HTTP_URL (.env.development.local) for local dev, or VITE_POWER_AUTOMATE_DEMO_URL for production.";
+          } else if (parsed?.error?.message) {
+            detail = ` (${parsed.error.message})`;
+          }
+        } catch {
+          /* ignore parse errors */
+        }
+        setSubmitError(
+          res.status === 401 || res.status === 403
+            ? `This form could not be accepted by Microsoft (HTTP ${res.status}).${detail || " Check Power Automate trigger access settings."}`
+            : `Something went wrong (HTTP ${res.status}). Please try again or email us directly.${detail}`,
+        );
+        return;
+      }
       setSubmitted(true);
-    }, 750);
+    } catch {
+      setSubmitError("Network error. Check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -127,6 +215,27 @@ export function BookDemoPage() {
             <div className="rounded-xl border border-[#D9D9D9] bg-white overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.14)]">
               {!submitted ? (
                 <form onSubmit={onSubmit} className="p-6 md:p-7 space-y-3 bg-white">
+                  {import.meta.env.DEV ? (
+                    <div className="flex justify-end -mt-1 mb-1">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setFirst("Zehan");
+                          setLast("Modan");
+                          setEmail("zehandesigns@gmail.com");
+                          setCompany("Bowsight");
+                          setFleetSize("0 – 10 vessels");
+                          setRole("Fleet Manager");
+                          setInterest("wayship");
+                          setComments("I want to see if this works.");
+                          setSubmitError(null);
+                        }}
+                        className="font-mono text-[10px] uppercase tracking-[0.06em] text-[#615D5D] hover:text-[#0e3233] underline underline-offset-2 decoration-[#D9D9D9] hover:decoration-[#0e3233]/40"
+                      >
+                        Fill test data
+                      </button>
+                    </div>
+                  ) : null}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <label className="flex flex-col gap-1.5">
                       <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-[#615D5D]">First name</span>
@@ -142,6 +251,8 @@ export function BookDemoPage() {
                     <label className="flex flex-col gap-1.5">
                       <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-[#615D5D]">Last name</span>
                       <Input
+                        value={last}
+                        onChange={(e) => setLast(e.target.value)}
                         className="h-9 rounded-md border-[rgba(0,0,0,0.1)] bg-[#f3f3f5] text-[#262627] placeholder:text-[#717182] focus-visible:border-[#0e3233]/35 focus-visible:ring-[#0e3233]/12 md:text-sm"
                         style={{ ...tt, fontWeight: 400 }}
                         placeholder="Last name"
@@ -165,6 +276,8 @@ export function BookDemoPage() {
                     <label className="flex flex-col gap-1.5">
                       <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-[#615D5D]">Company</span>
                       <Input
+                        value={company}
+                        onChange={(e) => setCompany(e.target.value)}
                         className="h-9 rounded-md border-[rgba(0,0,0,0.1)] bg-[#f3f3f5] text-[#262627] placeholder:text-[#717182] focus-visible:border-[#0e3233]/35 focus-visible:ring-[#0e3233]/12 md:text-sm"
                         style={{ ...tt, fontWeight: 400 }}
                         placeholder="Company"
@@ -174,45 +287,47 @@ export function BookDemoPage() {
                     <label className="flex flex-col gap-1.5">
                       <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-[#615D5D]">Fleet size</span>
                       <select
+                        value={fleetSize}
+                        onChange={(e) => setFleetSize(e.target.value)}
                         className={selectLightClassName}
                         style={{
                           ...tt,
                           fontWeight: 400,
                           backgroundImage: `url("data:image/svg+xml,%3Csvg width='11' height='7' viewBox='0 0 11 7' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='rgba(38,38,38,0.45)' stroke-width='1.3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")`,
                         }}
-                        defaultValue=""
                       >
                         <option value="" disabled>
                           Select range
                         </option>
-                        <option>0 – 10 vessels</option>
-                        <option>11 – 50 vessels</option>
-                        <option>51 – 100 vessels</option>
-                        <option>100+ vessels</option>
+                        <option value="0 – 10 vessels">0 – 10 vessels</option>
+                        <option value="11 – 50 vessels">11 – 50 vessels</option>
+                        <option value="51 – 100 vessels">51 – 100 vessels</option>
+                        <option value="100+ vessels">100+ vessels</option>
                       </select>
                     </label>
                   </div>
                   <label className="flex flex-col gap-1.5">
                     <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-[#615D5D]">Your role</span>
                     <select
+                      value={role}
+                      onChange={(e) => setRole(e.target.value)}
                       className={selectLightClassName}
                       style={{
                         ...tt,
                         fontWeight: 400,
                         backgroundImage: `url("data:image/svg+xml,%3Csvg width='11' height='7' viewBox='0 0 11 7' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='rgba(38,38,38,0.45)' stroke-width='1.3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")`,
                       }}
-                      defaultValue=""
                     >
                       <option value="" disabled>
                         Select your role
                       </option>
-                      <option>Fleet Manager</option>
-                      <option>Technical Superintendent</option>
-                      <option>Operations Manager</option>
-                      <option>Chartering Manager</option>
-                      <option>Head of Technology / CTO</option>
-                      <option>CEO / Owner / Principal</option>
-                      <option>Other</option>
+                      <option value="Fleet Manager">Fleet Manager</option>
+                      <option value="Technical Superintendent">Technical Superintendent</option>
+                      <option value="Operations Manager">Operations Manager</option>
+                      <option value="Chartering Manager">Chartering Manager</option>
+                      <option value="Head of Technology / CTO">Head of Technology / CTO</option>
+                      <option value="CEO / Owner / Principal">CEO / Owner / Principal</option>
+                      <option value="Other">Other</option>
                     </select>
                   </label>
                   <div>
@@ -247,11 +362,18 @@ export function BookDemoPage() {
                     </span>
                     <Textarea
                       rows={3}
+                      value={comments}
+                      onChange={(e) => setComments(e.target.value)}
                       className="min-h-[72px] rounded-md border-[rgba(0,0,0,0.1)] bg-[#f3f3f5] text-[#262627] placeholder:text-[#717182] focus-visible:border-[#0e3233]/35 focus-visible:ring-[#0e3233]/12 md:text-sm leading-relaxed"
                       style={{ ...tt, fontWeight: 400 }}
                       placeholder="e.g. crew handovers, port revenue capture, compliance workflows…"
                     />
                   </label>
+                  {submitError ? (
+                    <p className="font-mono text-[11px] text-red-700/90 bg-red-50 border border-red-200/80 rounded-md px-3 py-2" role="alert">
+                      {submitError}
+                    </p>
+                  ) : null}
                   <Button
                     type="submit"
                     disabled={loading}

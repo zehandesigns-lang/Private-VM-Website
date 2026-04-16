@@ -6,6 +6,7 @@ import { AboutPageV2 } from "./components/AboutPageV2";
 import { BookDemoPage } from "./components/BookDemoPage";
 import { SmartportPage } from "./components/SmartportPage";
 import { ResourcesPage } from "./components/ResourcesPage";
+import { PledgeWallPage } from "./components/PledgeWallPage";
 
 export default function App() {
   const routeElement = useRoutes(
@@ -18,6 +19,7 @@ export default function App() {
       { path: "/about", element: <AboutPageV2 /> },
       { path: "/book-demo", element: <BookDemoPage /> },
       { path: "/resources", element: <ResourcesPage /> },
+      { path: "/pledge", element: <PledgeWallPage /> },
     ],
   );
 
