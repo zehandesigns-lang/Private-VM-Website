@@ -8,7 +8,7 @@ import { RailDivider } from "./RailDivider";
 
 const EASE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
-const PAGE_BG = "#F9F7F2";
+const PAGE_BG = "#f3f2ee";
 
 const lc = { fontFamily: "'LT Cushion', serif", fontWeight: 300 as const };
 const tt = { fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400 as const };
