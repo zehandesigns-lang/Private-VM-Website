@@ -57,11 +57,7 @@ function buildDemoRequestPayload(input: {
   };
 }
 
-function demoSubmitEndpoint(): string {
-  if (import.meta.env.DEV) return "/api/powerautomate-demo";
-  const url = import.meta.env.VITE_POWER_AUTOMATE_DEMO_URL;
-  return typeof url === "string" ? url.trim() : "";
-}
+const DEMO_SUBMIT_ENDPOINT = "/api/powerautomate-demo";
 
 export function BookDemoPage() {
   useEffect(() => {
@@ -75,6 +71,7 @@ export function BookDemoPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [showFillTestData, setShowFillTestData] = useState(import.meta.env.DEV);
   const [first, setFirst] = useState("");
   const [last, setLast] = useState("");
   const [email, setEmail] = useState("");
@@ -82,6 +79,12 @@ export function BookDemoPage() {
   const [fleetSize, setFleetSize] = useState("");
   const [role, setRole] = useState("");
   const [comments, setComments] = useState("");
+
+  useEffect(() => {
+    if (import.meta.env.DEV) return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("debug") === "1" || params.get("fillTestData") === "1") setShowFillTestData(true);
+  }, []);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -96,12 +99,6 @@ export function BookDemoPage() {
     if (!fleetSize) return;
     if (!role) return;
 
-    const endpoint = demoSubmitEndpoint();
-    if (!endpoint) {
-      setSubmitError("Demo form is not configured for this environment. Please try again later.");
-      return;
-    }
-
     const body = buildDemoRequestPayload({
       firstName: f,
       lastName: l,
@@ -115,7 +112,7 @@ export function BookDemoPage() {
 
     setLoading(true);
     try {
-      const res = await fetch(endpoint, {
+      const res = await fetch(DEMO_SUBMIT_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -127,7 +124,7 @@ export function BookDemoPage() {
           const parsed = JSON.parse(text) as { error?: { code?: string; message?: string } };
           if (parsed?.error?.code === "DirectApiAuthorizationRequired") {
             detail =
-              " Microsoft returned an auth error: set the HTTP trigger to “Anyone” (or use a signed URL with sig=), save the flow, then paste the new POST URL into POWER_AUTOMATE_HTTP_URL (.env.development.local) for local dev, or VITE_POWER_AUTOMATE_DEMO_URL for production.";
+              " Microsoft returned an auth error: set the HTTP trigger to “Anyone” (or use a signed URL with sig=), save the flow, then paste the new POST URL into POWER_AUTOMATE_HTTP_URL (local + Vercel environment variables).";
           } else if (parsed?.error?.message) {
             detail = ` (${parsed.error.message})`;
           }
@@ -215,7 +212,7 @@ export function BookDemoPage() {
             <div className="rounded-xl border border-[#D9D9D9] bg-white overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.14)]">
               {!submitted ? (
                 <form onSubmit={onSubmit} className="p-6 md:p-7 space-y-3 bg-white">
-                  {import.meta.env.DEV ? (
+                  {showFillTestData ? (
                     <div className="flex justify-end -mt-1 mb-1">
                       <button
                         type="button"
