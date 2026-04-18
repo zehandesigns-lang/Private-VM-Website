@@ -1,7 +1,6 @@
 import { motion } from "motion/react";
 import { useEffect, useRef } from "react";
 import { Link } from "react-router";
-import { Linkedin } from "lucide-react";
 import { VolteoLogo } from "./VolteoLogo";
 import { RailDivider } from "./RailDivider";
 
@@ -86,13 +85,12 @@ export function Footer() {
                         ) : (
                           <a
                             href={href}
-                            className={`${className} inline-flex items-center gap-2`}
+                            className={className}
                             style={style}
                             target="_blank"
                             rel="noreferrer"
                           >
-                            {label === "LinkedIn" ? <Linkedin size={16} aria-hidden /> : null}
-                            <span>{label}</span>
+                            {label}
                           </a>
                         )}
                       </li>

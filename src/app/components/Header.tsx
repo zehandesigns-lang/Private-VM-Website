@@ -261,6 +261,36 @@ export function Header() {
   const closeTimer = useRef<number | null>(null);
   const lastY = useRef(0);
 
+  // Close mobile menu on route change.
+  useEffect(() => {
+    setMobileOpen(false);
+    setMobileExpanded(null);
+  }, [location.pathname]);
+
+  // Body scroll lock while mobile menu is open.
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
+  // Close mobile menu on Escape key.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMobileOpen(false);
+        setMobileExpanded(null);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   useEffect(() => {
     lastY.current = window.scrollY;
 
@@ -439,10 +469,36 @@ export function Header() {
 
           {/* Mobile Hamburger */}
           <button
-            className="md:hidden text-[#262627] p-2"
+            className="md:hidden text-[#262627] p-2 -mr-2 rounded-sm active:scale-95 transition-transform duration-100 ease-out"
             onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
           >
-            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+            <AnimatePresence mode="wait" initial={false}>
+              {mobileOpen ? (
+                <motion.span
+                  key="close"
+                  initial={{ opacity: 0, rotate: -45, scale: 0.8 }}
+                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                  exit={{ opacity: 0, rotate: 45, scale: 0.8 }}
+                  transition={{ duration: 0.15, ease: [0.23, 1, 0.32, 1] }}
+                  className="flex"
+                >
+                  <X size={22} />
+                </motion.span>
+              ) : (
+                <motion.span
+                  key="open"
+                  initial={{ opacity: 0, rotate: 45, scale: 0.8 }}
+                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                  exit={{ opacity: 0, rotate: -45, scale: 0.8 }}
+                  transition={{ duration: 0.15, ease: [0.23, 1, 0.32, 1] }}
+                  className="flex"
+                >
+                  <Menu size={22} />
+                </motion.span>
+              )}
+            </AnimatePresence>
           </button>
         </div>
       </div>
@@ -450,98 +506,221 @@ export function Header() {
       {/* Constrained bottom divider */}
       <RailDivider />
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu — clip-path reveal (GPU-accelerated, no height animation) */}
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
-            className="md:hidden bg-[#f3f2ee] px-8 py-4 border-t border-[#D9D9D9]"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <nav className="flex flex-col">
-              {navLinks.map((link) => {
-                const hasDropdown = link.items.length > 0;
-                return (
-                  <div key={link.label} className="border-b border-[#E4E2DC] last:border-none">
-                    {hasDropdown ? (
-                      <>
-                        <button
-                          className="flex items-center justify-between w-full py-3 text-[#262627] bg-transparent border-none cursor-pointer"
-                          style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 16, fontWeight: 500 }}
-                          onClick={() =>
-                            setMobileExpanded(mobileExpanded === link.label ? null : link.label)
-                          }
-                        >
-                          {link.label}
-                          <motion.span
-                            initial={{ rotate: 0 }}
-                            animate={{ rotate: mobileExpanded === link.label ? 180 : 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="flex"
-                          >
-                            <ChevronDown size={16} className="opacity-60" />
-                          </motion.span>
-                        </button>
-                        <AnimatePresence>
-                          {mobileExpanded === link.label && (
-                            <motion.div
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: "auto" }}
-                              exit={{ opacity: 0, height: 0 }}
-                              transition={{ duration: 0.2 }}
-                              className="pl-3 pb-3 flex flex-col gap-2"
-                            >
-                              {link.items.map((item) => (
-                                <a
-                                  key={item.label}
-                                  href={item.href}
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    handleHrefNavigation(item.href);
-                                    setMobileOpen(false);
-                                  }}
-                                  className="text-[#464646] hover:text-[#0e3233] py-1"
-                                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 15, fontWeight: 400 }}
-                                >
-                                  {item.label}
-                                </a>
-                              ))}
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </>
-                    ) : (
-                      <Link
-                        to={link.href}
-                        className="block w-full py-3 text-[#262627] hover:text-[#0e3233] transition-colors duration-150"
-                        style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 16, fontWeight: 500 }}
-                        onClick={() => setMobileOpen(false)}
-                      >
-                        {link.label}
-                      </Link>
-                    )}
-                  </div>
-                );
-              })}
+          <>
+            {/* Backdrop — tapping it closes the menu */}
+            <motion.div
+              className="md:hidden fixed left-0 right-0 bottom-0 bg-black/25"
+              style={{ top: HEADER_HEIGHT }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setMobileOpen(false)}
+              aria-hidden
+            />
 
-              <Link
-                to="/book-demo"
-                onClick={(e) => {
-                  if (location.pathname === "/book-demo") {
-                    e.preventDefault();
-                    smoothScrollTo("#form");
-                  }
-                  setMobileOpen(false);
-                }}
-                className="bg-[#0e3233] hover:bg-[#416668] text-white px-5 py-3 text-center mt-4 transition-none block"
-                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}
-              >
-                Book a demo
-              </Link>
-            </nav>
-          </motion.div>
+            {/* Menu panel */}
+            <motion.div
+              className="md:hidden border-t border-[#D9D9D9]"
+              initial={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
+              animate={{ opacity: 1, clipPath: "inset(0 0 0% 0)" }}
+              exit={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
+              transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="bg-[#f3f2ee] px-8 md:px-16 lg:px-[115px] pt-1 pb-6 mx-auto max-w-[1512px]">
+                <nav className="flex flex-col">
+                  {navLinks.map((link, i) => {
+                    const hasDropdown = link.items.length > 0;
+                    return (
+                      <motion.div
+                        key={link.label}
+                        className="border-b border-[#E4E2DC] last:border-none"
+                        initial={{ opacity: 0, y: -6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          delay: 0.06 + i * 0.045,
+                          duration: 0.22,
+                          ease: [0.23, 1, 0.32, 1],
+                        }}
+                      >
+                        {hasDropdown ? (
+                          <>
+                            <button
+                              className="flex items-center justify-between w-full py-4 text-[#262627] bg-transparent border-none cursor-pointer active:opacity-60 transition-opacity duration-100"
+                              style={{
+                                fontFamily: "'TT Hoves Pro', sans-serif",
+                                fontSize: 16,
+                                fontWeight: 500,
+                                minHeight: 48,
+                              }}
+                              onClick={() =>
+                                setMobileExpanded(
+                                  mobileExpanded === link.label ? null : link.label,
+                                )
+                              }
+                            >
+                              {link.label}
+                              <motion.span
+                                animate={{ rotate: mobileExpanded === link.label ? 180 : 0 }}
+                                transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
+                                className="flex shrink-0 opacity-60"
+                              >
+                                <ChevronDown size={16} />
+                              </motion.span>
+                            </button>
+                            <AnimatePresence>
+                              {mobileExpanded === link.label && (
+                                <motion.div
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: "auto" }}
+                                  exit={{ opacity: 0, height: 0 }}
+                                  transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}
+                                  style={{ overflow: "hidden" }}
+                                >
+                                  {link.label === "Products" ? (
+                                    <div className="pb-4 pt-1 flex flex-col gap-3">
+                                      {(Object.entries(products) as [ProductKey, (typeof products)[ProductKey]][]).map(
+                                        ([key, p], idx) => (
+                                          <motion.div
+                                            key={key}
+                                            initial={{ opacity: 0, y: 8 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{
+                                              delay: 0.05 + idx * 0.06,
+                                              duration: 0.22,
+                                              ease: [0.23, 1, 0.32, 1],
+                                            }}
+                                          >
+                                            <Link
+                                              to={p.href!}
+                                              onClick={() => setMobileOpen(false)}
+                                              className="block border border-[#D9D9D9] overflow-hidden active:opacity-70 transition-opacity duration-100"
+                                            >
+                                              {/* Animated preview */}
+                                              <div className="h-[156px] overflow-hidden">
+                                                <ProductWalkthroughPreview product={key} />
+                                              </div>
+                                              {/* Card footer */}
+                                              <div className="flex items-start justify-between gap-2 px-3 py-2.5 border-t border-[#D9D9D9] bg-[#f3f2ee]">
+                                                <div className="min-w-0">
+                                                  <p
+                                                    className="text-[#0e3233] leading-snug"
+                                                    style={{
+                                                      fontFamily: "'TT Hoves Pro', sans-serif",
+                                                      fontWeight: 500,
+                                                      fontSize: 14,
+                                                    }}
+                                                  >
+                                                    {p.label}
+                                                  </p>
+                                                  <p
+                                                    className="text-[#464646] mt-0.5 leading-snug line-clamp-2"
+                                                    style={{
+                                                      fontFamily: "'TT Hoves Pro', sans-serif",
+                                                      fontWeight: 400,
+                                                      fontSize: 12,
+                                                    }}
+                                                  >
+                                                    {p.description}
+                                                  </p>
+                                                </div>
+                                                <ArrowUpRight
+                                                  size={15}
+                                                  className="text-[#0e3233] shrink-0 mt-0.5"
+                                                />
+                                              </div>
+                                            </Link>
+                                          </motion.div>
+                                        ),
+                                      )}
+                                    </div>
+                                  ) : (
+                                    <div className="pb-3 flex flex-col gap-0">
+                                      {link.items.map((item) => (
+                                        <a
+                                          key={item.label}
+                                          href={item.href}
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            handleHrefNavigation(item.href);
+                                            setMobileOpen(false);
+                                          }}
+                                          className="text-[#464646] hover:text-[#0e3233] active:opacity-60 transition-colors duration-150 py-3 block pl-3"
+                                          style={{
+                                            fontFamily: "'TT Hoves Pro', sans-serif",
+                                            fontSize: 15,
+                                            fontWeight: 400,
+                                            minHeight: 44,
+                                          }}
+                                        >
+                                          {item.label}
+                                        </a>
+                                      ))}
+                                    </div>
+                                  )}
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </>
+                        ) : (
+                          <Link
+                            to={link.href}
+                            className="flex items-center w-full py-4 text-[#262627] hover:text-[#0e3233] active:opacity-60 transition-colors duration-150"
+                            style={{
+                              fontFamily: "'TT Hoves Pro', sans-serif",
+                              fontSize: 16,
+                              fontWeight: 500,
+                              minHeight: 48,
+                            }}
+                            onClick={() => setMobileOpen(false)}
+                          >
+                            {link.label}
+                          </Link>
+                        )}
+                      </motion.div>
+                    );
+                  })}
+
+                  <motion.div
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      delay: 0.06 + navLinks.length * 0.045,
+                      duration: 0.22,
+                      ease: [0.23, 1, 0.32, 1],
+                    }}
+                    className="pt-5"
+                  >
+                    <Link
+                      to="/book-demo"
+                      onClick={(e) => {
+                        if (location.pathname === "/book-demo") {
+                          e.preventDefault();
+                          smoothScrollTo("#form");
+                        }
+                        setMobileOpen(false);
+                      }}
+                      className="bg-[#0e3233] text-white px-5 py-3.5 text-center block w-full active:bg-[#0c2829] transition-colors duration-150"
+                      style={{
+                        fontFamily: "'TT Hoves Pro', sans-serif",
+                        fontWeight: 500,
+                        fontSize: 16,
+                        minHeight: 52,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      Book a demo
+                    </Link>
+                  </motion.div>
+                </nav>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </motion.header>

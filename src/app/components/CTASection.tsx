@@ -89,11 +89,11 @@ export function CTASection({ variant = "default" }: CTASectionProps) {
               </>
             )}
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 mb-6">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 mb-6">
             {isTeam ? (
               <a
                 href="mailto:careers@volteo.com?subject=Careers%20inquiry"
-                className="bg-[#fcf7e3] text-[#0e3233] px-7 py-3 hover:bg-white transition-colors duration-150 inline-flex items-center gap-2 shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
+                className="bg-[#fcf7e3] text-[#0e3233] px-7 py-3 hover:bg-white transition-colors duration-150 inline-flex items-center justify-center gap-2 shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
                 style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
               >
                 Join our team
@@ -103,7 +103,7 @@ export function CTASection({ variant = "default" }: CTASectionProps) {
               <>
                 <Link
                   to="/book-demo"
-                  className="bg-[#fcf7e3] text-[#0e3233] px-7 py-3 hover:bg-white transition-colors duration-150 inline-flex items-center gap-2 shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
+                  className="bg-[#fcf7e3] text-[#0e3233] px-7 py-3 hover:bg-white transition-colors duration-150 inline-flex items-center justify-center gap-2 shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
                   style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
                 >
                   Request a demo
@@ -111,7 +111,7 @@ export function CTASection({ variant = "default" }: CTASectionProps) {
                 </Link>
                 <a
                   href="#"
-                  className="text-[#fcf7e3]/90 border border-[#fcf7e3]/25 px-7 py-3 hover:border-[#fcf7e3]/45 hover:bg-[#fcf7e3]/5 transition-colors duration-150"
+                  className="text-[#fcf7e3]/90 border border-[#fcf7e3]/25 px-7 py-3 hover:border-[#fcf7e3]/45 hover:bg-[#fcf7e3]/5 transition-colors duration-150 inline-flex items-center justify-center"
                   style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}
                 >
                   Talk to a specialist

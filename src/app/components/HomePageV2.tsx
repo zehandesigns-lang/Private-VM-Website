@@ -142,11 +142,12 @@ function AdvantageTabs() {
 
   return (
     <div className="w-full">
-      <div className="grid grid-cols-1 md:grid-cols-2 border border-[#D9D9D9] overflow-hidden">
+      {/* Tab bar — sticky at top of viewport */}
+      <div className="sticky top-0 z-40 grid grid-cols-2 border border-[#D9D9D9] overflow-hidden">
         <button
           type="button"
           onClick={() => setTab("wayship")}
-          className={`flex items-center justify-between gap-4 border-b border-[#D9D9D9] md:border-b-0 md:border-r px-6 py-5 md:py-6 text-left transition-colors ${
+          className={`relative flex items-center justify-between gap-4 border-r border-[#D9D9D9] px-5 py-5 text-left transition-colors ${
             tab === "wayship" ? "bg-[#e8e6e0]" : "bg-[#f3f2ee] hover:bg-[#ebe9e3]"
           }`}
         >
@@ -155,21 +156,22 @@ function AdvantageTabs() {
               <span className="text-[#0e3233] text-xs font-semibold">W</span>
             </div>
             <div className="min-w-0">
-              <p className="text-[#103435] flex flex-wrap items-center gap-2" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 16 }}>
+              <p className="text-[#103435] flex flex-wrap items-center gap-2" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: tab === "wayship" ? 500 : 400, fontSize: 15 }}>
                 Wayship
                 <span className="inline-block bg-[#2f615a]/15 px-1.5 py-0.5 text-[9px] font-mono uppercase tracking-wider text-[#0e3233]">
                   NEW v6
                 </span>
               </p>
-              <p className="text-[#615D5D] text-[11px] font-mono mt-0.5">Crew operations & knowledge platform</p>
+              <p className="text-[#615D5D] text-[11px] font-mono mt-0.5 hidden sm:block">Crew operations & knowledge platform</p>
             </div>
           </div>
           <span className="text-[#615D5D] shrink-0">→</span>
+          {tab === "wayship" && <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#103435]" />}
         </button>
         <button
           type="button"
           onClick={() => setTab("smartport")}
-          className={`flex items-center justify-between gap-4 px-6 py-5 md:py-6 text-left transition-colors ${
+          className={`relative flex items-center justify-between gap-4 px-5 py-5 text-left transition-colors ${
             tab === "smartport" ? "bg-[#e8e6e0]" : "bg-[#f3f2ee] hover:bg-[#ebe9e3]"
           }`}
         >
@@ -178,17 +180,19 @@ function AdvantageTabs() {
               <span className="text-[#0e3233] text-xs font-semibold">S</span>
             </div>
             <div className="min-w-0">
-              <p className="text-[#103435]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 16 }}>
+              <p className="text-[#103435]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: tab === "smartport" ? 500 : 400, fontSize: 15 }}>
                 Smartport
               </p>
-              <p className="text-[#615D5D] text-[11px] font-mono mt-0.5">Port productivity & revenue platform</p>
+              <p className="text-[#615D5D] text-[11px] font-mono mt-0.5 hidden sm:block">Port productivity & revenue platform</p>
             </div>
           </div>
           <span className="text-[#615D5D] shrink-0">→</span>
+          {tab === "smartport" && <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#103435]" />}
         </button>
       </div>
 
-      {tab === "wayship" && (
+      {/* Wayship content */}
+      <div className={tab !== "wayship" ? "hidden" : ""}>
         <div className="grid grid-cols-1 lg:grid-cols-2 border border-t-0 border-[#D9D9D9] overflow-hidden">
           <div className="border-b lg:border-b-0 lg:border-r border-[#D9D9D9] p-8 md:p-10 lg:p-12">
             <p className="mb-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.08em] text-[#2f615a]">
@@ -267,9 +271,10 @@ function AdvantageTabs() {
             </div>
           </div>
         </div>
-      )}
+      </div>
 
-      {tab === "smartport" && (
+      {/* Smartport content */}
+      <div className={tab !== "smartport" ? "hidden" : ""}>
         <div className="grid grid-cols-1 lg:grid-cols-2 border border-t-0 border-[#D9D9D9] overflow-hidden">
           <div className="border-b lg:border-b-0 lg:border-r border-[#D9D9D9] p-8 md:p-10 lg:p-12">
             <p className="mb-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.08em] text-[#416668]">
@@ -352,7 +357,7 @@ function AdvantageTabs() {
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
@@ -665,75 +670,6 @@ export function HomePageV2() {
             </div>
           </section>
 
-          <ContentDivider />
-
-          {/* Resources */}
-          <section id="insights" className="relative py-20 md:py-28">
-            <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px]">
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
-                <div>
-                  <span className="block font-mono text-[10px] uppercase tracking-[0.1em] text-[#615D5D] mb-3">Resources</span>
-                  <h2
-                    className="text-[#103435]"
-                    style={{ fontSize: "clamp(28px, 3.2vw, 40px)", ...mixedHeadlineTracking }}
-                  >
-                    <span style={ttHovesMedium}>From the </span>
-                    <span style={lc}>Volteo desk.</span>
-                  </h2>
-                </div>
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-1 text-[#2f615a] shrink-0 hover:gap-2 transition-all text-[13px] font-medium"
-                  style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}
-                >
-                  See all resources →
-                </a>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <article className="border border-[#D9D9D9] bg-[#f3f2ee] overflow-hidden flex flex-col hover:border-[#0e3233]/25 transition-colors">
-                  <div className="h-1 bg-[#0e3233]" />
-                  <div className="p-7 flex flex-col flex-1">
-                    <span className="inline-block w-fit border border-[#D9D9D9] px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-[#2f615a] mb-4">
-                      Insight
-                    </span>
-                    <h3 className="text-[#103435] text-xl mb-3 leading-snug" style={lc}>
-                      Why crew knowledge walks off the gangway — and what to do about it
-                    </h3>
-                    <p className="text-[#464646] text-[13.5px] leading-relaxed flex-1 mb-6" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>
-                      Every crew rotation resets vessel-specific memory to zero. Here&apos;s how structured knowledge capture changes that equation — and what six years of deployment data shows about where the knowledge gaps actually are.
-                    </p>
-                    <div className="flex items-center justify-between border-t border-[#D9D9D9] pt-4">
-                      <span className="font-mono text-[11px] text-[#615D5D]">Wayship Research · Oct 2025</span>
-                      <a href="#" className="text-[#2f615a] text-sm inline-flex items-center gap-1 hover:gap-2 transition-all">
-                        Read →
-                      </a>
-                    </div>
-                  </div>
-                </article>
-                <article className="border border-[#D9D9D9] bg-[#f3f2ee] overflow-hidden flex flex-col hover:border-[#2f615a]/35 transition-colors">
-                  <div className="h-1 bg-[#2f615a]" />
-                  <div className="p-7 flex flex-col flex-1">
-                    <span className="inline-block w-fit border border-[#2f615a]/25 bg-[#2f615a]/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-[#0e3233] mb-4">
-                      Customer Story
-                    </span>
-                    <h3 className="text-[#103435] text-xl mb-3 leading-snug" style={lc}>
-                      How Teekay reduced vessel handover from three days to half a day
-                    </h3>
-                    <p className="text-[#464646] text-[13.5px] leading-relaxed flex-1 mb-6" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>
-                      When experienced crew rotate off, they take hard-won vessel knowledge with them. Teekay&apos;s team explains how Wayship changed that — and what it means for the safety culture on board.
-                    </p>
-                    <div className="flex items-center justify-between border-t border-[#D9D9D9] pt-4">
-                      <span className="font-mono text-[11px] text-[#615D5D]">Teekay Corporation · Sep 2025</span>
-                      <a href="#" className="text-[#2f615a] text-sm inline-flex items-center gap-1 hover:gap-2 transition-all">
-                        Read →
-                      </a>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
-          </section>
           </div>
         </main>
       </div>

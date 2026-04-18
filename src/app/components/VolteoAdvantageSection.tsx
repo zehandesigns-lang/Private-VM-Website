@@ -760,6 +760,117 @@ function useIsLargeViewport() {
   return isLg;
 }
 
+// ── Mobile product block ────────────────────────────────────────────────
+function MobileProductBlock({ tab }: { tab: typeof tabs[number] }) {
+  const [activeFeature, setActiveFeature] = useState(0);
+  const FeatureUI = FEATURE_UIS[tab.key]?.[activeFeature];
+
+  return (
+    <div>
+      {/* Heading row */}
+      <div className="flex flex-col border-b border-[#D9D9D9]">
+        <div className="px-6 pt-7 pb-6 border-b border-[#D9D9D9]">
+          <h3
+            className="text-black mb-4"
+            style={{
+              fontFamily: "'TT Hoves Pro', sans-serif",
+              fontWeight: 400,
+              fontSize: "clamp(22px, 2vw, 34px)",
+            }}
+          >
+            {tab.title}
+          </h3>
+          <VolteoTextLink href={tab.href ?? "#"}>{tab.subtitle}</VolteoTextLink>
+        </div>
+        <div className="px-6 pt-6 pb-6">
+          <p
+            className="text-[#464646] leading-[1.6]"
+            style={{
+              fontFamily: "'TT Hoves Pro', sans-serif",
+              fontWeight: 400,
+              fontSize: 14,
+            }}
+          >
+            {tab.description}
+          </p>
+        </div>
+      </div>
+
+      {/* Preview area */}
+      <div
+        className="relative w-full overflow-hidden min-h-[300px] sm:min-h-[360px] border-b border-[#D9D9D9]"
+        style={{ background: "#eeece5" }}
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`m-${tab.key}-${activeFeature}`}
+            className="absolute inset-0"
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.01 }}
+            transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
+          >
+            {FeatureUI && <FeatureUI />}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Feature tabs */}
+      <div className="bg-[#f3f2ee]">
+        <div
+          className="flex gap-2 overflow-x-auto overscroll-x-contain px-4 py-3 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          role="tablist"
+          aria-label={`${tab.label} features`}
+        >
+          {tab.features.map((feature, i) => {
+            const selected = activeFeature === i;
+            return (
+              <button
+                key={i}
+                type="button"
+                role="tab"
+                aria-selected={selected}
+                id={`advantage-feature-tab-${tab.key}-${i}`}
+                onClick={() => setActiveFeature(i)}
+                className={`shrink-0 snap-start max-w-[min(280px,78vw)] rounded-none border px-3 py-2.5 text-left transition-colors duration-150 ${
+                  selected
+                    ? "border-[#103435] bg-[#eeece5] shadow-sm"
+                    : "border-[#D9D9D9] bg-white/80 active:bg-[#eeece5]/80"
+                }`}
+                style={{
+                  fontFamily: "'TT Hoves Pro', sans-serif",
+                  fontWeight: selected ? 500 : 400,
+                  fontSize: 12,
+                  lineHeight: 1.35,
+                  color: selected ? "#1d1d1d" : "#464646",
+                }}
+              >
+                {feature.label}
+              </button>
+            );
+          })}
+        </div>
+        <div
+          className="px-4 pb-5 pt-1 border-t border-[#D9D9D9]/80"
+          role="tabpanel"
+          aria-labelledby={`advantage-feature-tab-${tab.key}-${activeFeature}`}
+        >
+          <p
+            className="text-[#5a5a5a] leading-[1.65]"
+            style={{
+              fontFamily: "'TT Hoves Pro', sans-serif",
+              fontWeight: 400,
+              fontSize: 14,
+            }}
+          >
+            {tab.features[activeFeature]?.description}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Main section ───────────────────────────────────────────────────────
 export function VolteoAdvantageSection() {
   const [activeTab, setActiveTab] = useState("wayship");
@@ -794,11 +905,6 @@ export function VolteoAdvantageSection() {
       setOpenFeature(i);
       setPreviewFeature(i);
     }
-  };
-
-  const handleMobileFeatureTab = (i: number) => {
-    setPreviewFeature(i);
-    setOpenFeature(i);
   };
 
   const handleTabChange = (key: string) => {
@@ -842,96 +948,108 @@ export function VolteoAdvantageSection() {
           </h2>
         </motion.div>
 
-        {/* Product Panel */}
-        <motion.div
-          className="mt-10 mb-20 md:mb-28 border border-[#D9D9D9]"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          custom={0.12}
-        >
-          {/* Tab Bar */}
-          <div className="flex border-b border-[#D9D9D9]">
-            {tabs.map((tab) => (
-              <button
-                key={tab.key}
-                onClick={() => handleTabChange(tab.key)}
-                className={`relative flex items-center justify-center gap-2 px-8 py-4 transition-colors duration-150 ease-out active:scale-[0.99] will-change-transform ${
-                  activeTab === tab.key ? "bg-[#eeece5]" : "bg-transparent hover:bg-[#eeece5]/50"
-                }`}
-                style={{ flex: 1, borderRight: "1px solid #D9D9D9" }}
-              >
-                <span
-                  className="transition-colors duration-150"
-                  style={{
-                    fontFamily: "'TT Hoves Pro', sans-serif",
-                    fontWeight: activeTab === tab.key ? 500 : 400,
-                    fontSize: 18,
-                    color: activeTab === tab.key ? "#000" : "#464646",
-                  }}
-                >
-                  {tab.label}
-                </span>
-                {activeTab === tab.key && (
-                  <motion.div
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#103435]"
-                    layoutId="tab-indicator"
-                    transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
-                  />
-                )}
-              </button>
-            ))}
-          </div>
-
-          {/* Content Area */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
-            >
-
-              {/* ── Row 1: Heading (left) | Description (right) ─────── */}
-              <div className="flex flex-col lg:flex-row border-b border-[#D9D9D9]">
-
-                {/* Left: title + link */}
-                <div className="lg:w-1/2 px-8 pt-8 pb-7 border-b lg:border-b-0">
-                  <h3
-                    className="text-black mb-4"
-                    style={{
-                      fontFamily: "'TT Hoves Pro', sans-serif",
-                      fontWeight: 400,
-                      fontSize: "clamp(22px, 2vw, 34px)",
-                    }}
-                  >
-                    {activeData.title}
-                  </h3>
-                  <VolteoTextLink href={activeData.href ?? "#"}>{activeData.subtitle}</VolteoTextLink>
-                </div>
-
-                {/* Right: description */}
-                <div className="lg:w-1/2 px-8 pt-8 pb-7 flex items-start">
-                  <p
-                    className="text-[#464646] leading-[1.6] max-w-[480px]"
-                    style={{
-                      fontFamily: "'TT Hoves Pro', sans-serif",
-                      fontWeight: 400,
-                      fontSize: "clamp(13px, 1.05vw, 16px)",
-                    }}
-                  >
-                    {activeData.description}
-                  </p>
-                </div>
-
+        {/* ── Mobile layout: both products stacked vertically ── */}
+        {!isLg && (
+          <motion.div
+            className="mt-10 mb-20 border border-[#D9D9D9]"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            custom={0.12}
+          >
+            {tabs.map((tab, idx) => (
+              <div key={tab.key} className={idx > 0 ? "border-t-4 border-[#D9D9D9]" : ""}>
+                <MobileProductBlock tab={tab} />
               </div>
+            ))}
+          </motion.div>
+        )}
 
-              {/* ── Row 2: mobile = preview on top + horizontal tabs; desktop = accordion | preview ── */}
-              {isLg ? (
+        {/* ── Desktop layout: tab-based panel ── */}
+        {isLg && (
+          <motion.div
+            className="mt-10 mb-28 border border-[#D9D9D9]"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            custom={0.12}
+          >
+            {/* Tab Bar */}
+            <div className="flex border-b border-[#D9D9D9]">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.key}
+                  onClick={() => handleTabChange(tab.key)}
+                  className={`relative flex items-center justify-center gap-2 px-8 py-4 transition-colors duration-150 ease-out active:scale-[0.99] will-change-transform ${
+                    activeTab === tab.key ? "bg-[#eeece5]" : "bg-transparent hover:bg-[#eeece5]/50"
+                  }`}
+                  style={{ flex: 1, borderRight: "1px solid #D9D9D9" }}
+                >
+                  <span
+                    className="transition-colors duration-150"
+                    style={{
+                      fontFamily: "'TT Hoves Pro', sans-serif",
+                      fontWeight: activeTab === tab.key ? 500 : 400,
+                      fontSize: 18,
+                      color: activeTab === tab.key ? "#000" : "#464646",
+                    }}
+                  >
+                    {tab.label}
+                  </span>
+                  {activeTab === tab.key && (
+                    <motion.div
+                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#103435]"
+                      layoutId="tab-indicator"
+                      transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+
+            {/* Content Area */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
+              >
+                {/* Row 1: Heading (left) | Description (right) */}
+                <div className="flex flex-row border-b border-[#D9D9D9]">
+                  <div className="w-1/2 px-8 pt-8 pb-7">
+                    <h3
+                      className="text-black mb-4"
+                      style={{
+                        fontFamily: "'TT Hoves Pro', sans-serif",
+                        fontWeight: 400,
+                        fontSize: "clamp(22px, 2vw, 34px)",
+                      }}
+                    >
+                      {activeData.title}
+                    </h3>
+                    <VolteoTextLink href={activeData.href ?? "#"}>{activeData.subtitle}</VolteoTextLink>
+                  </div>
+                  <div className="w-1/2 px-8 pt-8 pb-7 flex items-start">
+                    <p
+                      className="text-[#464646] leading-[1.6] max-w-[480px]"
+                      style={{
+                        fontFamily: "'TT Hoves Pro', sans-serif",
+                        fontWeight: 400,
+                        fontSize: "clamp(13px, 1.05vw, 16px)",
+                      }}
+                    >
+                      {activeData.description}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Row 2: Accordion (left) | Preview (right) */}
                 <div className="flex flex-row min-h-[570px]">
-                  <div className="lg:w-1/2 lg:border-r border-[#D9D9D9]">
+                  <div className="w-1/2 border-r border-[#D9D9D9]">
                     {activeData.features.map((feature, i) => {
                       const isOpen = openFeature === i;
                       const isPreview = previewFeature === i;
@@ -993,7 +1111,7 @@ export function VolteoAdvantageSection() {
                   </div>
 
                   <div
-                    className="lg:w-1/2 overflow-hidden relative min-h-[480px]"
+                    className="w-1/2 overflow-hidden relative min-h-[480px]"
                     style={{ background: "#eeece5" }}
                   >
                     <AnimatePresence mode="wait">
@@ -1010,83 +1128,12 @@ export function VolteoAdvantageSection() {
                     </AnimatePresence>
                   </div>
                 </div>
-              ) : (
-                <div className="flex flex-col border-t border-[#D9D9D9]">
-                  <div
-                    className="relative w-full overflow-hidden min-h-[300px] sm:min-h-[360px]"
-                    style={{ background: "#eeece5" }}
-                  >
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={`m-${activeTab}-${previewFeature}`}
-                        className="absolute inset-0"
-                        initial={{ opacity: 0, scale: 0.98 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 1.01 }}
-                        transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
-                      >
-                        {FeatureUI && <FeatureUI />}
-                      </motion.div>
-                    </AnimatePresence>
-                  </div>
 
-                  <div className="border-t border-[#D9D9D9] bg-[#f3f2ee]">
-                    <div
-                      className="flex gap-2 overflow-x-auto overscroll-x-contain px-4 py-3 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-                      role="tablist"
-                      aria-label="Product features"
-                    >
-                      {activeData.features.map((feature, i) => {
-                        const selected = previewFeature === i;
-                        return (
-                          <button
-                            key={i}
-                            type="button"
-                            role="tab"
-                            aria-selected={selected}
-                            id={`advantage-feature-tab-${activeTab}-${i}`}
-                            onClick={() => handleMobileFeatureTab(i)}
-                            className={`shrink-0 snap-start max-w-[min(280px,78vw)] rounded-none border px-3 py-2.5 text-left transition-colors duration-150 ${
-                              selected
-                                ? "border-[#103435] bg-[#eeece5] shadow-sm"
-                                : "border-[#D9D9D9] bg-white/80 active:bg-[#eeece5]/80"
-                            }`}
-                            style={{
-                              fontFamily: "'TT Hoves Pro', sans-serif",
-                              fontWeight: selected ? 500 : 400,
-                              fontSize: 12,
-                              lineHeight: 1.35,
-                              color: selected ? "#1d1d1d" : "#464646",
-                            }}
-                          >
-                            {feature.label}
-                          </button>
-                        );
-                      })}
-                    </div>
-                    <div
-                      className="px-4 pb-5 pt-1 border-t border-[#D9D9D9]/80"
-                      role="tabpanel"
-                      aria-labelledby={`advantage-feature-tab-${activeTab}-${previewFeature}`}
-                    >
-                      <p
-                        className="text-[#5a5a5a] leading-[1.65]"
-                        style={{
-                          fontFamily: "'TT Hoves Pro', sans-serif",
-                          fontWeight: 400,
-                          fontSize: 14,
-                        }}
-                      >
-                        {activeData.features[previewFeature]?.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
+        )}
 
-            </motion.div>
-          </AnimatePresence>
-        </motion.div>
       </div>
     </section>
   );

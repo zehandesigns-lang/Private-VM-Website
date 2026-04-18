@@ -14,6 +14,7 @@ import imgWilhelmsen from "@/assets/logos/wilhelmsen.png";
 import imgZamil from "@/assets/logos/zamil.png";
 import imgMtm from "@/assets/logos/mtm.png";
 import surenTransparentPortrait from "@/assets/suren-transparent.png";
+import imgSingaporeOfficeMap from "@/assets/singapore-office-map.png";
 
 const EASE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 const EASE_STRONG: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -378,11 +379,7 @@ function HeroSection() {
         </motion.div>
       </div>
 
-      <div className="relative z-10">
-        <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px]">
-          <div className="h-px w-full bg-[#D9D9D9]" aria-hidden />
-        </div>
-      </div>
+      <RailDivider />
     </section>
   );
 }
@@ -456,9 +453,6 @@ function OurInvestorsSection() {
 
   return (
     <section className="relative bg-[#f3f2ee] py-20 md:py-28">
-      <div className="absolute top-0 left-0 right-0" aria-hidden>
-        <RailDivider />
-      </div>
       <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px]">
         <div className="mx-auto max-w-[640px] text-center mb-12 md:mb-14">
           <motion.p
@@ -517,15 +511,8 @@ function OurInvestorsSection() {
 }
 
 function WhereWeAreSection() {
-  /** OpenStreetMap embed — Singapore overview (west, south, east, north). */
-  const singaporeMapSrc =
-    "https://www.openstreetmap.org/export/embed.html?bbox=103.58%2C1.15%2C104.12%2C1.50&layer=mapnik";
-
   return (
     <section className="relative bg-[#f3f2ee] py-20 md:py-28">
-      <div className="absolute top-0 left-0 right-0" aria-hidden>
-        <RailDivider />
-      </div>
       <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px]">
         <div className="mx-auto max-w-[640px] text-center mb-10 md:mb-12">
           <motion.p
@@ -568,29 +555,14 @@ function WhereWeAreSection() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.55, delay: 0.06, ease: EASE }}
         >
-          <div className="relative w-full aspect-[4/3] md:aspect-[21/9] min-h-[240px]">
-            <iframe
-              title="Map of Singapore"
-              className="absolute inset-0 h-full w-full border-0"
-              src={singaporeMapSrc}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
-          <p
-            className="border-t border-[#D9D9D9]/80 bg-[#faf9f6] px-4 py-2.5 text-center text-[#5c5a58]/75"
-            style={{ ...ttHoves, fontSize: 11 }}
-          >
-            Map data ©{" "}
-            <a
-              href="https://www.openstreetmap.org/copyright"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#0e3233]/80 underline underline-offset-2 hover:text-[#0e3233]"
-            >
-              OpenStreetMap contributors
-            </a>
-          </p>
+          <img
+            src={imgSingaporeOfficeMap}
+            alt="Map of Southeast Asia highlighting the Singapore office at 10 Anson Road"
+            className="block w-full h-auto"
+            loading="lazy"
+            decoding="async"
+            draggable={false}
+          />
         </motion.div>
       </div>
     </section>
@@ -1006,11 +978,14 @@ export function AboutPageV2() {
         <Header />
       </div>
 
-      <main>
+      <main className="bg-[#f3f2ee]">
         <HeroSection />
         <LogoTicker />
+        <RailDivider />
         <FounderNoteSection />
+        <RailDivider />
         <OurInvestorsSection />
+        <RailDivider />
         <WhereWeAreSection />
       </main>
 
