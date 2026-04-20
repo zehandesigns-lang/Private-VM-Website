@@ -244,7 +244,7 @@ function LLMChatUI() {
 
   return (
     <UICardLight>
-      <LHeader title="Chat with Wayship · Nordic Swan" meta="Online" />
+      <LHeader title="Chat with Wayship · CMA CGM Imagination" meta="Online" />
       <div className="px-3 pt-2.5 pb-3 space-y-2 min-h-[258px]">
         <AnimatePresence>
           {step >= 1 && (
@@ -317,7 +317,7 @@ const LOGBOOK_ROWS = [
 function DigitalLogbooksUI() {
   return (
     <UICardLight>
-      <LHeader title="E-Logbooks · Nordic Swan" meta="ABS Approved" />
+      <LHeader title="E-Logbooks · CMA CGM Imagination" meta="ABS Approved" />
       <div className="divide-y divide-[#D9D9D9]">
         {LOGBOOK_ROWS.map((row, i) => (
           <motion.div key={row.book}
@@ -373,7 +373,7 @@ function StructuredHandoversUI() {
 
   return (
     <UICardLight>
-      <LHeader title="Crew Handover · Nordic Swan" meta="18 Apr 2024" />
+      <LHeader title="Crew Handover · CMA CGM Imagination" meta="18 Apr 2024" />
       <div className="px-3 pt-2.5 pb-1 space-y-1.5">
         {/* Transfer bar */}
         <div className="flex items-center justify-between mb-2">

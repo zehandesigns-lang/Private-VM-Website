@@ -62,14 +62,11 @@ export function CTASection({ variant = "default" }: CTASectionProps) {
             }}
           >
             {isTeam ? (
-              <>
-                Join{" "}
-                <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>our team</span>
-              </>
+              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>Careers</span>
             ) : (
               <>
-                Start capturing what your fleet{" "}
-                <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>already knows</span>
+                Capture the knowledge before it walks off the{" "}
+                <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>gangway</span>
               </>
             )}
           </h2>
@@ -79,25 +76,22 @@ export function CTASection({ variant = "default" }: CTASectionProps) {
           >
             {isTeam ? (
               <>
-                We&apos;re rebuilding maritime from the ground up. Come do it with us.
+                We&apos;re rebuilding maritime from the ground up. Let&apos;s do it together.
               </>
             ) : (
-              <>
-                Most fleets are 30 days from their first structured crew handover and a crew that actually has time to
-                do their job. Let&apos;s show you how it works on your vessel type.
-              </>
+              <>Whether you operate 5 vessels or 500, most fleets are less than 4 weeks from their first deployment — and a fundamentally better way of vessel operations</>
             )}
           </p>
-          <div
-            className={`flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 ${isTeam ? "" : "mb-6"}`}
-          >
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4">
             {isTeam ? (
               <a
-                href="mailto:careers@volteo.com?subject=Careers%20inquiry"
+                href="https://sg.linkedin.com/company/volteomaritime"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-[#fcf7e3] text-[#0e3233] px-7 py-3 hover:bg-white transition-colors duration-150 inline-flex items-center justify-center gap-2 shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
                 style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
               >
-                Join our team
+                Careers
                 <ArrowUpRight size={15} />
               </a>
             ) : (
@@ -107,17 +101,12 @@ export function CTASection({ variant = "default" }: CTASectionProps) {
                   className="bg-[#fcf7e3] text-[#0e3233] px-7 py-3 hover:bg-white transition-colors duration-150 inline-flex items-center justify-center gap-2 shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
                   style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
                 >
-                  Request a demo
+                  Get a Demo
                   <ArrowUpRight size={15} />
                 </Link>
               </>
             )}
           </div>
-          {!isTeam ? (
-            <p className="text-[#fcf7e3]/45 font-mono text-[11px]">
-              No commitment · Live on 200+ vessels · ABS, Liberia, Bahamas, Malta, Singapore
-            </p>
-          ) : null}
         </motion.div>
       </div>
     </section>

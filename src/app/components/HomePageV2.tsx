@@ -137,7 +137,7 @@ function AdvantageTabs() {
 
       {/* Wayship content */}
       <div className={tab !== "wayship" ? "hidden" : ""}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 border border-t-0 border-[#D9D9D9] overflow-hidden">
+        <div className="grid grid-cols-1 items-stretch lg:grid-cols-2 border border-t-0 border-[#D9D9D9] overflow-hidden">
           <div className="border-b lg:border-b-0 lg:border-r border-[#D9D9D9] p-8 md:p-10 lg:p-12">
             <p className="mb-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.08em] text-[#2f615a]">
               <span className="h-1 w-1 shrink-0 bg-[#2f615a]" aria-hidden />
@@ -208,7 +208,7 @@ function AdvantageTabs() {
 
       {/* Smartport content */}
       <div className={tab !== "smartport" ? "hidden" : ""}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 border border-t-0 border-[#D9D9D9] overflow-hidden">
+        <div className="grid grid-cols-1 items-stretch lg:grid-cols-2 border border-t-0 border-[#D9D9D9] overflow-hidden">
           <div className="border-b lg:border-b-0 lg:border-r border-[#D9D9D9] p-8 md:p-10 lg:p-12">
             <p className="mb-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.08em] text-[#416668]">
               <span className="h-1 w-1 shrink-0 bg-[#416668]" aria-hidden />
@@ -218,17 +218,18 @@ function AdvantageTabs() {
               className="text-[#103435] leading-[1.15] mb-4"
               style={{ ...lc, fontSize: "clamp(22px, 2.5vw, 30px)" }}
             >
-              Turn every berth into a <em className="not-italic text-[#2f615a]">revenue opportunity.</em>
+              When operations run on paper, inefficiency compounds with every vessel call.{" "}
+              <em className="not-italic text-[#2f615a]">Smartport is here to fix that.</em>
             </h3>
             <p className="text-[#464646] leading-[1.75] mb-8" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 14 }}>
               Secondary and emerging ports handle the long tail of global shipping — but they&apos;ve always competed with one hand tied behind their back. Smartport gives them the planning tools, analytics, and operator-facing visibility to attract more vessel calls and turn berths into revenue.
             </p>
             <ul className="flex flex-col gap-3 mb-8">
               {[
-                "Berth planning, vessel scheduling and conflict resolution",
-                "Port call performance analytics and turnaround benchmarking",
-                "Revenue optimisation tools and cargo allocation",
-                "Operator-port communication and pre-arrival coordination",
+                "Vessel traffic management that keeps anchorages, arrivals and departures organised — before congestion builds.",
+                "End-to-end cargo tracking from pre-arrival to departure",
+                "Resource allocation tools that match port assets to vessel calls — dynamically, not on a spreadsheet.",
+                "Real-time analytics and reporting across all port operations — surfacing inefficiencies, turnaround trends, and revenue performance in one dashboard.",
               ].map((line) => (
                 <li key={line} className="flex gap-2 text-[#464646] text-[13.5px] leading-snug" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-[#416668]" />
@@ -245,40 +246,74 @@ function AdvantageTabs() {
               <ArrowUpRight size={15} />
             </Link>
           </div>
-          <div className="bg-[#ebe9e3] p-6 md:p-8">
-            <div className="border border-[#D9D9D9] bg-[#f3f2ee] overflow-hidden">
-              <div className="flex items-center justify-between border-b border-[#D9D9D9] px-4 py-3">
+          <div className="flex h-full min-h-[420px] w-full items-center justify-center bg-[#ebe9e3] p-6 md:p-8 lg:min-h-0 lg:py-10">
+            <div className="flex w-full max-w-[560px] min-h-[min(520px,72vh)] flex-col border border-[#D9D9D9] bg-[#f3f2ee] shadow-[0_12px_40px_rgba(0,0,0,0.06)]">
+              <div className="flex shrink-0 items-center justify-between border-b border-[#D9D9D9] px-4 py-3.5">
                 <span className="font-mono text-[9px] uppercase tracking-wider text-[#615D5D]">Port revenue dashboard</span>
                 <span className="bg-[#2f615a]/15 px-2 py-0.5 font-mono text-[10px] text-[#0e3233]">Live</span>
               </div>
-              <div className="p-4">
-                <div className="grid grid-cols-3 gap-px bg-[#D9D9D9] overflow-hidden mb-4">
+              <div className="flex min-h-0 flex-1 flex-col p-5 md:p-6">
+                <div className="mb-5 grid grid-cols-2 gap-px overflow-hidden bg-[#D9D9D9]">
                   {[
                     ["$45m", "Revenue"],
-                    ["15+", "Ports live"],
-                    ["32%", "Turnaround ↑"],
+                    ["35%", "Productivity gains"],
                   ].map(([v, l]) => (
-                    <div key={l} className="bg-[#f3f2ee] p-3 text-center">
-                      <div className={`font-mono text-lg ${l === "Revenue" ? "text-[#2f615a]" : "text-[#103435]"}`}>{v}</div>
+                    <div key={l} className="bg-[#f3f2ee] px-3 py-4 text-center">
+                      <div className={`font-mono text-xl ${l === "Revenue" ? "text-[#2f615a]" : "text-[#103435]"}`}>{v}</div>
                       <div className="font-mono text-[9px] uppercase text-[#615D5D]">{l}</div>
                     </div>
                   ))}
                 </div>
-                <p className="font-mono text-[9px] uppercase tracking-wider text-[#615D5D] mb-3">Incremental vessel calls · This quarter</p>
-                {[
-                  ["Jebel Ali", 88, "+44"],
-                  ["Sohar", 70, "+36"],
-                  ["Duqm", 53, "+27"],
-                  ["Karachi", 36, "+19"],
-                ].map(([name, w, val]) => (
-                  <div key={name as string} className="flex items-center gap-2 py-1.5">
-                    <span className="w-[72px] shrink-0 text-[11.5px] text-[#464646]">{name as string}</span>
-                    <div className="flex-1 h-1.5 bg-[#D9D9D9]/80 overflow-hidden">
-                      <div className="h-full bg-[#2f615a]" style={{ width: `${w}%` }} />
-                    </div>
-                    <span className="font-mono text-[10px] text-[#2f615a] w-8 text-right">{val as string}</span>
+                <p className="mb-3 shrink-0 font-mono text-[9px] uppercase tracking-wider text-[#615D5D]">Port call pipeline · Live</p>
+                <div className="-mx-1 min-h-0 flex-1 overflow-x-auto pb-1">
+                  <div className="flex h-full min-h-[260px] items-stretch gap-2 min-w-[min(100%,520px)]">
+                    {(
+                      [
+                        { title: "Pre-arrival", vessels: ["CMA CGM Harmony"] as const },
+                        { title: "Arrival", vessels: ["Olympic Bay"] as const },
+                        { title: "Operational", vessels: ["Atlantic Pearl"] as const },
+                        { title: "Departure", vessels: ["CMA CGM Bali"] as const },
+                        { title: "Post-Departure", vessels: [] as const },
+                      ] as const
+                    ).map((col) => (
+                      <div
+                        key={col.title}
+                        className="flex h-full min-h-[260px] min-w-[92px] flex-1 flex-col rounded-sm border border-[#D9D9D9] bg-[#ebe9e3]/60"
+                      >
+                        <div className="shrink-0 border-b border-[#D9D9D9] px-1.5 py-2">
+                          <p
+                            className="text-[#615D5D] leading-tight"
+                            style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600, fontSize: 8, letterSpacing: "0.04em" }}
+                          >
+                            {col.title}
+                          </p>
+                        </div>
+                        <div className="flex min-h-0 flex-1 flex-col gap-1.5 p-1.5">
+                          {col.vessels.length === 0 ? (
+                            <div
+                              className="min-h-[72px] flex-1 rounded-sm border border-dashed border-[#D9D9D9]/80 bg-[#f3f2ee]/40"
+                              aria-hidden
+                            />
+                          ) : (
+                            col.vessels.map((v) => (
+                              <div
+                                key={v}
+                                className="rounded-sm border border-[#D9D9D9] bg-[#f3f2ee] px-1.5 py-2 shadow-[0_1px_0_rgba(0,0,0,0.04)]"
+                              >
+                                <p
+                                  className="text-[#103435] leading-snug"
+                                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 9.5 }}
+                                >
+                                  {v}
+                                </p>
+                              </div>
+                            ))
+                          )}
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
               </div>
             </div>
           </div>
@@ -342,7 +377,7 @@ function HomeV2CTA() {
               className="bg-[#fcf7e3] text-[#0e3233] px-7 py-3 hover:bg-white transition-colors duration-150 inline-flex items-center gap-2 shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
               style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
             >
-              Get a demo
+              Get a Demo
               <ArrowUpRight size={15} />
             </Link>
           </div>
@@ -388,7 +423,7 @@ export function HomePageV2() {
                   <div className="inline-flex flex-wrap items-center justify-center gap-2 border border-[#fcf7e3]/20 bg-[#fcf7e3]/10 px-3 py-2">
                     <span className="h-1.5 w-1.5 shrink-0 bg-[#fcf7e3]/90 animate-pulse" aria-hidden />
                     <VolteoTextLink
-                      href="https://www.smw.sg/expo-smw-2026/exhibitors-2026"
+                      href="/event-monitor"
                       className="!border-[#fcf7e3]/45 !text-[#fcf7e3] hover:!opacity-80"
                     >
                       Meet us at Booth S05, Singapore Maritime Week 2026

@@ -445,9 +445,9 @@ function FounderNoteSection() {
 
 function OurInvestorsSection() {
   const investors = [
-    { name: "EPS Ventures", line: "Maritime venture partner", logo: svgEpsVentures },
-    { name: "Techstars", line: "Accelerator & global network", logo: svgTechstars },
-    { name: "Zeebox", line: "Product vision at scale", logo: svgZeebox },
+    { name: "EPS Ventures", logo: svgEpsVentures },
+    { name: "Techstars", logo: svgTechstars },
+    { name: "Zeebox", logo: svgZeebox },
   ] as const;
 
   return (
@@ -477,7 +477,7 @@ function OurInvestorsSection() {
               transition={{ duration: 0.5, delay: i * 0.08, ease: EASE_STRONG }}
             >
               <div className="mb-5 h-px w-10 bg-[#0e3233]/25 mx-auto" aria-hidden />
-              <div className="mb-4 flex items-center justify-center h-[34px]">
+              <div className="flex items-center justify-center min-h-[34px]">
                 <img
                   src={inv.logo}
                   alt={inv.name}
@@ -487,12 +487,6 @@ function OurInvestorsSection() {
                   decoding="async"
                 />
               </div>
-              <p
-                className="text-[#5c5a58] leading-relaxed"
-                style={{ ...ttHoves, fontSize: "clamp(16px, 1.1vw, 18px)" }}
-              >
-                {inv.line}
-              </p>
             </motion.div>
           ))}
         </div>

@@ -141,7 +141,7 @@ function SmartportHero() {
                 className="inline-flex items-center gap-2 bg-[#0e3233] px-6 py-3 text-white transition-colors hover:bg-[#416668]"
                 style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
               >
-                Request a demo
+                Get a Demo
                 <ArrowUpRight size={15} />
               </Link>
               <a
@@ -592,7 +592,7 @@ function SmartportCTASection() {
               className="inline-flex items-center gap-2 bg-[#fcf7e3] px-7 py-3 text-[#0e3233] shadow-[0_8px_32px_rgba(0,0,0,0.2)] transition-colors hover:bg-white"
               style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
             >
-              Request a demo
+              Get a Demo
               <ArrowUpRight size={15} />
             </Link>
           </div>

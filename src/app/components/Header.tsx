@@ -28,11 +28,6 @@ function buildNavLinks(pathname: string) {
       href: "/about",
       items: [],
     },
-    {
-      label: "SMW 26",
-      href: "/event-monitor",
-      items: [],
-    },
   ];
 }
 

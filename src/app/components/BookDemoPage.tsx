@@ -174,24 +174,24 @@ export function BookDemoPage() {
                 className="text-[#fcf7e3] leading-[1.05] tracking-[-2px] mb-6"
                 style={{ fontSize: "clamp(36px, 4.5vw, 52px)", ...tt, fontWeight: 500 }}
               >
-                Your fleet.
+                Wayship for the vessel.
                 <br />
-                Your port.
+                Smartport for the port.
                 <br />
                 <span style={lc} className="text-[#fcf7e3]">
-                  See what the right platform does for both.
+                  Built by Volteo, so your operations don&apos;t fall short.
                 </span>
               </h1>
               <p
                 className="text-[#f3f2ee]/80 leading-[1.75] max-w-[440px] mb-8"
                 style={{ ...tt, fontWeight: 400, fontSize: "clamp(15px, 1.1vw, 17px)" }}
               >
-                Wayship captures operational knowledge across 200+ vessels. Smartport gives secondary ports the digital infrastructure major terminals take for granted. A 30-minute demo covers both — tailored to your operation.
+                Wayship captures operational intelligence across 350+ vessels. Smartport gives secondary ports the digital infrastructure to run efficiently and profitably. Book a 30-minute demo with our product specialists to see what that looks like for your operation.
               </p>
               <div className="flex flex-wrap items-center gap-3 pt-8 border-t border-[#fcf7e3]/10">
                 <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#fcf7e3]/35 shrink-0">Trusted by</span>
                 <div className="flex flex-wrap items-center gap-2 text-[13px] text-[#fcf7e3]/55" style={{ ...tt, fontWeight: 500 }}>
-                  {["Teekay", "TORM", "Anglo-Eastern", "CMA CGM"].map((name, i, a) => (
+                  {["EPS", "Teekay", "TORM", "CMA CGM"].map((name, i, a) => (
                     <span key={name} className="flex items-center gap-2">
                       {name}
                       {i < a.length - 1 ? <span className="text-[#fcf7e3]/20">·</span> : null}
@@ -395,13 +395,13 @@ export function BookDemoPage() {
                       </>
                     ) : (
                       <>
-                        Request a demo
+                        Get a Demo
                         <ArrowUpRight size={16} className="opacity-90" />
                       </>
                     )}
                   </Button>
                   <p className="font-mono text-[10px] text-center text-[#717182] tracking-[0.03em] pt-1">
-                    We&apos;ll only use your details to schedule your session.
+                    No spam, pinky promise!
                   </p>
                 </form>
               ) : (
@@ -442,7 +442,7 @@ export function BookDemoPage() {
         <SideRailOverlay />
 
       {/* Platforms */}
-      <section id="products" className="relative bg-[#f3f2ee] py-20 md:py-28 border-b border-[#D9D9D9]">
+      <section id="products" className="relative bg-[#f3f2ee] py-20 md:py-28">
         <Wrap>
           <p
             className="text-[#464646] uppercase tracking-[0.12em] mb-4"
@@ -451,21 +451,15 @@ export function BookDemoPage() {
             Our platforms
           </p>
           <h2
-            className="text-[#103435] leading-[1.08] tracking-[-1.5px] max-w-[560px] mb-4"
+            className="text-[#103435] leading-[1.08] tracking-[-1.5px] max-w-[560px] mb-12 md:mb-14"
             style={{ fontSize: "clamp(30px, 3.2vw, 44px)", ...tt, fontWeight: 500 }}
           >
-            Two products.
+            Two platforms.
             <br />
             <span style={lc} className="text-[#103435]">
               Sea and shore.
             </span>
           </h2>
-          <p
-            className="text-[#464646] leading-[1.75] max-w-[600px] mb-12 md:mb-14"
-            style={{ ...tt, fontWeight: 400, fontSize: "clamp(14px, 1.05vw, 17px)" }}
-          >
-            Wayship captures operational knowledge at the vessel level. Smartport gives regional port authorities the digital infrastructure to compete with major terminals — built on years of real-world maritime operations.
-          </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#D9D9D9] border border-[#D9D9D9] overflow-hidden">
             <div className="relative bg-[#f3f2ee] p-8 md:p-10 hover:bg-[#ebe9e3]/80 transition-colors group flex flex-col">
@@ -482,20 +476,8 @@ export function BookDemoPage() {
                 </span>
               </h3>
               <p className="text-[#464646] text-[14px] leading-[1.8] mb-6" style={{ ...tt, fontWeight: 400 }}>
-                Voice AI, LLM chat, and structured capture so crew knowledge stays with the vessel — not the rotation.
+                Voice-to-action, AI Assistant, and reliable digital records — Class, Flag &amp; MARPOL compliant
               </p>
-              <ul className="flex flex-col gap-2.5 mb-8">
-                {[
-                  "Voice and text capture tuned for noisy, real-world ship conditions",
-                  "Fleet dashboards and handovers without a heavy IT integration",
-                  "Aligned with how superintendents and operators already work",
-                ].map((line) => (
-                  <li key={line} className="flex gap-2.5 text-[#464646] text-[13.5px] leading-snug" style={{ ...tt, fontWeight: 400 }}>
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#416668]" />
-                    {line}
-                  </li>
-                ))}
-              </ul>
               <Link
                 to="/wayship"
                 className="mt-auto inline-flex w-fit items-center gap-2 border border-[#D9D9D9] bg-[#f3f2ee] px-5 py-2.5 text-[#0e3233] hover:bg-[#e8e6e0] transition-colors duration-150"
@@ -521,18 +503,6 @@ export function BookDemoPage() {
               <p className="text-[#464646] text-[14px] leading-[1.8] mb-6" style={{ ...tt, fontWeight: 400 }}>
                 Scheduling, billing, customs integration, and operator-facing visibility — packaged for ports that need to move fast.
               </p>
-              <ul className="flex flex-col gap-2.5 mb-8">
-                {[
-                  "Live-ops surfaces for berth planning and vessel flow",
-                  "Revenue and compliance workflows built for regional scale",
-                  "No dedicated IT team required to get value on day one",
-                ].map((line) => (
-                  <li key={line} className="flex gap-2.5 text-[#464646] text-[13.5px] leading-snug" style={{ ...tt, fontWeight: 400 }}>
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#416668]" />
-                    {line}
-                  </li>
-                ))}
-              </ul>
               <Link
                 to="/smartport"
                 className="mt-auto inline-flex w-fit items-center gap-2 border border-[#D9D9D9] bg-[#f3f2ee] px-5 py-2.5 text-[#0e3233] hover:bg-[#e8e6e0] transition-colors duration-150"
@@ -546,59 +516,6 @@ export function BookDemoPage() {
         </Wrap>
       </section>
       </div>
-
-      {/* CTA strip */}
-      <section id="contact" className="relative z-[70] w-full overflow-hidden">
-        <div className="absolute inset-0 bg-[#0e3233]" aria-hidden />
-        <div className="absolute inset-0" aria-hidden style={{ background: CTA_RADIAL_STACK }} />
-        <AnimatedDitherBackground className="pointer-events-none z-[1] opacity-[0.72]" ditherMix={0.34} />
-        <div className="relative z-10 mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px] py-20 md:py-28 text-center">
-          <p className="mb-6 inline-flex items-center gap-2 border border-[#fcf7e3]/20 bg-[#fcf7e3]/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.08em] text-[#fcf7e3]/80">
-            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#fcf7e3]/90 animate-pulse" aria-hidden />
-            Ready when you are
-          </p>
-          <h2
-            className="text-[#fcf7e3] leading-[1.1] tracking-[-1.5px] mb-5 max-w-[580px] mx-auto"
-            style={{
-              fontFamily: "'TT Hoves Pro', sans-serif",
-              fontWeight: 500,
-              fontSize: "clamp(32px, 3.5vw, 50px)",
-              textShadow: "0 1px 24px rgba(0,0,0,0.25)",
-            }}
-          >
-            Production-proven with demanding operators.{" "}
-            <span style={lc} className="text-[#fcf7e3]">
-              Your operation next.
-            </span>
-          </h2>
-          <p
-            className="text-[#f3f2ee]/80 leading-[1.65] mb-10 max-w-[460px] mx-auto"
-            style={{ ...tt, fontWeight: 400, fontSize: "clamp(14px, 1.1vw, 17px)" }}
-          >
-            A 30-minute demo is the fastest way to see how Wayship and Smartport fit your fleet or port.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 mb-6">
-            <a
-              href="#form"
-              className="bg-[#fcf7e3] text-[#0e3233] px-7 py-3 hover:bg-white transition-colors duration-150 inline-flex items-center gap-2 shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
-              style={{ ...tt, fontWeight: 500, fontSize: 15 }}
-            >
-              Book a demo
-              <ArrowUpRight size={15} />
-            </a>
-            <Link
-              to="/wayship"
-              className="text-[#fcf7e3]/90 border border-[#fcf7e3]/25 px-7 py-3 hover:border-[#fcf7e3]/45 hover:bg-[#fcf7e3]/5 transition-colors duration-150 inline-flex items-center gap-2"
-              style={{ ...tt, fontWeight: 400, fontSize: 15 }}
-            >
-              Explore Wayship
-            </Link>
-          </div>
-          <p className="text-[#fcf7e3]/45 font-mono text-[11px]">
-            No commitment · Live on 200+ vessels · ABS, Liberia, Bahamas, Malta, Singapore
-          </p>
-        </div>
-      </section>
 
       <div className="relative bg-[#f3f2ee]">
         <SideRailOverlay />

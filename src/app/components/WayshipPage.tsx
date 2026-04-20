@@ -79,11 +79,11 @@ function WayshipHero() {
           <div>
             <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.05}>
               <span className="inline-flex items-center gap-2 bg-[#103435]/8 border border-[#103435]/20 px-3 py-1.5 mb-8"
-                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 11, fontWeight: 500, color: "#2f615a", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 11, fontWeight: 500, color: "#2f615a", letterSpacing: "0.04em" }}>
                 <motion.span className="w-1.5 h-1.5 rounded-full bg-emerald-600"
                   animate={{ opacity: [1, 0.3, 1] }}
                   transition={{ duration: 1.8, repeat: Infinity }} />
-                Fleet intelligence platform
+                All-new Wayship 6
               </span>
             </motion.div>
 
@@ -118,7 +118,7 @@ function WayshipHero() {
                 className="bg-[#0e3233] hover:bg-[#1a5052] text-white px-6 py-3 transition-colors duration-150 inline-flex items-center gap-2"
                 style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
               >
-                Request a demo
+                Get a Demo
                 <ArrowUpRight size={15} />
               </Link>
               <a href="#voice"
@@ -126,17 +126,6 @@ function WayshipHero() {
                 style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}>
                 See how it works
               </a>
-            </motion.div>
-
-            {/* Stats */}
-            <motion.div className="flex items-center gap-8"
-              variants={fadeUp} initial="hidden" animate="visible" custom={0.3}>
-              {[["200+", "Active vessels"], ["2,000+", "Seafarers daily"], ["40+", "Crew hrs saved/week"]].map(([num, lbl], i) => (
-                <div key={lbl} className={`${i > 0 ? "pl-8 border-l border-[#D9D9D9]" : ""}`}>
-                  <p className="text-[#103435]" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(22px, 2vw, 30px)" }}>{num}</p>
-                  <p className="text-[#464646] mt-0.5" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 11, fontWeight: 400, letterSpacing: "0.06em", textTransform: "uppercase" }}>{lbl}</p>
-                </div>
-              ))}
             </motion.div>
           </div>
 
@@ -209,10 +198,10 @@ function HeroCards() {
           </span>
         </div>
         <div className="px-4 py-1">
-          {[["Nordic Swan", "14 entries today", "bg-emerald-500"],
-            ["Torm Helene", "9 entries today", "bg-emerald-500"],
-            ["CMA Voyager", "Syncing…", "bg-amber-400"],
-            ["AE Resolute", "6 entries today", "bg-blue-500"]].map(([name, meta, dot]) => (
+          {[["CMA CGM Imagination", "14 entries today", "bg-emerald-500"],
+            ["Pacific Jasper", "9 entries today", "bg-emerald-500"],
+            ["Logan Explorer", "Syncing…", "bg-amber-400"],
+            ["Seaboard Galaxy", "6 entries today", "bg-blue-500"]].map(([name, meta, dot]) => (
             <div key={name} className="flex items-center justify-between py-1.5 border-b border-[#D9D9D9] last:border-0">
               <div className="flex items-center gap-2">
                 <div className={`w-1.5 h-1.5 shrink-0 ${dot}`} />
@@ -224,7 +213,7 @@ function HeroCards() {
         </div>
       </motion.div>
 
-      {/* Card B — Knowledge captured */}
+      {/* Card B — Data points captured */}
       <motion.div
         className="absolute top-20 right-0 w-[210px] overflow-hidden"
         style={cardBase}
@@ -232,12 +221,12 @@ function HeroCards() {
         transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
       >
         <div className="px-4 py-2.5 border-b border-[#D9D9D9]" style={{ background: "#eeece5" }}>
-          <span className="text-[#103435] text-[9px] uppercase tracking-widest font-mono">Knowledge captured</span>
+          <span className="text-[#103435] text-[9px] uppercase tracking-widest font-mono">Data Points Captured</span>
         </div>
         <div className="px-4 py-3">
           <p className="text-[#103435] font-mono leading-none mb-1"
-            style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: 32 }}>2,847</p>
-          <p className="text-[#5a5a5a] text-[10px] leading-[1.5] mb-3">Crew entries logged<br />across all vessels</p>
+            style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: 32 }}>4,847</p>
+          <p className="text-[#5a5a5a] text-[10px] leading-[1.5] mb-3">submissions logged across the fleet<br />in last 24 hours</p>
           <div className="h-1 bg-[#D9D9D9] overflow-hidden">
             <motion.div className="h-full bg-[#103435]"
               initial={{ width: 0 }} animate={{ width: "78%" }}
@@ -254,7 +243,7 @@ function HeroCards() {
         transition={{ duration: 7.1, repeat: Infinity, ease: "easeInOut" }}
       >
         <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#D9D9D9]" style={{ background: "#eeece5" }}>
-          <span className="text-[#103435] text-[9px] uppercase tracking-widest font-mono">Latest · Torm Helene</span>
+          <span className="text-[#103435] text-[9px] uppercase tracking-widest font-mono">Latest · Pacific Jasper</span>
           <span className="text-emerald-700 text-[9px] border border-emerald-600/30 px-1.5 py-0.5">Voice AI</span>
         </div>
         <div className="px-4 py-3">
@@ -321,7 +310,7 @@ function ProblemSection() {
             viewport={{ once: true, margin: "-80px" }} custom={0.1}>
             <div style={{ background: "#f3f2ee", border: "1px solid #D9D9D9", boxShadow: "0 4px 20px rgba(0,0,0,0.06)" }}>
               <div className="px-5 py-3 border-b border-[#D9D9D9]" style={{ background: "#eeece5" }}>
-                <p className="text-[#103435] text-[9px] uppercase tracking-widest font-mono">Vessel: Nordic Swan · 2024</p>
+                <p className="text-[#103435] text-[9px] uppercase tracking-widest font-mono">Vessel: CMA CGM Imagination · 2024</p>
               </div>
 
               <div className="px-5 py-5 border-b border-[#D9D9D9]">
@@ -536,7 +525,7 @@ function ChatSection() {
             viewport={{ once: true, margin: "-80px" }} custom={0.1}>
             <div style={{ background: "#f3f2ee", border: "1px solid #D9D9D9", boxShadow: "0 4px 20px rgba(0,0,0,0.06)" }}>
               <div className="flex items-center justify-between px-5 py-3 border-b border-[#D9D9D9]" style={{ background: "#eeece5" }}>
-                <span className="text-[#103435] text-[9px] uppercase tracking-widest font-mono">Chat with Wayship · Nordic Swan</span>
+                <span className="text-[#103435] text-[9px] uppercase tracking-widest font-mono">Chat with Wayship · CMA CGM Imagination</span>
                 <span className="flex items-center gap-1.5 text-emerald-700 text-[10px]">
                   <motion.span className="w-1.5 h-1.5 bg-emerald-600"
                     animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.4, repeat: Infinity }} />
@@ -780,10 +769,10 @@ function ROISection() {
                 {/* Activity feed */}
                 <div>
                   {[
-                    { dot: "bg-red-500", text: "Critical: Main engine lube oil pressure drop — Torm Helene", time: "4m ago" },
-                    { dot: "bg-amber-500", text: "Advisory: Cargo hold ventilation reduced — Nordic Swan", time: "41m ago" },
-                    { dot: "bg-blue-500", text: "[Voice AI] Observation logged: favourable current — AE Resolute", time: "1h ago" },
-                    { dot: "bg-emerald-600", text: "Handover complete: 247 entries transferred to incoming crew — CMA Voyager", time: "3h ago" },
+                    { dot: "bg-red-500", text: "Critical: Main engine lube oil pressure drop — Pacific Jasper", time: "4m ago" },
+                    { dot: "bg-amber-500", text: "Advisory: Cargo hold ventilation reduced — CMA CGM Imagination", time: "41m ago" },
+                    { dot: "bg-blue-500", text: "[Voice AI] Observation logged: favourable current — Seaboard Galaxy", time: "1h ago" },
+                    { dot: "bg-emerald-600", text: "Handover complete: 247 entries transferred to incoming crew — Logan Explorer", time: "3h ago" },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-2.5 py-2.5 border-b border-[#D9D9D9] last:border-0">
                       <div className={`w-1.5 h-1.5 shrink-0 mt-1.5 ${item.dot}`} />
@@ -827,36 +816,6 @@ function ROISection() {
             </div>
           </motion.div>
         </div>
-      </Wrap>
-    </Section>
-  );
-}
-
-// ── Testimonial ──────────────────────────────────────────────────────────
-function TestimonialSection() {
-  return (
-    <Section>
-      <Wrap className="py-16 md:py-20">
-        <motion.div className="max-w-[680px] mx-auto text-center"
-          variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}>
-          <p className="text-[#D9D9D9] mb-4" style={{ fontFamily: "'LT Cushion', serif", fontSize: 56, lineHeight: 1 }}>"</p>
-          <p className="text-[#103435] leading-[1.55] mb-8"
-            style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal", fontSize: "clamp(20px, 1.8vw, 28px)" }}>
-            Before Wayship, when a crew rotated off we lost everything they knew about that vessel. Now that knowledge stays on the ship — not the seafarer.
-          </p>
-          <div className="flex items-center justify-center gap-4">
-            <div className="w-10 h-10 flex items-center justify-center border border-[#D9D9D9]"
-              style={{ background: "#eeece5" }}>
-              <span className="text-[#103435] text-xs font-medium font-mono">SR</span>
-            </div>
-            <div className="text-left">
-              <p className="text-[#1d1d1d]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 14 }}>Senior Superintendent</p>
-              <p className="text-[#464646]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 13 }}>Technical Operations</p>
-            </div>
-            <div className="h-6 w-px bg-[#D9D9D9] mx-1" />
-            <p className="text-[#464646]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 14 }}>TORM</p>
-          </div>
-        </motion.div>
       </Wrap>
     </Section>
   );
@@ -914,8 +873,6 @@ export function WayshipPage() {
         <ComplianceSection />
         <ContentDivider />
         <ROISection />
-        <ContentDivider />
-        <TestimonialSection />
         <ContentDivider />
         <DeployStrip />
         <ContentDivider />
