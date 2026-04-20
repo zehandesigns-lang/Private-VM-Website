@@ -225,19 +225,19 @@ function SmartportHero() {
 const gapCards = [
   {
     num: "01 — The routing problem",
-    title: "Documentation that requires a phone call.",
+    title: "Documentation that requires a phone call",
     body: "Tariffs aren't published. Clearance timelines are unknown. Payment requires follow-up. Major ports have solved this with software. Secondary ports compete without it.",
     foot: "→ Smartport makes you as predictable as any major terminal",
   },
   {
     num: "02 — The revenue problem",
-    title: "Services rendered. Revenue not captured.",
+    title: "Services rendered. Revenue not captured",
     body: "Fees not tracked, cash without receipts, land leased below market rate. The gap between revenue potential and revenue collected is structural — and invisible until it's digitized.",
     foot: "→ Smartport surfaces revenue that was always there",
   },
   {
     num: "03 — The compliance problem",
-    title: "Regulatory complexity. No infrastructure for it.",
+    title: "Regulatory complexity. No infrastructure for it",
     body: "Customs integration, tax filings, e-invoicing — each jurisdiction adds layers. Major ports have dedicated teams and enterprise software. Secondary ports have spreadsheets.",
     foot: "→ Smartport makes compliance automatic",
   },
@@ -251,7 +251,7 @@ function GapSection() {
           <div>
             <Label>The competitive gap</Label>
             <SectionTitle className="mb-0">
-              <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Agents route to certainty.</span>
+              <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Agents route to certainty</span>
               <br />
               <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>
                 Most secondary ports can&apos;t offer it.
@@ -326,12 +326,12 @@ function PlatformSection() {
             <Label>How it works</Label>
             <SectionTitle className="mb-4">
               <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>
-                One platform.
+                One platform
                 <br />
-                Every stakeholder.
+                Every stakeholder
                 <br />
               </span>
-              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>Zero gaps.</span>
+              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>Zero gaps</span>
             </SectionTitle>
             <Body className="mb-8 max-w-[520px]">
               Smartport doesn&apos;t sit on top of port operations. It <span className="font-medium text-[#103435]">is</span> port operations. Every fee flows through it. Every clearance originates in it. Every gate pass is issued from it.
@@ -578,7 +578,7 @@ function SmartportCTASection() {
           >
             Your port competes on merit.
             <br />
-            <span style={lc}>Let the platform match it.</span>
+            <span style={lc}>Let the platform match it</span>
           </h2>
           <p
             className="mb-10 leading-[1.65] text-[#f3f2ee]/80"
@@ -595,13 +595,6 @@ function SmartportCTASection() {
               Request a demo
               <ArrowUpRight size={15} />
             </Link>
-            <a
-              href="#"
-              className="border border-[#fcf7e3]/25 px-7 py-3 text-[#fcf7e3]/90 transition-colors hover:border-[#fcf7e3]/45 hover:bg-[#fcf7e3]/5"
-              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}
-            >
-              Talk to a specialist
-            </a>
           </div>
           <p className="font-mono text-[11px] text-[#fcf7e3]/45">
             Proven since 2018 · ICEGATE &amp; GST compliant · 99.9% uptime · No IT team required

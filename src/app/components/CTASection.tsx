@@ -79,8 +79,7 @@ export function CTASection({ variant = "default" }: CTASectionProps) {
           >
             {isTeam ? (
               <>
-                We&apos;re growing the crew behind maritime intelligence — product, design, and people who ship with
-                operators at sea. If that sounds like your next chapter, we&apos;d love to hear from you.
+                We&apos;re rebuilding maritime from the ground up. Come do it with us.
               </>
             ) : (
               <>
@@ -111,13 +110,6 @@ export function CTASection({ variant = "default" }: CTASectionProps) {
                   Request a demo
                   <ArrowUpRight size={15} />
                 </Link>
-                <a
-                  href="#"
-                  className="text-[#fcf7e3]/90 border border-[#fcf7e3]/25 px-7 py-3 hover:border-[#fcf7e3]/45 hover:bg-[#fcf7e3]/5 transition-colors duration-150 inline-flex items-center justify-center"
-                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}
-                >
-                  Talk to a specialist
-                </a>
               </>
             )}
           </div>

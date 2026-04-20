@@ -36,8 +36,8 @@ export function HeroSection() {
             >
               NEW
             </span>
-            <VolteoTextLink href="https://www.singaporemaritimeweek.com/">
-              Visit us at Singapore Maritime Week 2026
+            <VolteoTextLink href="https://www.smw.sg/expo-smw-2026/exhibitors-2026">
+              Meet us at Booth S05, Singapore Maritime Week 2026
             </VolteoTextLink>
           </motion.div>
 

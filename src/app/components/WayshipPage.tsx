@@ -449,8 +449,8 @@ function VoiceSection() {
             viewport={{ once: true, margin: "-80px" }} custom={0.1}>
             <Label>Wayship 6 · New</Label>
             <SectionTitle className="mb-5">
-              <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Speak it.</span>{" "}
-              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>It's captured.</span>
+              <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Speak it</span>{" "}
+              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>It's captured</span>
             </SectionTitle>
             <Body className="mb-8 max-w-[440px]">
               Crew shouldn't have to choose between doing the job and documenting it. Voice AI turns the moment of observation into a structured, tagged, searchable entry — in under 60 seconds, in any condition.
@@ -507,7 +507,7 @@ function ChatSection() {
             <Label>Wayship 6 · New</Label>
             <SectionTitle className="mb-5">
               <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Ask the ship what</span>{" "}
-              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>it knows.</span>
+              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>it knows</span>
             </SectionTitle>
             <Body className="mb-8 max-w-[440px]">
               Captains don't need another dashboard to read. They need answers. Wayship 6 lets you query your vessel's full operational history in plain language — current state, past incidents, crew observations across rotations.
@@ -607,8 +607,8 @@ function FeaturesSection() {
         <motion.div className="mb-14" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}>
           <Label>Platform capabilities</Label>
           <SectionTitle>
-            <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Six years of reliability.</span>{" "}
-            <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>Now supercharged.</span>
+            <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Six years of reliability</span>{" "}
+            <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>Now supercharged</span>
           </SectionTitle>
           <Body className="mt-4 max-w-[500px]">
             The foundation that 2,000+ seafarers depend on every day — plus the AI layer that makes all that accumulated knowledge actually useful.
@@ -662,8 +662,8 @@ function ComplianceSection() {
           <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}>
             <Label>Compliance & approvals</Label>
             <SectionTitle className="mb-5">
-              <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Not just compliant.</span>{" "}
-              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>Approved.</span>
+              <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Not just compliant</span>{" "}
+              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>Approved</span>
             </SectionTitle>
             <Body className="mb-8 max-w-[420px]">
               Class approval and flag acceptance aren't features — they're procurement gates. Wayship clears them all.
@@ -802,7 +802,7 @@ function ROISection() {
             <Label>Real-world outcomes</Label>
             <SectionTitle className="mb-5">
               <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Numbers your superintendent</span>{" "}
-              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>will notice.</span>
+              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>will notice</span>
             </SectionTitle>
             <Body className="mb-10 max-w-[420px]">
               Six years of deployment across 200+ vessels gives us data on what actually changes when knowledge stops walking off the gangway.

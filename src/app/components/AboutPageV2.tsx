@@ -13,8 +13,11 @@ import imgUnionMarine from "@/assets/logos/union-marine.png";
 import imgWilhelmsen from "@/assets/logos/wilhelmsen.png";
 import imgZamil from "@/assets/logos/zamil.png";
 import imgMtm from "@/assets/logos/mtm.png";
+import svgEpsVentures from "@/assets/logos/eps-ventures.svg";
+import svgTechstars from "@/assets/logos/techstars.svg";
+import svgZeebox from "@/assets/logos/zeebox.svg";
 import surenTransparentPortrait from "@/assets/suren-transparent.png";
-import imgSingaporeOfficeMap from "@/assets/singapore-office-map.png";
+import imgSingaporeOfficeMap from "@/assets/singapore-office-map-v2.png";
 
 const EASE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 const EASE_STRONG: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -325,13 +328,13 @@ function HeroSection() {
             style={{ fontSize: "clamp(38px,5.2vw,76px)" }}
           >
             <LineReveal delay={0.04}>
-              <span style={ttHovesMedium}>We're helping the world's</span>
+              <span style={ttHovesMedium}>We are building the operating layer</span>
             </LineReveal>
             <LineReveal delay={0.13}>
-              <span style={ttHovesMedium}>best maritime teams</span>
+              <span style={ttHovesMedium}>for maritime teams that refuse</span>
             </LineReveal>
             <LineReveal delay={0.22}>
-              <span style={ltCushion}>transform the way they work.</span>
+              <span style={ttHovesMedium}>to run blind</span>
             </LineReveal>
           </h1>
           <div className="mt-8 md:mt-10 pb-8 md:pb-10">
@@ -386,9 +389,11 @@ function HeroSection() {
 
 function FounderNoteSection() {
   const bodyParagraphs = [
-    "In 2019, connectivity, cheap storage, and sensors finally met at fleet scale. We asked one question: what becomes possible when those forces converge onboard?",
-    "EPS Techstars put us beside crews — thousands of seafarers, hundreds of ships, real voyages and handovers. That is where we learned where information actually breaks.",
-    "What we ship today is built for how work moves: voice where hands are full, memory that survives crew change, and clarity when stakes are high. Less friction between what crews know and what the fleet can act on.",
+    "Vessel operations generate an extraordinary amount of knowledge—every watch, every port call, and every near-miss handled quietly and never written down. But almost none of it survives the crew change. Ships are handed over, but understanding is not. The patterns, the workarounds, and the lessons learned voyage by voyage—they all leave with the outgoing crew.",
+    "We learned this not from a distance, but from the people carrying that burden: seafarers and shore teams who had accepted knowledge loss as an inevitable condition of the job. The problem was never laziness; it was friction. Logging on paper took time the crew didn't have, and paper logbooks held data no one could retrieve.",
+    "Wayship is built around one core belief: capture context-rich knowledge the moment it happens, in the medium that works at sea — accessible to all relevant stakeholders, digitally.",
+    "That belief is no longer a hypothesis. Over the last six years, across 350+ vessels, we have captured over 5 million type- and class-approved digital records — proving there is indeed a better way.",
+    "With most of the world's fleet still on paper logbooks and siloed noon reports, the opportunity to reimagine maritime operations has never been greater.",
   ];
 
   return (
@@ -413,14 +418,8 @@ function FounderNoteSection() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.55, delay: 0.04, ease: EASE }}
           >
-            <span style={ttHovesMedium}>
-              We&apos;re building{" "}
-            </span>
-            <span style={ltCushion}>decision-ready maritime intelligence</span>
-            <span style={ttHovesMedium}>
-              {" "}
-              — the kind that disappears into the work so teams can focus on the voyage.
-            </span>
+            <span style={ttHovesMedium}>What your crew learns at sea should outlast the voyage.</span>{" "}
+            <span style={ltCushion}>Today, it walks off the gangway with them.</span>
           </motion.h2>
 
           <div className="space-y-5">
@@ -446,25 +445,15 @@ function FounderNoteSection() {
 
 function OurInvestorsSection() {
   const investors = [
-    { name: "EPS Ventures", line: "Maritime venture partner" },
-    { name: "Techstars", line: "Accelerator & global network" },
-    { name: "Zeebox", line: "Product vision at scale" },
+    { name: "EPS Ventures", line: "Maritime venture partner", logo: svgEpsVentures },
+    { name: "Techstars", line: "Accelerator & global network", logo: svgTechstars },
+    { name: "Zeebox", line: "Product vision at scale", logo: svgZeebox },
   ] as const;
 
   return (
     <section className="relative bg-[#f3f2ee] py-20 md:py-28">
       <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px]">
         <div className="mx-auto max-w-[640px] text-center mb-12 md:mb-14">
-          <motion.p
-            className="text-[#5c5a58]/85 mb-4"
-            style={{ fontFamily: "monospace", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase" }}
-            initial={{ opacity: 0, y: 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.45, ease: EASE }}
-          >
-            Our investors
-          </motion.p>
           <motion.h3
             className="text-[#0e3233] leading-[1.2] tracking-[-0.02em]"
             style={{ fontSize: "clamp(22px, 2.6vw, 32px)" }}
@@ -473,9 +462,7 @@ function OurInvestorsSection() {
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.5, delay: 0.05, ease: EASE }}
           >
-            <span style={ttHovesMedium}>Partners who backed us when </span>
-            <span style={ltCushion}>maritime intelligence</span>
-            <span style={ttHovesMedium}> was still an idea.</span>
+            <span style={ttHovesMedium}>Backed by the most credible operators in maritime</span>
           </motion.h3>
         </div>
 
@@ -490,12 +477,16 @@ function OurInvestorsSection() {
               transition={{ duration: 0.5, delay: i * 0.08, ease: EASE_STRONG }}
             >
               <div className="mb-5 h-px w-10 bg-[#0e3233]/25 mx-auto" aria-hidden />
-              <p
-                className="text-[#0e3233] mb-3 tracking-[-0.02em]"
-                style={{ ...ttHovesMedium, fontSize: "clamp(20px, 2vw, 26px)" }}
-              >
-                {inv.name}
-              </p>
+              <div className="mb-4 flex items-center justify-center h-[34px]">
+                <img
+                  src={inv.logo}
+                  alt={inv.name}
+                  className="h-[26px] w-auto object-contain"
+                  draggable={false}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
               <p
                 className="text-[#5c5a58] leading-relaxed"
                 style={{ ...ttHoves, fontSize: "clamp(16px, 1.1vw, 18px)" }}
@@ -515,16 +506,6 @@ function WhereWeAreSection() {
     <section className="relative bg-[#f3f2ee] py-20 md:py-28">
       <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px]">
         <div className="mx-auto max-w-[640px] text-center mb-10 md:mb-12">
-          <motion.p
-            className="text-[#5c5a58]/85 mb-4"
-            style={{ fontFamily: "monospace", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase" }}
-            initial={{ opacity: 0, y: 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.45, ease: EASE }}
-          >
-            Where we are
-          </motion.p>
           <motion.h3
             className="text-[#0e3233] leading-[1.2] tracking-[-0.02em] mb-4"
             style={{ fontSize: "clamp(22px, 2.6vw, 32px)" }}
@@ -544,7 +525,7 @@ function WhereWeAreSection() {
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.45, delay: 0.08, ease: EASE }}
           >
-            We build Volteo from one of the world&apos;s busiest maritime hubs — close to operators, class, and the rhythms of real fleet life.
+            Located in the nerve centre of global maritime
           </motion.p>
         </div>
 
@@ -607,8 +588,8 @@ function TrustAuthoritySection() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.55, delay: 0.05, ease: EASE }}
         >
-          <span style={ttHovesMedium}>Earned at sea. </span>
-          <span style={ltCushion} className="text-[#5aa89e]">Proven across fleets.</span>
+          <span style={ttHovesMedium}>Earned at sea </span>
+          <span style={ltCushion} className="text-[#5aa89e]">Proven across fleets</span>
         </motion.h2>
 
         <motion.p
@@ -740,7 +721,7 @@ function ValuePropsSection() {
           transition={{ duration: 0.55, delay: 0.05, ease: EASE }}
         >
           <span style={ttHovesMedium}>Value grounded in </span>
-          <span style={ltCushion} className="text-[#5aa89e]">real operations.</span>
+          <span style={ltCushion} className="text-[#5aa89e]">real operations</span>
         </motion.h2>
 
         <div className="space-y-24">
@@ -838,7 +819,7 @@ function JourneyTimeline() {
           transition={{ duration: 0.55, delay: 0.05, ease: EASE }}
         >
           <span style={ttHovesMedium}>From thesis to </span>
-          <span style={ltCushion} className="text-[#5aa89e]">trusted platform.</span>
+          <span style={ltCushion} className="text-[#5aa89e]">trusted platform</span>
         </motion.h2>
 
         <div className="relative">

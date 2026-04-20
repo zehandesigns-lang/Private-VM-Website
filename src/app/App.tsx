@@ -9,6 +9,7 @@ import { SmartportPage } from "./components/SmartportPage";
 import { ResourcesPage } from "./components/ResourcesPage";
 import { PledgeWallPage } from "./components/PledgeWallPage";
 import { LoadingScreen } from "./components/LoadingScreen";
+import { EventMonitorPage } from "./components/EventMonitorPage";
 
 /** Persists for SPA session so client nav back to `/` does not replay the full site loader. */
 let volteoSiteIntroDoneGlobal = false;
@@ -49,6 +50,7 @@ export default function App() {
       { path: "/book-demo", element: <BookDemoPage /> },
       { path: "/resources", element: <ResourcesPage /> },
       { path: "/pledge", element: <PledgeWallPage /> },
+      { path: "/event-monitor", element: <EventMonitorPage /> },
     ],
   );
 

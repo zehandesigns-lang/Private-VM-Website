@@ -144,7 +144,7 @@ export function Footer() {
           className="text-[#888]"
           style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 13 }}
         >
-          © {new Date().getFullYear()} Volteo. All rights reserved.
+          © {new Date().getFullYear()} Volteo Maritime Pte Limited. All rights reserved.
         </p>
       </div>
     </footer>

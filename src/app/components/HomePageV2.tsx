@@ -103,10 +103,10 @@ function AdvantageTabs() {
               <p className="text-[#103435] flex flex-wrap items-center gap-2" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: tab === "wayship" ? 500 : 400, fontSize: 15 }}>
                 Wayship
                 <span className="inline-block bg-[#2f615a]/15 px-1.5 py-0.5 text-[9px] font-mono uppercase tracking-wider text-[#0e3233]">
-                  NEW v6
+                  All-New
                 </span>
               </p>
-              <p className="text-[#615D5D] text-[11px] font-mono mt-0.5 hidden sm:block">Crew operations & knowledge platform</p>
+              <p className="text-[#615D5D] text-[11px] font-mono mt-0.5 hidden sm:block">Vessel operations platform</p>
             </div>
           </div>
           <span className="text-[#615D5D] shrink-0">→</span>
@@ -127,7 +127,7 @@ function AdvantageTabs() {
               <p className="text-[#103435]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: tab === "smartport" ? 500 : 400, fontSize: 15 }}>
                 Smartport
               </p>
-              <p className="text-[#615D5D] text-[11px] font-mono mt-0.5 hidden sm:block">Port productivity & revenue platform</p>
+              <p className="text-[#615D5D] text-[11px] font-mono mt-0.5 hidden sm:block">Port productivity suite</p>
             </div>
           </div>
           <span className="text-[#615D5D] shrink-0">→</span>
@@ -147,18 +147,17 @@ function AdvantageTabs() {
               className="text-[#103435] leading-[1.15] mb-4"
               style={{ ...lc, fontSize: "clamp(22px, 2.5vw, 30px)" }}
             >
-              The knowledge layer your fleet has always <em className="not-italic text-[#2f615a]">needed.</em>
+              The operational intelligence layer your fleet always needed
             </h3>
             <p className="text-[#464646] leading-[1.75] mb-8" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 14 }}>
               Maritime runs on institutional knowledge — and that knowledge walks off the gangway at every crew rotation. Wayship captures it, structures it, and makes it available to every officer who steps aboard, regardless of how many times they&apos;ve been on that vessel before.
             </p>
             <ul className="flex flex-col gap-3 mb-8">
               {[
-                "Structured knowledge capture, vessel-specific SOPs and checklists",
-                "Crew onboarding and competency tracking across rotation cycles",
-                "Voice AI for hands-free entry — works fully offline at sea",
-                "Fleet-level reporting and vessel-to-shore knowledge transfer",
-                "ABS type approved · ISO 21745 certified · Works on any vessel type",
+                "Voice-to-action for hands-free knowledge capture — works fully offline.",
+                "AI assistant that surfaces insights from historical vessel data, on demand.",
+                "Full suite of digital records across deck and engine operations — with automatic validation, offline capability, and real-time sync when connected.",
+                "Unified dashboard across every vessel — consolidating operational records, compliance status, and crew performance into clear, actionable fleet-level reporting for shore teams.",
               ].map((line) => (
                 <li key={line} className="flex gap-2 text-[#464646] text-[13.5px] leading-snug" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-[#2f615a]" />
@@ -168,7 +167,7 @@ function AdvantageTabs() {
             </ul>
             <VolteoTextLink href="/wayship">Learn more about Wayship</VolteoTextLink>
           </div>
-          <div className="bg-[#ebe9e3] p-6 md:p-8">
+          <div className="bg-[#ebe9e3] p-6 md:p-8 flex items-center justify-center">
             <div className="border border-[#D9D9D9] bg-[#f3f2ee] overflow-hidden">
               <div className="flex items-center justify-between border-b border-[#D9D9D9] px-4 py-3 bg-[#f3f2ee]/80">
                 <span className="font-mono text-[9px] uppercase tracking-wider text-[#615D5D]">Fleet knowledge · Live</span>
@@ -178,8 +177,8 @@ function AdvantageTabs() {
                 <div className="grid grid-cols-3 gap-px bg-[#D9D9D9] overflow-hidden">
                   {[
                     ["350+", "Vessels"],
-                    ["48k", "Entries / mo"],
-                    ["40h+", "Saved / wk"],
+                    ["150M+", "Entries"],
+                    ["$100M+", "of productivity unlocked"],
                   ].map(([v, l]) => (
                     <div key={l} className="bg-[#f3f2ee] p-3 text-center">
                       <div className="font-mono text-lg text-[#103435]">{v}</div>
@@ -188,10 +187,10 @@ function AdvantageTabs() {
                   ))}
                 </div>
                 {[
-                  ["Nordic Swan · Chief Engineer handover", "2h ago", "g"],
-                  ["Torm Helene · Engine room SOP updated", "4h ago", "g"],
-                  ["CMA Borealis · Crew checklist pending", "5h ago", "a"],
-                  ["AE Resolute · Voice entry logged", "7h ago", "g"],
+                  ["CMA CGM Harmony · Chief Engineer handover", "2h ago", "g"],
+                  ["Olympic Bay · Engine room SOP updated", "4h ago", "g"],
+                  ["Atlantic Pearl · Crew checklist pending", "5h ago", "a"],
+                  ["CMA CGM Bali · Voice entry logged", "7h ago", "g"],
                 ].map(([name, time, kind]) => (
                   <div key={name} className="flex justify-between gap-4 border-b border-[#E4E2DC] last:border-0 pb-2 last:pb-0 text-[12.5px]">
                     <span className="flex items-center gap-2 text-[#464646]">
@@ -201,16 +200,6 @@ function AdvantageTabs() {
                     <span className="font-mono text-[10px] text-[#615D5D] shrink-0">{time}</span>
                   </div>
                 ))}
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-3 mt-4">
-              <div className="border border-[#D9D9D9] p-4 bg-[#f3f2ee]">
-                <div className="font-mono text-xl text-[#2f615a]">6 yrs</div>
-                <div className="text-[11px] text-[#615D5D] mt-1 leading-snug">Deployment data no competitor can match</div>
-              </div>
-              <div className="border border-[#D9D9D9] p-4 bg-[#f3f2ee]">
-                <div className="font-mono text-xl text-[#0e3233]">4 wks</div>
-                <div className="text-[11px] text-[#615D5D] mt-1 leading-snug">Time to first vessel deployment</div>
               </div>
             </div>
           </div>
@@ -292,13 +281,6 @@ function AdvantageTabs() {
                 ))}
               </div>
             </div>
-            <div className="mt-4 border border-[#416668]/25 p-4 bg-[#f3f2ee]">
-              <p className="font-mono text-[10px] uppercase tracking-wider text-[#416668] mb-2">Customer outcome</p>
-              <p className="text-[#464646] text-[13.5px] leading-relaxed" style={{ ...lc, fontSize: 13.5 }}>
-                &ldquo;Smartport gave our port a competitive edge we didn&apos;t expect from software. More vessel calls. Faster turnarounds.&rdquo;
-              </p>
-              <p className="font-mono text-[11px] text-[#615D5D] mt-3">[Port Director] · Placeholder</p>
-            </div>
           </div>
         </div>
       </div>
@@ -346,13 +328,13 @@ function HomeV2CTA() {
             }}
           >
             The next six years start with{" "}
-            <span style={lc}>your fleet.</span>
+            <span style={lc}>your fleet</span>
           </h2>
           <p
             className="text-[#f3f2ee]/80 leading-[1.65] mb-10"
             style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.1vw, 17px)" }}
           >
-            Whether you operate 5 vessels or 500, Volteo Maritime has the platform to help your fleet run with more clarity, more confidence, and less friction.
+            Whether you operate 5 vessels or 500, most fleets are less than 4 weeks from their first deployment — and a fundamentally better way of vessel operations.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 mb-6">
             <Link
@@ -363,17 +345,7 @@ function HomeV2CTA() {
               Get a demo
               <ArrowUpRight size={15} />
             </Link>
-            <a
-              href="#"
-              className="text-[#fcf7e3]/90 border border-[#fcf7e3]/25 px-7 py-3 hover:border-[#fcf7e3]/45 hover:bg-[#fcf7e3]/5 transition-colors duration-150"
-              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}
-            >
-              Talk to a specialist
-            </a>
           </div>
-          <p className="text-[#fcf7e3]/45 font-mono text-[11px]">
-            No commitment · Live on 350+ vessels · ABS, Liberia, Bahamas, Malta, Singapore approved
-          </p>
         </motion.div>
       </div>
     </section>
@@ -416,10 +388,10 @@ export function HomePageV2() {
                   <div className="inline-flex flex-wrap items-center justify-center gap-2 border border-[#fcf7e3]/20 bg-[#fcf7e3]/10 px-3 py-2">
                     <span className="h-1.5 w-1.5 shrink-0 bg-[#fcf7e3]/90 animate-pulse" aria-hidden />
                     <VolteoTextLink
-                      href="https://www.singaporemaritimeweek.com/"
+                      href="https://www.smw.sg/expo-smw-2026/exhibitors-2026"
                       className="!border-[#fcf7e3]/45 !text-[#fcf7e3] hover:!opacity-80"
                     >
-                      Meet us at the Singapore Maritime week 2026
+                      Meet us at Booth S05, Singapore Maritime Week 2026
                     </VolteoTextLink>
                   </div>
                 </motion.div>
@@ -450,7 +422,7 @@ export function HomePageV2() {
                   className="text-[#f3f2ee]/80 max-w-[440px] mx-auto leading-[1.8] mb-8"
                   style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 16 }}
                 >
-                  We started with a single question — why does maritime software treat seafarers as data-entry operators? Six years on, the answer is still driving us forward.
+                  World's leading maritime teams rely on Wayship to transform vessel operations data into structured, searchable intelligence, and Smartport to run secondary ports at their fullest potential
                 </motion.p>
                 <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.2} className="flex flex-wrap gap-3 justify-center">
                   <a
@@ -488,11 +460,11 @@ export function HomePageV2() {
                     style={{ fontSize: "clamp(28px, 3.2vw, 40px)", ...mixedHeadlineTracking }}
                   >
                     <span style={ttHovesMedium}>Here&apos;s a peek into what our last </span>
-                    <span style={lc}>six years were like.</span>
+                    <span style={lc}>six years were like</span>
                   </h2>
                 </div>
                 <p className="text-[#464646] leading-[1.8]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}>
-                  From a founding thesis to $145m+ in documented value created — across crew operations, port productivity, and six years of deployment data that no competitor can replicate.
+                  From a hypothesis to $145m+ in documented value created — across vessel operations, crew performance, and port productivity.
                 </p>
               </div>
 
@@ -505,10 +477,13 @@ export function HomePageV2() {
                     350+
                   </div>
                   <p className="text-[#464646] text-[13px] leading-snug" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>
-                    Vessels rely on Wayship every single day
+                    vessels rely on Wayship every single day
                   </p>
-                  <p className="mt-2 font-mono text-[10.5px] text-[#615D5D] flex items-center gap-1">
-                    <span className="text-[#2f615a]">↑</span> 600+ strong by Q4 2026
+                  <p className="mt-3 inline-flex items-center gap-1.5 font-mono text-[11px] text-[#0e3233] bg-[#e7efe8] border border-[#2f615a]/25 px-2 py-1 rounded-full w-fit">
+                    <span className="text-[#2f615a]" aria-hidden>
+                      ↑
+                    </span>
+                    <span>600+ strong by Q4 2026</span>
                   </p>
                 </StatCell>
                 <StatCell accent="#416668" delay={0.1}>
@@ -519,7 +494,7 @@ export function HomePageV2() {
                     $30b+
                   </div>
                   <p className="text-[#464646] text-[13px] leading-snug" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>
-                    In maritime assets managed across our customer fleet
+                    in maritime assets managed across our customer fleet
                   </p>
                 </StatCell>
                 <StatCell accent="#2f615a" delay={0.15}>
@@ -530,7 +505,7 @@ export function HomePageV2() {
                     $100m+
                   </div>
                   <p className="text-[#464646] text-[13px] leading-snug" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>
-                    Of productivity unlocked by Wayship, bringing focus back to core operations
+                    of productivity unlocked by Wayship, bringing focus back to core operations
                   </p>
                 </StatCell>
                 <StatCell accent="#2f615a" delay={0.2}>
@@ -541,7 +516,7 @@ export function HomePageV2() {
                     $45m+
                   </div>
                   <p className="text-[#464646] text-[13px] leading-snug" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>
-                    Of additional revenue generated for specialised secondary ports via Smartport
+                    of additional revenue generated for specialised secondary ports via Smartport
                   </p>
                 </StatCell>
               </div>
@@ -560,10 +535,10 @@ export function HomePageV2() {
                   style={{ fontSize: "clamp(26px, 3vw, 38px)", ...mixedHeadlineTracking }}
                 >
                   <span style={ttHovesMedium}>Customers who trusted us to help </span>
-                  <span style={lc}>transform their operations.</span>
+                  <span style={lc}>transform their operations</span>
                 </h2>
                 <p className="text-[#464646] leading-[1.8]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}>
-                  Eight world-class operators and port authorities — from the Gulf to the North Atlantic.
+                  Eight world-class operators — from Asia Pacific to Europe
                 </p>
               </div>
 
@@ -580,10 +555,10 @@ export function HomePageV2() {
 
               <div className="mt-10 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 pt-8 border-t border-[#D9D9D9] max-w-[960px] mx-auto">
                 <p className="text-center md:text-left text-[#464646] text-[15px] max-w-md" style={{ ...lc, fontSize: 15 }}>
-                  Type &amp; class approved — proof that maritime&apos;s most rigorous institutions trust us at sea
+                  Approved by leading flags and classification bodies
                 </p>
                 <div className="flex flex-wrap justify-center gap-2">
-                  {["ABS Type Approved", "ISO 21745 Certified", "5 Flag States", "MARPOL Compliant", "Works offline at sea"].map((t) => (
+                  {["ABS Type Approved", "ISO 21745 Certified", "6 Flag States", "MARPOL Compliant", "Works offline at sea"].map((t) => (
                     <span
                       key={t}
                       className="inline-flex items-center gap-1.5 border border-[#D9D9D9] bg-[#f3f2ee] px-2.5 py-1 font-mono text-[10px] text-[#464646]"
@@ -606,12 +581,9 @@ export function HomePageV2() {
                 className="text-[#103435] mb-3"
                 style={{ fontSize: "clamp(28px, 3.2vw, 40px)", ...mixedHeadlineTracking }}
               >
-                <span style={ttHovesMedium}>Two platforms. </span>
-                <span style={lc}>One mission.</span>
+                <span style={ttHovesMedium}>Two platforms </span>
+                <span style={lc}>One mission</span>
               </h2>
-              <p className="text-[#464646] max-w-xl mb-12 leading-[1.8]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 15 }}>
-                Give maritime operators and port authorities the clarity to make better decisions, faster.
-              </p>
               <AdvantageTabs />
             </div>
           </section>

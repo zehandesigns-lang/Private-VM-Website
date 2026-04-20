@@ -28,6 +28,11 @@ function buildNavLinks(pathname: string) {
       href: "/about",
       items: [],
     },
+    {
+      label: "SMW 26",
+      href: "/event-monitor",
+      items: [],
+    },
   ];
 }
 
@@ -462,7 +467,7 @@ export function Header() {
                 className="bg-[#0e3233] hover:bg-[#416668] text-white px-5 py-2.5 text-[15px] will-change-transform transition-none inline-block"
                 style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, letterSpacing: "0.02em" }}
               >
-                Book a demo
+                Get a Demo
               </Link>
             </motion.div>
           </div>
@@ -714,7 +719,7 @@ export function Header() {
                         justifyContent: "center",
                       }}
                     >
-                      Book a demo
+                      Get a Demo
                     </Link>
                   </motion.div>
                 </nav>
