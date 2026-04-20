@@ -89,7 +89,9 @@ export function CTASection({ variant = "default" }: CTASectionProps) {
               </>
             )}
           </p>
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 mb-6">
+          <div
+            className={`flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 ${isTeam ? "" : "mb-6"}`}
+          >
             {isTeam ? (
               <a
                 href="mailto:careers@volteo.com?subject=Careers%20inquiry"
@@ -119,13 +121,11 @@ export function CTASection({ variant = "default" }: CTASectionProps) {
               </>
             )}
           </div>
-          <p className="text-[#fcf7e3]/45 font-mono text-[11px]">
-            {isTeam ? (
-              <>Product · Design · Maritime operations · Remote-friendly</>
-            ) : (
-              <>No commitment · Live on 200+ vessels · ABS, Liberia, Bahamas, Malta, Singapore</>
-            )}
-          </p>
+          {!isTeam ? (
+            <p className="text-[#fcf7e3]/45 font-mono text-[11px]">
+              No commitment · Live on 200+ vessels · ABS, Liberia, Bahamas, Malta, Singapore
+            </p>
+          ) : null}
         </motion.div>
       </div>
     </section>

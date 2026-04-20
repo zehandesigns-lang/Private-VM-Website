@@ -188,14 +188,6 @@ export function BookDemoPage() {
               >
                 Wayship captures operational knowledge across 200+ vessels. Smartport gives secondary ports the digital infrastructure major terminals take for granted. A 30-minute demo covers both — tailored to your operation.
               </p>
-              <div className="flex flex-wrap items-center gap-x-0 gap-y-2 mb-10 font-mono text-[11px] text-[#fcf7e3]/45">
-                {["200+ vessels live", "Ports on Smartport", "Production-proven", "Trusted approvals"].map((t, i) => (
-                  <span key={t} className="flex items-center">
-                    {i > 0 ? <span className="mx-3 hidden sm:inline text-[#fcf7e3]/15">|</span> : null}
-                    {t}
-                  </span>
-                ))}
-              </div>
               <div className="flex flex-wrap items-center gap-3 pt-8 border-t border-[#fcf7e3]/10">
                 <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#fcf7e3]/35 shrink-0">Trusted by</span>
                 <div className="flex flex-wrap items-center gap-2 text-[13px] text-[#fcf7e3]/55" style={{ ...tt, fontWeight: 500 }}>
@@ -377,8 +369,36 @@ export function BookDemoPage() {
                     className="w-full h-auto rounded-md bg-[#0e3233] py-3 text-[15px] font-medium text-white shadow-none hover:bg-[#416668] disabled:opacity-70"
                     style={{ ...tt, fontWeight: 500 }}
                   >
-                    {loading ? "Submitting…" : "Request a demo"}
-                    {!loading ? <ArrowUpRight size={16} className="opacity-90" /> : null}
+                    {loading ? (
+                      <>
+                        <svg
+                          className="size-4 animate-spin"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          aria-hidden
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="3"
+                          />
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 0 1 8-8v3.1A4.9 4.9 0 0 0 7.1 12H4Z"
+                          />
+                        </svg>
+                        Submitting…
+                      </>
+                    ) : (
+                      <>
+                        Request a demo
+                        <ArrowUpRight size={16} className="opacity-90" />
+                      </>
+                    )}
                   </Button>
                   <p className="font-mono text-[10px] text-center text-[#717182] tracking-[0.03em] pt-1">
                     We&apos;ll only use your details to schedule your session.

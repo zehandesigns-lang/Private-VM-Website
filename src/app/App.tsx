@@ -1,4 +1,5 @@
-import { useRoutes, Navigate } from "react-router";
+import { useEffect, useState } from "react";
+import { useLocation, useRoutes, Navigate } from "react-router";
 import { WayshipPage } from "./components/WayshipPage";
 import { HomePageV2 } from "./components/HomePageV2";
 import { PageRouteTransition } from "./components/PageRouteTransition";
@@ -7,8 +8,36 @@ import { BookDemoPage } from "./components/BookDemoPage";
 import { SmartportPage } from "./components/SmartportPage";
 import { ResourcesPage } from "./components/ResourcesPage";
 import { PledgeWallPage } from "./components/PledgeWallPage";
+import { LoadingScreen } from "./components/LoadingScreen";
+
+/** Persists for SPA session so client nav back to `/` does not replay the full site loader. */
+let volteoSiteIntroDoneGlobal = false;
+
+function shouldSkipSiteIntroOnBoot(): boolean {
+  if (typeof window === "undefined") return false;
+  if (volteoSiteIntroDoneGlobal) return true;
+  const p = window.location.pathname || "/";
+  if (p !== "/") {
+    volteoSiteIntroDoneGlobal = true;
+    return true;
+  }
+  return false;
+}
 
 export default function App() {
+  const location = useLocation();
+  const [skipIntro] = useState(() => shouldSkipSiteIntroOnBoot());
+  const [siteLoaderFinished, setSiteLoaderFinished] = useState(skipIntro);
+  const [introScrollUnlocked, setIntroScrollUnlocked] = useState(skipIntro);
+
+  useEffect(() => {
+    const lockForIntro = location.pathname === "/" && !siteLoaderFinished && !introScrollUnlocked;
+    document.body.style.overflow = lockForIntro ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [introScrollUnlocked, siteLoaderFinished, location.pathname]);
+
   const routeElement = useRoutes(
     [
       { path: "/", element: <HomePageV2 /> },
@@ -23,7 +52,22 @@ export default function App() {
     ],
   );
 
+  const showSiteLoader = location.pathname === "/" && !siteLoaderFinished;
+
   return (
-    <PageRouteTransition>{routeElement}</PageRouteTransition>
+    <>
+      {showSiteLoader && (
+        <LoadingScreen
+          onReveal={() => {
+            setIntroScrollUnlocked(true);
+          }}
+          onComplete={() => {
+            volteoSiteIntroDoneGlobal = true;
+            setSiteLoaderFinished(true);
+          }}
+        />
+      )}
+      <PageRouteTransition>{routeElement}</PageRouteTransition>
+    </>
   );
 }

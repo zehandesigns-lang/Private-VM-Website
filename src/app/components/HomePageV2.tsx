@@ -37,13 +37,6 @@ const mixedHeadlineTracking: Pick<CSSProperties, "letterSpacing"> = {
   letterSpacing: "-0.03em",
 };
 
-/** TT Hoves for hero testimonial quote body */
-const ttHovesQuote: CSSProperties = {
-  fontFamily: "'TT Hoves Pro', sans-serif",
-  fontWeight: 400,
-  fontStyle: "normal",
-};
-
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   visible: (d = 0) => ({
@@ -63,55 +56,6 @@ const LOGOS = [
   { src: imgCmaCgm, alt: "CMA CGM", maxH: "max-h-[40px] md:max-h-[48px]" },
   { src: imgMtm, alt: "MTM", maxH: "max-h-[44px] md:max-h-[52px]" },
 ] as const;
-
-function TestimonialCard({
-  quote,
-  initials,
-  name,
-  placeholder,
-  role,
-}: {
-  quote: string;
-  initials: string;
-  name: string;
-  placeholder: boolean;
-  role: string;
-}) {
-  return (
-    <div className="relative border border-[#D9D9D9] bg-[#f3f2ee] p-6 md:p-7">
-      <span
-        className="absolute left-5 top-3 text-[48px] leading-none text-[#2f615a]/20"
-        style={{ ...ttHovesQuote, fontWeight: 500 }}
-        aria-hidden
-      >
-        &ldquo;
-      </span>
-      <p
-        className="relative z-[1] pt-8 text-[#464646] leading-[1.65]"
-        style={{ ...ttHovesQuote, fontSize: 15 }}
-      >
-        {quote}
-      </p>
-      <div className="mt-5 flex items-center gap-3 border-t border-[#D9D9D9] pt-4">
-        <div
-          className="flex h-8 w-8 shrink-0 items-center justify-center border border-[#2f615a]/30 bg-[#2f615a]/10 text-[10px] text-[#0e3233]"
-          style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}
-        >
-          {initials}
-        </div>
-        <div>
-          <p className="text-[#103435]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 13 }}>
-            {name}
-            {placeholder && (
-              <span className="ml-1.5 font-mono text-[10px] text-[#615D5D]">· Placeholder</span>
-            )}
-          </p>
-          <p className="text-[#615D5D] text-[11px] font-mono">{role}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function StatCell({
   accent,
@@ -449,79 +393,81 @@ export function HomePageV2() {
       <div className="relative">
         <Header />
         <main className="pt-[72px]">
-          {/* Hero */}
-          <section id="hero" className="relative overflow-hidden">
-            <SideRailOverlay className="z-[0]" />
-            <div className="relative z-[1] mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px] py-14 md:py-20 lg:py-24">
-              <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-start">
-                <div>
-                  <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.05} className="mb-6">
-                    <div className="inline-flex flex-wrap items-center gap-2 border border-[#D9D9D9] bg-[#f3f2ee] px-3 py-2">
-                      <span className="h-1.5 w-1.5 shrink-0 bg-[#2f615a] animate-pulse" aria-hidden />
-                      <VolteoTextLink href="https://www.singaporemaritimeweek.com/">
-                        Join the #NoPaperForWork movement at SMW 2026
-                      </VolteoTextLink>
-                    </div>
-                  </motion.div>
-                  <motion.h1
-                    variants={fadeUp}
-                    initial="hidden"
-                    animate="visible"
-                    custom={0.1}
-                    className="text-[#103435] leading-[1.05] tracking-[-1px] mb-6"
-                    style={{ fontSize: "clamp(36px, 4.5vw, 56px)" }}
-                  >
-                    <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>
-                      Celebrating 6 years of
-                      <br />
-                    </span>
-                    <span style={lc} className="text-[#2f615a]">
-                      reimagining maritime.
-                    </span>
-                  </motion.h1>
-                  <motion.p
-                    variants={fadeUp}
-                    initial="hidden"
-                    animate="visible"
-                    custom={0.15}
-                    className="text-[#464646] max-w-[440px] leading-[1.8] mb-8"
-                    style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 16 }}
-                  >
-                    We started with a single question — why does maritime software treat seafarers as data-entry operators? Six years on, the answer is still driving us forward.
-                  </motion.p>
-                  <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.2} className="flex flex-wrap gap-3">
-                    <a
-                      href="#rewind"
-                      className="inline-flex items-center gap-2 bg-[#0e3233] text-white px-6 py-3 hover:bg-[#416668] transition-colors"
-                      style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
+          {/* Hero — same dither + radial stack as bottom CTA, inverted (cream) foreground */}
+          <section id="hero" className="relative z-0 w-full overflow-hidden">
+            <div className="absolute inset-0 bg-[#0e3233]" aria-hidden />
+            <div
+              className="absolute inset-0"
+              aria-hidden
+              style={{
+                background: `
+            radial-gradient(ellipse 130% 70% at 50% -35%, rgba(252, 247, 227, 0.16), transparent 52%),
+            radial-gradient(ellipse 55% 45% at 100% 105%, rgba(0, 0, 0, 0.45), transparent 50%),
+            radial-gradient(ellipse 50% 40% at 0% 80%, rgba(65, 102, 104, 0.35), transparent 55%),
+            linear-gradient(168deg, #0e3233 0%, #0b282a 42%, #0d2f30 100%)
+          `,
+              }}
+            />
+            <AnimatedDitherBackground className="pointer-events-none z-[1] opacity-[0.72]" ditherMix={0.34} />
+
+            <div className="relative z-10 mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px] py-24 md:py-28 lg:py-32">
+              <div className="flex flex-col items-center text-center">
+                <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.05} className="mb-6">
+                  <div className="inline-flex flex-wrap items-center justify-center gap-2 border border-[#fcf7e3]/20 bg-[#fcf7e3]/10 px-3 py-2">
+                    <span className="h-1.5 w-1.5 shrink-0 bg-[#fcf7e3]/90 animate-pulse" aria-hidden />
+                    <VolteoTextLink
+                      href="https://www.singaporemaritimeweek.com/"
+                      className="!border-[#fcf7e3]/45 !text-[#fcf7e3] hover:!opacity-80"
                     >
-                      Our story →
-                    </a>
-                    <a
-                      href="#advantage"
-                      className="inline-flex items-center border border-[#D9D9D9] text-[#464646] px-6 py-3 hover:border-[#0e3233]/30 transition-colors"
-                      style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}
-                    >
-                      Explore products
-                    </a>
-                  </motion.div>
-                </div>
-                <div className="flex flex-col gap-4">
-                  <TestimonialCard
-                    quote="Wayship has fundamentally changed how we transfer knowledge at sea. What used to walk off the gangway with every crew rotation now stays on the ship — and compounds over time."
-                    initials="NG"
-                    name="Nabo Ghosh"
-                    placeholder
-                    role="Eastern Pacific Shipping"
-                  />
-                  <TestimonialCard
-                    quote={`We went from three days of vessel handover to half a day. On tankers where an hour matters, that's not a feature — that's how you keep crew focused on what actually matters.`}
-                    initials="AS"
-                    name="Adam Smith"
-                    placeholder
-                    role="Teekay"
-                  />
-                </div>
+                      Meet us at the Singapore Maritime week 2026
+                    </VolteoTextLink>
+                  </div>
+                </motion.div>
+                <motion.h1
+                  variants={fadeUp}
+                  initial="hidden"
+                  animate="visible"
+                  custom={0.1}
+                  className="text-[#fcf7e3] leading-[1.05] tracking-[-1px] mb-6"
+                  style={{
+                    fontSize: "clamp(36px, 4.5vw, 56px)",
+                    textShadow: "0 1px 24px rgba(0,0,0,0.25)",
+                  }}
+                >
+                  <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>
+                    Celebrating 6 years of
+                    <br />
+                  </span>
+                  <span style={lc} className="text-[#d8ebe8]">
+                    reimagining maritime.
+                  </span>
+                </motion.h1>
+                <motion.p
+                  variants={fadeUp}
+                  initial="hidden"
+                  animate="visible"
+                  custom={0.15}
+                  className="text-[#f3f2ee]/80 max-w-[440px] mx-auto leading-[1.8] mb-8"
+                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 16 }}
+                >
+                  We started with a single question — why does maritime software treat seafarers as data-entry operators? Six years on, the answer is still driving us forward.
+                </motion.p>
+                <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.2} className="flex flex-wrap gap-3 justify-center">
+                  <a
+                    href="#rewind"
+                    className="inline-flex items-center gap-2 bg-[#fcf7e3] text-[#0e3233] px-6 py-3 hover:bg-white transition-colors duration-150 shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
+                    style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
+                  >
+                    Our story →
+                  </a>
+                  <a
+                    href="#advantage"
+                    className="inline-flex items-center border border-[#fcf7e3]/25 text-[#fcf7e3]/90 px-6 py-3 hover:border-[#fcf7e3]/45 hover:bg-[#fcf7e3]/5 transition-colors duration-150"
+                    style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}
+                  >
+                    Explore products
+                  </a>
+                </motion.div>
               </div>
             </div>
           </section>
