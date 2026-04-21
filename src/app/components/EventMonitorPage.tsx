@@ -558,11 +558,6 @@ export function EventMonitorPage() {
         }}
       />
 
-      {/* Customer logos — above falling papers, below headline */}
-      <div className="absolute bottom-[min(22vh,220px)] left-0 right-0 z-[14] pointer-events-none">
-        <CustomerLogoTicker variant="dark" />
-      </div>
-
       {/* Sound toggle — minimal top-right */}
       <button
         type="button"
@@ -664,6 +659,15 @@ export function EventMonitorPage() {
           6 years. <Stat v="5+" l="million type and class approved records" />, across{" "}
           <Stat v="350+" l="vessels" />.
         </motion.p>
+
+        <motion.div
+          className="relative left-1/2 mt-8 md:mt-10 w-screen max-w-[100vw] -translate-x-1/2 pointer-events-auto"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 1.15, ease: EASE }}
+        >
+          <CustomerLogoTicker variant="dark" />
+        </motion.div>
       </div>
 
       {/* Paper eater — flush with the bottom of the screen */}
