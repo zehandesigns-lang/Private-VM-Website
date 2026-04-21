@@ -1,7 +1,7 @@
 name: Deploy App to vercel
 'on':
-  push:
-    branches:
+  pull_request:
+    branches: 
       - main
 jobs:
   trigger-deploy:
