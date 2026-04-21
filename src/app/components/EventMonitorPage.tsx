@@ -594,7 +594,7 @@ export function EventMonitorPage() {
             ...tt,
             fontWeight: 500,
             lineHeight: 0.98,
-            fontSize: "clamp(48px, 6.4vw, 120px)",
+            fontSize: "clamp(38px, 5.12vw, 96px)",
             textShadow: "0 2px 40px rgba(0,0,0,0.55), 0 1px 12px rgba(0,0,0,0.45)",
           }}
           initial={{ opacity: 0, y: 18, filter: "blur(8px)" }}
@@ -632,7 +632,7 @@ export function EventMonitorPage() {
             ...tt,
             fontWeight: 500,
             lineHeight: 1.22,
-            fontSize: "calc(0.6 * clamp(48px, 6.4vw, 120px))",
+            fontSize: "clamp(23px, 3.07vw, 58px)",
             textShadow: "0 2px 28px rgba(0,0,0,0.5), 0 1px 10px rgba(0,0,0,0.45)",
           }}
           initial={{ opacity: 0, y: 12 }}
@@ -660,7 +660,7 @@ export function EventMonitorPage() {
           style={{
             ...tt,
             fontWeight: 400,
-            fontSize: "clamp(20px, 1.69vw, 33px)",
+            fontSize: "clamp(16px, 1.35vw, 26px)",
             lineHeight: 1.5,
             maxWidth: 960,
             textShadow: "0 1px 20px rgba(0,0,0,0.6)",
