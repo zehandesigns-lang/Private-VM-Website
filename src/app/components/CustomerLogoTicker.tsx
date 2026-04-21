@@ -10,19 +10,19 @@ import imgCmaCgm from "@/assets/logos/cma-cgm.png";
 import imgMtm from "@/assets/logos/mtm.png";
 
 const CUSTOMER_LOGOS = [
-  { src: imgEasternPacific, alt: "Eastern Pacific Shipping", h: "h-[53px]" },
-  { src: imgTorm, alt: "TORM", h: "h-[48px]" },
-  { src: imgTk, alt: "Teekay", h: "h-[53px]" },
-  { src: imgWilhelmsen, alt: "Wilhelmsen", h: "h-[53px]" },
-  { src: imgUnionMarine, alt: "Union Marine Management", h: "h-[53px]" },
-  { src: imgZamil, alt: "Zamil Marine", h: "h-[53px]" },
-  { src: imgCmaCgm, alt: "CMA CGM", h: "h-[48px]" },
-  { src: imgMtm, alt: "MTM", h: "h-[53px]" },
+  { src: imgEasternPacific, alt: "Eastern Pacific Shipping", h: "h-[69px]" },
+  { src: imgTorm, alt: "TORM", h: "h-[62px]" },
+  { src: imgTk, alt: "Teekay", h: "h-[69px]" },
+  { src: imgWilhelmsen, alt: "Wilhelmsen", h: "h-[69px]" },
+  { src: imgUnionMarine, alt: "Union Marine Management", h: "h-[69px]" },
+  { src: imgZamil, alt: "Zamil Marine", h: "h-[69px]" },
+  { src: imgCmaCgm, alt: "CMA CGM", h: "h-[62px]" },
+  { src: imgMtm, alt: "MTM", h: "h-[69px]" },
 ] as const;
 
 function logoSizeClass(logo: (typeof CUSTOMER_LOGOS)[number], isDark: boolean) {
   if (!isDark) return logo.h;
-  return logo.h.includes("[48px]") ? "h-[36px] md:h-[48px]" : "h-[39px] md:h-[53px]";
+  return logo.h.includes("[62px]") ? "h-[47px] md:h-[62px]" : "h-[51px] md:h-[69px]";
 }
 
 export type CustomerLogoTickerProps = {
@@ -117,7 +117,7 @@ export function CustomerLogoTicker({ variant, className = "" }: CustomerLogoTick
   const track = (
     <div
       ref={containerRef}
-      className="relative min-h-[67px] w-full min-w-0 overflow-hidden md:min-h-[78px]"
+      className="relative min-h-[87px] w-full min-w-0 overflow-hidden md:min-h-[101px]"
       style={edgeMask}
       role="region"
       aria-label="Partner logos"

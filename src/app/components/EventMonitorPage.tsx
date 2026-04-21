@@ -317,22 +317,6 @@ function PaperEater({ chompCount }: { chompCount: number }) {
   );
 }
 
-function Stat({ v, l }: { v: string; l: string }) {
-  return (
-    <span className="inline-flex items-baseline gap-1.5 align-baseline">
-      <span className="text-[#fcf7e3] leading-none" style={{ ...lc, fontSize: "1.05em" }}>
-        {v}
-      </span>
-      <span
-        className="text-[#fcf7e3]/65"
-        style={{ ...tt, fontWeight: 400, fontSize: "0.55em", letterSpacing: "0.06em", textTransform: "uppercase" }}
-      >
-        {l}
-      </span>
-    </span>
-  );
-}
-
 export function EventMonitorPage() {
   const prefersReducedMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -643,7 +627,36 @@ export function EventMonitorPage() {
         </motion.h1>
 
         <motion.p
-          className="mt-8 md:mt-10 text-[#fcf7e3]/85 mx-auto"
+          className="mt-5 md:mt-7 mx-auto max-w-[1100px] text-[#fcf7e3] pointer-events-auto"
+          style={{
+            ...tt,
+            fontWeight: 500,
+            lineHeight: 1.22,
+            fontSize: "calc(0.6 * clamp(48px, 6.4vw, 120px))",
+            textShadow: "0 2px 28px rgba(0,0,0,0.5), 0 1px 10px rgba(0,0,0,0.45)",
+          }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: 0.72, ease: EASE }}
+        >
+          Join the #NoPaperForWork club with{" "}
+          <Link
+            to="/wayship"
+            className="text-[#fcf7e3] underline decoration-[#fcf7e3]/45 underline-offset-[0.18em] transition-opacity hover:opacity-85"
+          >
+            Wayship
+          </Link>{" "}
+          and{" "}
+          <Link
+            to="/smartport"
+            className="text-[#fcf7e3] underline decoration-[#fcf7e3]/45 underline-offset-[0.18em] transition-opacity hover:opacity-85"
+          >
+            Smartport
+          </Link>
+        </motion.p>
+
+        <motion.p
+          className="mt-6 md:mt-8 text-[#fcf7e3]/88 mx-auto"
           style={{
             ...tt,
             fontWeight: 400,
@@ -654,17 +667,16 @@ export function EventMonitorPage() {
           }}
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.0, ease: EASE }}
+          transition={{ duration: 0.7, delay: 0.95, ease: EASE }}
         >
-          6 years. <Stat v="5+" l="million type and class approved records" />, across{" "}
-          <Stat v="350+" l="vessels" />.
+          6 years. 5+ million type and class approved records, across 350+ vessels.
         </motion.p>
 
         <motion.div
           className="relative left-1/2 mt-8 md:mt-10 w-screen max-w-[100vw] -translate-x-1/2 pointer-events-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.15, ease: EASE }}
+          transition={{ duration: 0.6, delay: 1.12, ease: EASE }}
         >
           <CustomerLogoTicker variant="dark" />
         </motion.div>
