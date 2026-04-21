@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "react-router";
 import { motion, useAnimation, useReducedMotion } from "motion/react";
 import { AnimatedDitherBackground } from "./AnimatedDitherBackground";
+import { CustomerLogoTicker } from "./CustomerLogoTicker";
+import { VolteoLogo } from "./VolteoLogo";
 import sfxScissorsCut from "@/assets/sfx/scissors-cut.mp3";
-import { Link } from "react-router";
-
 const RADIAL_STACK = `
   radial-gradient(ellipse 130% 70% at 50% -35%, rgba(252, 247, 227, 0.14), transparent 52%),
   radial-gradient(ellipse 55% 45% at 100% 105%, rgba(0, 0, 0, 0.45), transparent 50%),
@@ -312,36 +313,6 @@ function PaperEater({ chompCount }: { chompCount: number }) {
         style={{ transformOrigin: "1763px 128.5px" }}
         animate={slotCtl}
       />
-
-      {/* VOLTEO brand label on the pedestal */}
-      <text
-        x="1763"
-        y="228"
-        textAnchor="middle"
-        fill="#0e3233"
-        style={{
-          fontFamily: "'TT Hoves Pro', sans-serif",
-          fontWeight: 600,
-          fontSize: 44,
-          letterSpacing: "0.35em",
-        }}
-      >
-        VOLTEO
-      </text>
-      <text
-        x="1763"
-        y="258"
-        textAnchor="middle"
-        fill="#464646"
-        style={{
-          fontFamily: "'TT Hoves Pro', sans-serif",
-          fontWeight: 400,
-          fontSize: 16,
-          letterSpacing: "0.28em",
-        }}
-      >
-        MARITIME · SIX YEARS
-      </text>
     </motion.svg>
   );
 }
@@ -572,18 +543,6 @@ export function EventMonitorPage() {
       className="relative min-h-[100svh] bg-[#0e3233] overflow-hidden select-none"
       style={{ WebkitTapHighlightColor: "transparent" }}
     >
-      {/* Minimal chrome for monitor mode */}
-      <div className="absolute top-6 left-6 z-[25]">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 rounded-full border border-[#fcf7e3]/20 bg-black/20 px-3 py-2 text-[11px] uppercase tracking-[0.22em] text-[#fcf7e3]/80 backdrop-blur-md hover:bg-black/30"
-          style={tt}
-        >
-          <span aria-hidden>←</span>
-          Back to home
-        </Link>
-      </div>
-
       {/* Background */}
       <div className="absolute inset-0 bg-[#0e3233]" aria-hidden />
       <div className="absolute inset-0" aria-hidden style={{ background: RADIAL_STACK }} />
@@ -599,22 +558,16 @@ export function EventMonitorPage() {
         }}
       />
 
-      {/* Eyebrow */}
-      <div className="absolute top-[92px] left-1/2 -translate-x-1/2 z-[20] flex items-center gap-3">
-        <span className="relative flex h-2 w-2">
-          <span className="absolute inline-flex h-full w-full rounded-full bg-[#fcf7e3]/70 animate-ping opacity-60" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-[#fcf7e3]" />
-        </span>
-        <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#fcf7e3]/75">
-          Volteo · Six years of reimagining maritime
-        </span>
+      {/* Customer logos — above falling papers, below headline */}
+      <div className="absolute bottom-[min(22vh,220px)] left-0 right-0 z-[14] pointer-events-none">
+        <CustomerLogoTicker variant="dark" />
       </div>
 
-      {/* Sound toggle */}
+      {/* Sound toggle — minimal top-right */}
       <button
         type="button"
         onClick={() => setSoundOn((v) => !v)}
-        className="absolute top-[86px] right-6 z-[21] rounded-full border border-[#fcf7e3]/20 bg-black/20 px-3 py-2 text-[11px] uppercase tracking-[0.22em] text-[#fcf7e3]/80 backdrop-blur-md hover:bg-black/30"
+        className="absolute top-[0.65rem] right-[0.65rem] z-[25] border-0 bg-transparent px-0.5 py-0.5 text-[9px] font-normal uppercase tracking-[0.14em] text-[#fcf7e3]/40 transition-colors hover:text-[#fcf7e3]/70"
         style={tt}
       >
         {soundOn ? "Sound on" : "Sound off"}
@@ -642,6 +595,20 @@ export function EventMonitorPage() {
 
       {/* Headline — sits between stack and eater, text-shadow keeps it crisp */}
       <div className="absolute left-1/2 -translate-x-1/2 top-[44%] -translate-y-1/2 z-[15] w-full max-w-[1500px] px-10 text-center pointer-events-none">
+        <motion.div
+          className="mb-7 md:mb-9 flex justify-center pointer-events-auto"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: 0.05, ease: EASE }}
+        >
+          <Link
+            to="/"
+            className="inline-flex shrink-0 outline-offset-4 rounded-sm transition-opacity hover:opacity-85 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-[#fcf7e3]/50"
+            aria-label="Volteo — back to home"
+          >
+            <VolteoLogo color="#fcf7e3" />
+          </Link>
+        </motion.div>
         <motion.h1
           className="text-[#fcf7e3] tracking-[-0.025em]"
           style={{
@@ -655,11 +622,10 @@ export function EventMonitorPage() {
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
         >
-          Shipping shouldn&apos;t still{" "}
+          It&apos;s 2026, and shipping shouldn&apos;t still run on{" "}
           <span className="whitespace-nowrap">
-            run on{" "}
             <span style={lc} className="relative inline-block text-[#fcf7e3]">
-              paper.
+              paper!
               <motion.svg
                 className="absolute left-0 -bottom-2 w-full h-[0.3em]"
                 viewBox="0 0 400 30"
@@ -695,9 +661,8 @@ export function EventMonitorPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 1.0, ease: EASE }}
         >
-          Six years. <Stat v="5M" l="type & class approved records" /> across{" "}
-          <Stat v="350+" l="vessels" /> operated by{" "}
-          <Stat v="8" l="top-tier ship managers" />.
+          6 years. <Stat v="5+" l="million type and class approved records" />, across{" "}
+          <Stat v="350+" l="vessels" />.
         </motion.p>
       </div>
 

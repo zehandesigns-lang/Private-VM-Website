@@ -5,14 +5,7 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { CTASection } from "./CTASection";
 import { RailDivider } from "./RailDivider";
-import imgEasternPacific from "@/assets/logos/eastern-pacific.png";
-import imgTorm from "@/assets/logos/torm.png";
-import imgCmaCgm from "@/assets/logos/cma-cgm.png";
-import imgTk from "@/assets/logos/tk.png";
-import imgUnionMarine from "@/assets/logos/union-marine.png";
-import imgWilhelmsen from "@/assets/logos/wilhelmsen.png";
-import imgZamil from "@/assets/logos/zamil.png";
-import imgMtm from "@/assets/logos/mtm.png";
+import { CustomerLogoTicker } from "./CustomerLogoTicker";
 import svgEpsVentures from "@/assets/logos/eps-ventures.svg";
 import svgTechstars from "@/assets/logos/techstars.svg";
 import svgZeebox from "@/assets/logos/zeebox.svg";
@@ -249,67 +242,6 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
   }, [display]);
 
   return <span ref={ref}>0{suffix}</span>;
-}
-
-/* ------------------------------------------------------------------ */
-/*  Logo ticker                                                       */
-/* ------------------------------------------------------------------ */
-
-const LOGOS = [
-  { src: imgEasternPacific, alt: "Eastern Pacific Shipping", h: "h-[38px]" },
-  { src: imgTorm,           alt: "TORM",                     h: "h-[34px]" },
-  { src: imgTk,             alt: "Teekay",                   h: "h-[38px]" },
-  { src: imgWilhelmsen,     alt: "Wilhelmsen",               h: "h-[38px]" },
-  { src: imgUnionMarine,    alt: "Union Marine Management",  h: "h-[38px]" },
-  { src: imgZamil,          alt: "Zamil Marine",             h: "h-[38px]" },
-  { src: imgCmaCgm,         alt: "CMA CGM",                  h: "h-[34px]" },
-  { src: imgMtm,            alt: "MTM",                      h: "h-[38px]" },
-] as const;
-
-function LogoTicker() {
-  return (
-    <div className="bg-[#f3f2ee] py-7">
-      {/* Constrain to the same width as the side rails — label + marquee like Wayship */}
-      <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px]">
-        <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-x-6 md:gap-x-10 sm:gap-y-4">
-          <p
-            className="text-[#464646] uppercase tracking-widest text-[10px] shrink-0 sm:self-center"
-            style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}
-          >
-            Trusted by
-          </p>
-          <div className="relative overflow-hidden w-full sm:flex-1 sm:min-w-0">
-            {/* Left + right fade — inside the marquee track */}
-            <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-[#f3f2ee] to-transparent z-10 pointer-events-none" />
-            <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-[#f3f2ee] to-transparent z-10 pointer-events-none" />
-
-            {/* Two sets of logos for seamless loop */}
-            <div
-              className="flex items-center gap-16 w-max"
-              style={{ animation: "volteo-ticker 36s linear infinite" }}
-            >
-              {[...LOGOS, ...LOGOS].map((logo, i) => (
-                <img
-                  key={i}
-                  src={logo.src}
-                  alt={logo.alt}
-                  className={`${logo.h} w-auto object-contain grayscale opacity-40 shrink-0 select-none`}
-                  draggable={false}
-                />
-              ))}
-            </div>
-
-            <style>{`
-            @keyframes volteo-ticker {
-              0%   { transform: translateX(0); }
-              100% { transform: translateX(-50%); }
-            }
-          `}</style>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
 }
 
 /* ------------------------------------------------------------------ */
@@ -955,7 +887,7 @@ export function AboutPageV2() {
 
       <main className="bg-[#f3f2ee]">
         <HeroSection />
-        <LogoTicker />
+        <CustomerLogoTicker variant="light" />
         <RailDivider />
         <FounderNoteSection />
         <RailDivider />
