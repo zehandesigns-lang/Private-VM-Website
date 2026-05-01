@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "motion/react";
 import imgEasternPacific from "@/assets/logos/eastern-pacific.png";
-import imgTorm from "@/assets/logos/torm.png";
+import imgAngloEastern from "@/assets/logos/angloeastern.png";
 import imgCmaCgm from "@/assets/logos/cma-cgm.png";
 import imgTk from "@/assets/logos/tk.png";
 import imgUnionMarine from "@/assets/logos/union-marine.png";
@@ -85,7 +85,7 @@ function StatCard({ prefix = "", value, suffix, description, badge, start, borde
 const LOGOS = [
   { src: imgEasternPacific, alt: "Eastern Pacific Shipping", maxH: "max-h-[52px] md:max-h-[64px]" },
   { src: imgTk,             alt: "TK",                       maxH: "max-h-[52px] md:max-h-[64px]" },
-  { src: imgTorm,           alt: "TORM",                     maxH: "max-h-[46px] md:max-h-[58px]" },
+  { src: imgAngloEastern,   alt: "Anglo Eastern",             maxH: "max-h-[46px] md:max-h-[58px]" },
   { src: imgCmaCgm,         alt: "CMA CGM",                  maxH: "max-h-[46px] md:max-h-[58px]" },
   { src: imgMtm,            alt: "MTM",                      maxH: "max-h-[52px] md:max-h-[64px]" },
   { src: imgZamil,          alt: "Zamil Marine",             maxH: "max-h-[52px] md:max-h-[64px]" },

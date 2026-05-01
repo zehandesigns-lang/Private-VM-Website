@@ -191,7 +191,7 @@ export function BookDemoPage() {
               <div className="flex flex-wrap items-center gap-3 pt-8 border-t border-[#fcf7e3]/10">
                 <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#fcf7e3]/35 shrink-0">Trusted by</span>
                 <div className="flex flex-wrap items-center gap-2 text-[13px] text-[#fcf7e3]/55" style={{ ...tt, fontWeight: 500 }}>
-                  {["EPS", "Teekay", "TORM", "CMA CGM"].map((name, i, a) => (
+                  {["Eastern Pacific Shipping", "Teekay", "Wilhelmsen"].map((name, i, a) => (
                     <span key={name} className="flex items-center gap-2">
                       {name}
                       {i < a.length - 1 ? <span className="text-[#fcf7e3]/20">·</span> : null}
@@ -203,7 +203,7 @@ export function BookDemoPage() {
 
             <div className="rounded-xl border border-[#D9D9D9] bg-white overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.14)]">
               {!submitted ? (
-                <form onSubmit={onSubmit} className="p-6 md:p-7 space-y-3 bg-white">
+                <form onSubmit={onSubmit} className="p-7 md:p-9 space-y-4 bg-white">
                   {showFillTestData ? (
                     <div className="flex justify-end -mt-1 mb-1">
                       <button
@@ -448,7 +448,7 @@ export function BookDemoPage() {
             className="text-[#464646] uppercase tracking-[0.12em] mb-4"
             style={{ ...tt, fontWeight: 500, fontSize: 11 }}
           >
-            Our platforms
+            Our products
           </p>
           <h2
             className="text-[#103435] leading-[1.08] tracking-[-1.5px] max-w-[560px] mb-12 md:mb-14"
@@ -464,7 +464,7 @@ export function BookDemoPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#D9D9D9] border border-[#D9D9D9] overflow-hidden">
             <div className="relative bg-[#f3f2ee] p-8 md:p-10 hover:bg-[#ebe9e3]/80 transition-colors group flex flex-col">
               <span className="inline-block w-fit font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-none border border-[#D9D9D9] bg-[#f3f2ee] text-[#0e3233] mb-5">
-                Wayship · Vessel
+                Wayship · Vessel Operations
               </span>
               <h3
                 className="text-[#103435] leading-[1.12] tracking-[-0.5px] mb-3"
@@ -489,7 +489,7 @@ export function BookDemoPage() {
             </div>
             <div className="relative bg-[#f3f2ee] p-8 md:p-10 hover:bg-[#ebe9e3]/80 transition-colors flex flex-col">
               <span className="inline-block w-fit font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-none border border-[#D9D9D9] bg-[#f3f2ee] text-[#0e3233] mb-5">
-                Smartport · Port
+                Smartport · Port Productivity
               </span>
               <h3
                 className="text-[#103435] leading-[1.12] tracking-[-0.5px] mb-3"

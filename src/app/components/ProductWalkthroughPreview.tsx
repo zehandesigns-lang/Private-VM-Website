@@ -102,10 +102,10 @@ function WayshipPreview() {
       <div className="flex gap-2 flex-1 min-h-0">
         <div className="flex flex-col items-center justify-end w-[72px] shrink-0 rounded-md border border-[#D9D9D9]/80 bg-white/60 backdrop-blur-[2px] px-1 pt-2 pb-2">
           <span
-            className="text-[9px] uppercase tracking-[0.08em] text-[#0e3233]/55 mb-1"
+            className="text-[9px] uppercase tracking-[0.08em] text-[#0e3233]/55 mb-1 text-center leading-tight"
             style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600 }}
           >
-            Voice
+            Voice AI
           </span>
           <VoiceBars />
         </div>
@@ -116,7 +116,7 @@ function WayshipPreview() {
               className="text-[9px] uppercase tracking-wide text-[#0e3233]/50 mb-1"
               style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600 }}
             >
-              LLM assistant
+              AI Assistant
             </p>
             <div className="space-y-1.5">
               <div
@@ -144,7 +144,7 @@ function WayshipPreview() {
               className="text-[9px] uppercase tracking-wide text-[#0e3233]/55 mb-1"
               style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600 }}
             >
-              Digital logbook
+              Digital Records
             </p>
             <div className="space-y-1 font-mono text-[9px] leading-tight text-[#262627]/90">
               <div

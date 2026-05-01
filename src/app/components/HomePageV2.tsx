@@ -5,10 +5,11 @@ import { ArrowUpRight } from "lucide-react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { ContentDivider, SideRailOverlay } from "./RailDivider";
+import { CustomerLogoTicker } from "./CustomerLogoTicker";
 import { VolteoTextLink } from "./VolteoTextLink";
 import { AnimatedDitherBackground } from "./AnimatedDitherBackground";
 import imgEasternPacific from "@/assets/logos/eastern-pacific.png";
-import imgTorm from "@/assets/logos/torm.png";
+import imgUmms from "@/assets/logos/umms.png";
 import imgCmaCgm from "@/assets/logos/cma-cgm.png";
 import imgTk from "@/assets/logos/tk.png";
 import imgUnionMarine from "@/assets/logos/union-marine.png";
@@ -46,15 +47,17 @@ const fadeUp = {
   }),
 };
 
+// fleet: "full" | "partial" — controls the on-hover label per Venkata's review.
+// NOTE: Best-guess Full/Partial split below — please verify against Figma comment markers.
 const LOGOS = [
-  { src: imgEasternPacific, alt: "Eastern Pacific Shipping", maxH: "max-h-[44px] md:max-h-[52px]" },
-  { src: imgTorm, alt: "TORM", maxH: "max-h-[40px] md:max-h-[48px]" },
-  { src: imgTk, alt: "Teekay", maxH: "max-h-[44px] md:max-h-[52px]" },
-  { src: imgWilhelmsen, alt: "Wilhelmsen", maxH: "max-h-[44px] md:max-h-[52px]" },
-  { src: imgUnionMarine, alt: "Union Marine Management", maxH: "max-h-[44px] md:max-h-[52px]" },
-  { src: imgZamil, alt: "Zamil Marine", maxH: "max-h-[44px] md:max-h-[52px]" },
-  { src: imgCmaCgm, alt: "CMA CGM", maxH: "max-h-[40px] md:max-h-[48px]" },
-  { src: imgMtm, alt: "MTM", maxH: "max-h-[44px] md:max-h-[52px]" },
+  { src: imgEasternPacific, alt: "Eastern Pacific Shipping", maxH: "max-h-[44px] md:max-h-[52px]", fleet: "full" },
+  { src: imgUmms, alt: "UMMS", maxH: "max-h-[40px] md:max-h-[48px]", fleet: "full" },
+  { src: imgTk, alt: "Teekay", maxH: "max-h-[44px] md:max-h-[52px]", fleet: "full" },
+  { src: imgWilhelmsen, alt: "Wilhelmsen", maxH: "max-h-[44px] md:max-h-[52px]", fleet: "full" },
+  { src: imgUnionMarine, alt: "Union Marine Management", maxH: "max-h-[44px] md:max-h-[52px]", fleet: "partial" },
+  { src: imgZamil, alt: "Zamil Marine", maxH: "max-h-[44px] md:max-h-[52px]", fleet: "partial" },
+  { src: imgCmaCgm, alt: "CMA CGM", maxH: "max-h-[40px] md:max-h-[48px]", fleet: "partial" },
+  { src: imgMtm, alt: "MTM", maxH: "max-h-[44px] md:max-h-[52px]", fleet: "partial" },
 ] as const;
 
 function StatCell({
@@ -139,10 +142,6 @@ function AdvantageTabs() {
       <div className={tab !== "wayship" ? "hidden" : ""}>
         <div className="grid grid-cols-1 items-stretch lg:grid-cols-2 border border-t-0 border-[#D9D9D9] overflow-hidden">
           <div className="border-b lg:border-b-0 lg:border-r border-[#D9D9D9] p-8 md:p-10 lg:p-12">
-            <p className="mb-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.08em] text-[#2f615a]">
-              <span className="h-1 w-1 shrink-0 bg-[#2f615a]" aria-hidden />
-              All-new Wayship 6
-            </p>
             <h3
               className="text-[#103435] leading-[1.15] mb-4"
               style={{ ...lc, fontSize: "clamp(22px, 2.5vw, 30px)" }}
@@ -150,7 +149,7 @@ function AdvantageTabs() {
               The operational intelligence layer your fleet always needed
             </h3>
             <p className="text-[#464646] leading-[1.75] mb-8" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 14 }}>
-              Maritime runs on institutional knowledge — and that knowledge walks off the gangway at every crew rotation. Wayship captures it, structures it, and makes it available to every officer who steps aboard, regardless of how many times they&apos;ve been on that vessel before.
+              Maritime runs on institutional knowledge — and that knowledge walks off the gangway with every crew rotation. Wayship captures it, structures it, and makes it available to every officer and engineer who steps aboard, helping them get up to speed quickly, regardless of how many times they&apos;ve sailed on the vessel before.
             </p>
             <ul className="flex flex-col gap-3 mb-8">
               {[
@@ -349,10 +348,6 @@ function HomeV2CTA() {
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
         >
-          <p className="mb-6 inline-flex items-center gap-2 border border-[#fcf7e3]/20 bg-[#fcf7e3]/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.08em] text-[#fcf7e3]/80">
-            <span className="h-1.5 w-1.5 shrink-0 bg-[#fcf7e3]/90 animate-pulse" aria-hidden />
-            Ready when you are
-          </p>
           <h2
             className="text-[#fcf7e3] leading-[1.1] tracking-[-1.5px] mb-5"
             style={{
@@ -446,7 +441,7 @@ export function HomePageV2() {
                     <br />
                   </span>
                   <span style={lc} className="text-[#d8ebe8]">
-                    reimagining maritime.
+                    reimagining maritime
                   </span>
                 </motion.h1>
                 <motion.p
@@ -479,6 +474,8 @@ export function HomePageV2() {
             </div>
           </section>
 
+          <CustomerLogoTicker variant="light" />
+
           <ContentDivider />
 
           <div className="relative">
@@ -499,7 +496,7 @@ export function HomePageV2() {
                   </h2>
                 </div>
                 <p className="text-[#464646] leading-[1.8]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}>
-                  From a hypothesis to $145m+ in documented value created — across vessel operations, crew performance, and port productivity.
+                  From a hypothesis to $145m+ in value created — across vessel operations, crew performance, and port productivity.
                 </p>
               </div>
 
@@ -581,19 +578,28 @@ export function HomePageV2() {
                 {LOGOS.map((logo) => (
                   <div
                     key={logo.alt}
-                    className="flex min-h-[100px] md:min-h-[120px] items-center justify-center bg-[#f3f2ee] p-6"
+                    className="group relative flex min-h-[100px] md:min-h-[120px] items-center justify-center bg-[#f3f2ee] p-6"
                   >
-                    <img src={logo.src} alt={logo.alt} className={`w-auto object-contain opacity-90 grayscale ${logo.maxH}`} />
+                    <img
+                      src={logo.src}
+                      alt={logo.alt}
+                      className={`w-auto object-contain opacity-90 grayscale ${logo.maxH} transition-opacity duration-200 group-hover:opacity-0`}
+                    />
+                    <span
+                      className="pointer-events-none absolute inset-0 flex items-center justify-center font-mono text-[11px] uppercase tracking-[0.12em] text-[#103435] opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                    >
+                      {logo.fleet === "full" ? "Full fleet" : "Partial fleet"}
+                    </span>
                   </div>
                 ))}
               </div>
 
               <div className="mt-10 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 pt-8 border-t border-[#D9D9D9] max-w-[960px] mx-auto">
                 <p className="text-center md:text-left text-[#464646] text-[15px] max-w-md" style={{ ...lc, fontSize: 15 }}>
-                  Approved by leading flags and classification bodies
+                  Approved by major flag states and leading classification bodies
                 </p>
                 <div className="flex flex-wrap justify-center gap-2">
-                  {["ABS Type Approved", "ISO 21745 Certified", "6 Flag States", "MARPOL Compliant", "Works offline at sea"].map((t) => (
+                  {["ISO 21745", "MEPC 312 (74)", "Works offline at sea"].map((t) => (
                     <span
                       key={t}
                       className="inline-flex items-center gap-1.5 border border-[#D9D9D9] bg-[#f3f2ee] px-2.5 py-1 font-mono text-[10px] text-[#464646]"
@@ -616,8 +622,8 @@ export function HomePageV2() {
                 className="text-[#103435] mb-3"
                 style={{ fontSize: "clamp(28px, 3.2vw, 40px)", ...mixedHeadlineTracking }}
               >
-                <span style={ttHovesMedium}>Two platforms </span>
-                <span style={lc}>One mission</span>
+                <span style={ttHovesMedium}>Two platforms. </span>
+                <span style={lc}>Sea and shore.</span>
               </h2>
               <AdvantageTabs />
             </div>

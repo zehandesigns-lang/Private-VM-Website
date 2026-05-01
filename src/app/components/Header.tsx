@@ -99,14 +99,14 @@ const products: Record<
   wayship: {
     label: "Wayship",
     description:
-      "Voice AI, LLM chat, and digital logbooks for the modern fleet — ABS approved, trusted by 200+ vessels.",
+      "Voice-to-action, AI Assistant, and reliable digital records — Class, Flag & MARPOL compliant",
     hash: "#advantage",
     href: "/wayship",
   },
   smartport: {
     label: "Smartport",
     description:
-      "Port intelligence built to keep operations moving — from berth planning to arrivals, revenue, and compliance.",
+      "Scheduling, billing, customs integration, and operator-facing visibility — packaged for ports that need to move fast.",
     hash: "#advantage",
     href: "/smartport",
   },

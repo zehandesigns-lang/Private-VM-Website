@@ -19,7 +19,7 @@ const footerLinks: Record<string, FooterLink[]> = {
     { label: "Our story", href: "/about#founder-note" },
     { label: "Careers", href: "/about#join-our-team" },
   ],
-  Socials: [{ label: "LinkedIn", href: "https://www.linkedin.com" }],
+  Socials: [{ label: "LinkedIn", href: "https://www.linkedin.com/company/volteomaritime" }],
 };
 
 export function Footer() {
@@ -51,7 +51,15 @@ export function Footer() {
         <div className="flex flex-col md:flex-row gap-10 md:gap-0 justify-between">
           {/* Logo */}
           <div className="md:w-1/4">
-            <VolteoLogo color="#113637" />
+            <a
+              href="https://volteomaritime.com/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Volteo Maritime homepage"
+              className="inline-block"
+            >
+              <VolteoLogo color="#113637" />
+            </a>
           </div>
 
           {/* Link Columns */}
