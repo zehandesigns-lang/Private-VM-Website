@@ -273,18 +273,18 @@ function HeroSection() {
             <LineReveal delay={0.32}>
               <span
                 className="block text-[#0e3233]"
-                style={{ ...ttHovesMedium, fontSize: "clamp(18px, 1.8vw, 24px)" }}
+                style={{ ...ttHovesMedium, fontSize: "clamp(22px, 2.2vw, 30px)", lineHeight: 1.15 }}
               >
                 — Surendra Lingareddy
               </span>
             </LineReveal>
-            <div className="mt-2">
+            <div className="mt-3">
               <LineReveal delay={0.4}>
                 <span
                   className="block text-[#5c5a58]/85"
                   style={{
                     fontFamily: "monospace",
-                    fontSize: 11,
+                    fontSize: 13,
                     letterSpacing: "0.14em",
                     textTransform: "uppercase",
                   }}
@@ -321,7 +321,7 @@ function HeroSection() {
 
 function FounderNoteSection() {
   const bodyParagraphs = [
-    "Vessel operations generate an extraordinary amount of knowledge—every watch, every port call, and every near-miss handled quietly and never written down. But almost none of it survives the crew change. Ships are handed over, but understanding is not. The patterns, the workarounds, and the lessons learned voyage by voyage—they all leave with the outgoing crew.",
+    "Vessel operations generate an extraordinary amount of knowledge—every watch, every port call, and every near-miss handled. But almost none of it survives the crew change. Ships are handed over, but understanding is not. The patterns, the workarounds, and the lessons learned voyage by voyage—they all leave with the outgoing crew.",
     "We learned this not from a distance, but from the people carrying that burden: seafarers and shore teams who had accepted knowledge loss as an inevitable condition of the job. The problem was never laziness; it was friction. Logging on paper took time the crew didn't have, and paper logbooks held data no one could retrieve.",
     "Wayship is built around one core belief: capture context-rich knowledge the moment it happens, in the medium that works at sea — accessible to all relevant stakeholders, digitally.",
     "That belief is no longer a hypothesis. Over the last six years, across 350+ vessels, we have captured over 5 million type- and class-approved digital records — proving there is indeed a better way.",
@@ -398,30 +398,33 @@ function OurInvestorsSection() {
           </motion.h3>
         </div>
 
-        <div className="mx-auto max-w-[960px] grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        <motion.div
+          className="mx-auto max-w-[820px] flex flex-wrap items-center justify-center gap-x-10 gap-y-6 sm:gap-x-14 md:gap-x-20"
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.5, ease: EASE_STRONG }}
+        >
           {investors.map((inv, i) => (
             <motion.div
               key={inv.name}
-              className="group relative border border-[#D9D9D9] bg-white/50 px-8 py-10 md:px-8 md:py-11 text-center transition-colors duration-300 hover:bg-white hover:border-[#0e3233]/18"
-              initial={{ opacity: 0, y: 18 }}
+              className="flex items-center justify-center"
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: i * 0.08, ease: EASE_STRONG }}
+              transition={{ duration: 0.45, delay: i * 0.08, ease: EASE_STRONG }}
             >
-              <div className="mb-5 h-px w-10 bg-[#0e3233]/25 mx-auto" aria-hidden />
-              <div className="flex items-center justify-center min-h-[34px]">
-                <img
-                  src={inv.logo}
-                  alt={inv.name}
-                  className="h-[26px] w-auto object-contain"
-                  draggable={false}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
+              <img
+                src={inv.logo}
+                alt={inv.name}
+                className="h-[28px] sm:h-[32px] md:h-[36px] w-auto object-contain opacity-70 grayscale transition-opacity duration-300 hover:opacity-100"
+                draggable={false}
+                loading="lazy"
+                decoding="async"
+              />
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -464,7 +467,7 @@ function WhereWeAreSection() {
         >
           <img
             src={imgSingaporeOfficeMap}
-            alt="Map of Southeast Asia highlighting the Singapore office at 10 Anson Road"
+            alt="Map of Southeast Asia highlighting the Singapore Global HQ at 600 North Bridge Road, Parkview Square"
             className="block w-full h-auto"
             loading="lazy"
             decoding="async"
@@ -887,7 +890,11 @@ export function AboutPageV2() {
 
       <main className="bg-[#f3f2ee]">
         <HeroSection />
-        <CustomerLogoTicker variant="light" />
+        <div className="bg-[#f3f2ee] py-7">
+          <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px]">
+            <CustomerLogoTicker variant="light" size="compact" />
+          </div>
+        </div>
         <RailDivider />
         <FounderNoteSection />
         <RailDivider />

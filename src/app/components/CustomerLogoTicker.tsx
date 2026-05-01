@@ -1,7 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useReducedMotion } from "motion/react";
 import imgEasternPacific from "@/assets/logos/eastern-pacific.png";
-import imgTorm from "@/assets/logos/torm.png";
+import imgAngloEastern from "@/assets/logos/angloeastern.png";
+import imgUmms from "@/assets/logos/umms.png";
 import imgTk from "@/assets/logos/tk.png";
 import imgWilhelmsen from "@/assets/logos/wilhelmsen.png";
 import imgUnionMarine from "@/assets/logos/union-marine.png";
@@ -11,7 +12,8 @@ import imgMtm from "@/assets/logos/mtm.png";
 
 const CUSTOMER_LOGOS = [
   { src: imgEasternPacific, alt: "Eastern Pacific Shipping", h: "h-[69px]" },
-  { src: imgTorm, alt: "TORM", h: "h-[62px]" },
+  { src: imgAngloEastern, alt: "Anglo Eastern", h: "h-[62px]" },
+  { src: imgUmms, alt: "UMMS", h: "h-[62px]" },
   { src: imgTk, alt: "Teekay", h: "h-[69px]" },
   { src: imgWilhelmsen, alt: "Wilhelmsen", h: "h-[69px]" },
   { src: imgUnionMarine, alt: "Union Marine Management", h: "h-[69px]" },
@@ -20,7 +22,14 @@ const CUSTOMER_LOGOS = [
   { src: imgMtm, alt: "MTM", h: "h-[69px]" },
 ] as const;
 
-function logoSizeClass(logo: (typeof CUSTOMER_LOGOS)[number], isDark: boolean) {
+function logoSizeClass(
+  logo: (typeof CUSTOMER_LOGOS)[number],
+  isDark: boolean,
+  size: "default" | "compact",
+) {
+  if (size === "compact") {
+    return logo.h.includes("[62px]") ? "h-[34px] md:h-[42px]" : "h-[38px] md:h-[46px]";
+  }
   if (!isDark) return logo.h;
   return logo.h.includes("[62px]") ? "h-[47px] md:h-[62px]" : "h-[51px] md:h-[69px]";
 }
@@ -29,13 +38,15 @@ export type CustomerLogoTickerProps = {
   variant: "light" | "dark";
   /** Extra classes on the outer wrapper */
   className?: string;
+  /** `compact` reduces logo size — used where the ticker sits inside narrower content rails. */
+  size?: "default" | "compact";
 };
 
 /**
  * Infinite marquee: Motion `x` + rAF with modulo (no CSS keyframe loop seam).
  * Segment count grows so wide viewports stay covered — avoids a short “cluster” with empty sides.
  */
-export function CustomerLogoTicker({ variant, className = "" }: CustomerLogoTickerProps) {
+export function CustomerLogoTicker({ variant, className = "", size = "default" }: CustomerLogoTickerProps) {
   const prefersReducedMotion = useReducedMotion();
   const isDark = variant === "dark";
   const containerRef = useRef<HTMLDivElement>(null);
@@ -111,13 +122,17 @@ export function CustomerLogoTicker({ variant, className = "" }: CustomerLogoTick
 
   const imgClassFor = (logo: (typeof CUSTOMER_LOGOS)[number]) =>
     isDark
-      ? `${logoSizeClass(logo, true)} w-auto object-contain shrink-0 select-none brightness-0 invert opacity-[0.42]`
-      : `${logoSizeClass(logo, false)} w-auto object-contain grayscale opacity-40 shrink-0 select-none`;
+      ? `${logoSizeClass(logo, true, size)} w-auto object-contain shrink-0 select-none brightness-0 invert opacity-[0.42]`
+      : `${logoSizeClass(logo, false, size)} w-auto object-contain grayscale opacity-40 shrink-0 select-none`;
+
+  const trackHeightClass = size === "compact"
+    ? "min-h-[58px] md:min-h-[70px]"
+    : "min-h-[87px] md:min-h-[101px]";
 
   const track = (
     <div
       ref={containerRef}
-      className="relative min-h-[87px] w-full min-w-0 overflow-hidden md:min-h-[101px]"
+      className={`relative w-full min-w-0 overflow-hidden ${trackHeightClass}`}
       style={edgeMask}
       role="region"
       aria-label="Partner logos"

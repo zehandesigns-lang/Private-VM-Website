@@ -62,7 +62,7 @@ export function CTASection({ variant = "default" }: CTASectionProps) {
             }}
           >
             {isTeam ? (
-              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>Careers</span>
+              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>Join our team</span>
             ) : (
               <>
                 Capture the knowledge before it walks off the{" "}

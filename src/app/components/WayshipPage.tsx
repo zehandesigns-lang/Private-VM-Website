@@ -7,7 +7,7 @@ import { Footer } from "./Footer";
 import { CTASection } from "./CTASection";
 import { ContentDivider } from "./RailDivider";
 import epsLogo from "@/assets/logos/eastern-pacific.png";
-import imgTorm from "@/assets/logos/torm.png";
+import imgAngloEastern from "@/assets/logos/angloeastern.png";
 import imgTk from "@/assets/logos/tk.png";
 
 // ── Tokens ─────────────────────────────────────────────────────────────
@@ -152,7 +152,7 @@ function WayshipHero() {
               <div className="flex items-center gap-8 flex-wrap">
                 {[
                   { src: epsLogo, alt: "Eastern Pacific Shipping", h: "h-10" },
-                  { src: imgTorm, alt: "TORM", h: "h-8" },
+                  { src: imgAngloEastern, alt: "Anglo Eastern", h: "h-8" },
                   { src: imgTk, alt: "Teekay", h: "h-8" },
                 ].map((logo) => (
                   <img key={logo.alt} src={logo.src} alt={logo.alt}

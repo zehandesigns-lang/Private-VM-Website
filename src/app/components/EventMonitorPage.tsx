@@ -344,7 +344,7 @@ export function EventMonitorPage() {
   }, [soundOn]);
 
   useEffect(() => {
-    document.title = "SMW 26 — Volteo";
+    document.title = "Volteo Maritime - Campaign 2026";
     return () => {
       document.title = "Volteo Home Page Design";
     };
@@ -669,7 +669,7 @@ export function EventMonitorPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.95, ease: EASE }}
         >
-          6 years. 5+ million type and class approved records, across 350+ vessels.
+          6 years, 5+ million type and class approved digital records, across 350 vessels
         </motion.p>
 
         <motion.div
