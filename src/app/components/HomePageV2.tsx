@@ -5,7 +5,6 @@ import { ArrowUpRight } from "lucide-react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { ContentDivider, SideRailOverlay } from "./RailDivider";
-import { CustomerLogoTicker } from "./CustomerLogoTicker";
 import { VolteoTextLink } from "./VolteoTextLink";
 import { AnimatedDitherBackground } from "./AnimatedDitherBackground";
 import imgEasternPacific from "@/assets/logos/eastern-pacific.png";
@@ -473,8 +472,6 @@ export function HomePageV2() {
               </div>
             </div>
           </section>
-
-          <CustomerLogoTicker variant="light" />
 
           <ContentDivider />
 
