@@ -3,6 +3,9 @@ name: Deploy App to vercel
   pull_request:
     branches: 
       - main
+permissions:
+  contents: write
+
 jobs:
   trigger-deploy:
     runs-on: ubuntu-latest
