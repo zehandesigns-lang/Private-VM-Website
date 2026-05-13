@@ -2,9 +2,7 @@
 @import './tailwind.css';
 @import './theme.css';
 
-html {
-  scroll-behavior: smooth;
-}
+/* scroll-behavior: smooth removed — Lenis handles all smooth scrolling */
 
 * {
   -webkit-font-smoothing: antialiased;
