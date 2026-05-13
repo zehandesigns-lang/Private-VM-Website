@@ -1,5 +1,5 @@
 
-  # Volteo Home Page Design
+  # Volteo Home Page Design.
 
   This is a code bundle for Volteo Home Page Design. The original project is available at https://www.figma.com/design/3MAhZlyzLUQnRaxpWOLYY6/Volteo-Home-Page-Design/
 
