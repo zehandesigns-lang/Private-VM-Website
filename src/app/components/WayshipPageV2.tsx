@@ -9,6 +9,7 @@ import { ContentDivider } from "./RailDivider";
 import epsLogo from "@/assets/logos/eastern-pacific.png";
 import imgTk from "@/assets/logos/tk.png";
 import imgWilhelmsen from "@/assets/logos/wilhelmsen.png";
+import newTimelineVideo from "@/assets/new-timeline.mp4";
 
 // ── Tokens ─────────────────────────────────────────────────────────────
 const EASE: [number, number, number, number] = [0.23, 1, 0.32, 1];
@@ -412,6 +413,7 @@ function StorytellingSection({ containerRef }: { containerRef: React.RefObject<H
   const [voiceProgress, setVoiceProgress] = useState(0);
   const rafRef = useRef<number | null>(null);
   const animStartRef = useRef<number | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [revealedWords1, setRevealedWords1] = useState(0);
   const [revealedWords2, setRevealedWords2] = useState(0);
   const [revealedWords3, setRevealedWords3] = useState(0);
@@ -471,7 +473,13 @@ function StorytellingSection({ containerRef }: { containerRef: React.RefObject<H
       animStartRef.current = null;
       setActiveVoiceTab(0);
       setVoiceProgress(0);
+      videoRef.current?.pause();
       return;
+    }
+    // Start video from beginning when section comes into view
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {});
     }
     animStartRef.current = null;
     const tick = (ts: number) => {
@@ -697,169 +705,112 @@ function StorytellingSection({ containerRef }: { containerRef: React.RefObject<H
               <span style={{ fontWeight: 500 }}>Features</span>
             </motion.h3>
 
-            {/* ── Video card — crossfades between Voice AI and Chat demos ── */}
+            {/* ── 2-col layout: left = video, right = feature descriptions ── */}
             <motion.div
-              className="border border-[rgba(102,102,102,0.24)] relative overflow-hidden w-full shrink-0"
-              style={{ background: "#0a2526", flex: "1 1 0", minHeight: 0 }}
+              className="w-full grid grid-cols-1 lg:grid-cols-2 border border-[rgba(102,102,102,0.24)] overflow-hidden shrink-0"
+              style={{ flex: "1 1 0", minHeight: 0 }}
               initial={{ opacity: 0, y: 12 }}
               animate={meetVisible ? { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.45, ease: EASE } } : { opacity: 0, y: 12 }}
             >
-              <AnimatePresence mode="wait">
-                {activeVoiceTab === 0 ? (
+              {/* Left — video */}
+              <div className="relative overflow-hidden" style={{ background: "#0a2526", minHeight: 0 }}>
+                <video
+                  ref={videoRef}
+                  src={newTimelineVideo}
+                  loop
+                  muted
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Right — feature descriptions stacked vertically */}
+              <motion.div
+                className="relative flex flex-col justify-center"
+                style={{ background: "#f3f2ee", padding: "clamp(32px, 5%, 56px) clamp(28px, 5%, 56px)" }}
+                initial={{ opacity: 0, y: 8 }}
+                animate={meetVisible ? { opacity: 1, y: 0, transition: { duration: 0.45, delay: 0.6, ease: EASE } } : { opacity: 0, y: 8 }}
+              >
+                {/* Timeline progress bar */}
+                <div className="absolute left-0 top-0 h-[3px] w-full bg-[#e8e6de]" />
+                <div className="absolute left-0 top-0 h-[3px] bg-[#1d1d1d]" style={{ width: `${voiceProgress}%` }} />
+
+                <div className="flex flex-col gap-8">
+                  {/* VOICE AI tab */}
                   <motion.div
-                    key="voice"
-                    className="absolute inset-0 flex flex-col items-center justify-center"
-                    style={{ padding: "clamp(20px, 4%, 48px)" }}
-                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4, ease: EASE }}
+                    className="flex flex-col gap-[clamp(8px,1vh,14px)]"
+                    animate={{ opacity: activeVoiceTab === 0 ? 1 : 0.45 }}
+                    transition={{ duration: 0.2, ease: EASE }}
                   >
-                    <div className="inline-flex items-center px-[13px] py-[10px]" style={{ background: "#0b1e04", gap: 37 }}>
-                      <div className="flex items-center gap-[10px]">
-                        <div className="w-[44px] h-[44px] overflow-hidden shrink-0 flex items-center justify-center" style={{ background: "#103435" }}>
-                          <span className="text-white/70 font-mono tracking-[0.2em]" style={{ fontSize: 12 }}>RC</span>
-                        </div>
-                        <div className="flex flex-col">
-                          <p className="text-white" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: 16, lineHeight: 1.55 }}>Ryan Chen</p>
-                          <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 13, lineHeight: 1.5, color: "rgba(255,255,255,0.62)" }}>2nd officer</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center" style={{ height: 40, gap: 2.5 }} aria-hidden="true">
-                        {VOICE_WAVE_H.map((h, i) => (
-                          <motion.div key={i} className="bg-white" style={{ width: 3 }}
-                            animate={{ height: [4, h, 4] }}
-                            transition={{ duration: 0.55 + (i % 4) * 0.12, repeat: Infinity, ease: "easeInOut", delay: i * 0.045 }}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                    <p className="text-white text-center" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: 15, lineHeight: 1.55, maxWidth: 420, marginTop: "clamp(16px, 4%, 32px)" }}>
-                      "Auxiliary Engine 2. Running hours, uh, 3585. Load is 61 percent. Lube oil is 92 degrees, hmm, that seems high. Fuel oil temperature, let me see, 123, viscosity 12."
+                    <motion.div
+                      className="inline-flex items-center self-start"
+                      style={{ padding: "8px 10px", border: "1px solid", gap: 10 }}
+                      animate={{
+                        background: activeVoiceTab === 0 ? "#42ead4" : "#ffffff",
+                        borderRadius: activeVoiceTab === 0 ? 0 : 44,
+                        borderColor: activeVoiceTab === 0 ? "#ededed" : "#f2f3ec",
+                      }}
+                      transition={{ duration: 0.2, ease: EASE }}
+                    >
+                      <motion.span
+                        className="block rounded-full bg-[#103435] shrink-0"
+                        style={{ width: 8, height: 8 }}
+                        animate={{ opacity: activeVoiceTab === 0 ? 1 : 0, scale: activeVoiceTab === 0 ? 1 : 0.5 }}
+                        transition={{ duration: 0.15, ease: EASE }}
+                      />
+                      <motion.p
+                        className="font-mono whitespace-nowrap"
+                        style={{ fontSize: 13, fontWeight: 500 }}
+                        animate={{ color: activeVoiceTab === 0 ? "#113637" : "#929389" }}
+                        transition={{ duration: 0.18, ease: EASE }}
+                      >SPEECH AI</motion.p>
+                    </motion.div>
+                    <p className="text-black" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(16px, 1.5vw, 24px)", lineHeight: 1.15 }}>Speak ...<br />and its done!</p>
+                    <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.05vw, 16px)", color: "#85867b", lineHeight: 1.55 }}>
+                      Your crew shouldn't have to choose between doing the job and documenting it. Wayship's advanced automatic speech recognition turns the moment of observation into a structured, tagged, searchable entry — 4x faster than typing.
                     </p>
                   </motion.div>
-                ) : (
-                  <motion.div
-                    key="chat"
-                    className="absolute inset-0 flex items-center justify-center p-6"
-                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4, ease: EASE }}
-                  >
-                    <div className="w-full max-w-[560px]" style={{ background: "#f3f2ee", border: "1px solid #D9D9D9" }}>
-                      <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#D9D9D9]" style={{ background: "#eeece5" }}>
-                        <span className="text-[#103435] text-[9px] uppercase tracking-widest font-mono">Chat with Wayship · CMA CGM Imagination</span>
-                        <span className="flex items-center gap-1.5 text-emerald-700 text-[10px]">
-                          <motion.span className="w-1.5 h-1.5 bg-emerald-600" animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.4, repeat: Infinity }} />
-                          Online
-                        </span>
-                      </div>
-                      <div className="p-4 space-y-3">
-                        {CHAT_MESSAGES.slice(0, 2).map((msg, i) => (
-                          <motion.div key={i}
-                            initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.25, delay: i * 0.18, ease: EASE }}
-                            className={`flex flex-col gap-1 max-w-[90%] ${msg.role === "user" ? "ml-auto items-end" : "items-start"}`}
-                          >
-                            <div className={`px-3 py-2 text-[11px] leading-[1.6] ${msg.role === "user" ? "bg-[#103435] text-white" : "text-[#464646]"}`}
-                              style={msg.role === "ai" ? { background: "#eeece5", border: "1px solid #D9D9D9" } : {}}>
-                              {msg.text.split("\n")[0].replace(/\*\*/g, "")}
-                            </div>
-                            <span className="text-[#8a8a8a] text-[9px] font-mono px-1">{msg.role === "user" ? `${msg.from} · ` : "Wayship · "}{msg.time}</span>
-                          </motion.div>
-                        ))}
-                      </div>
-                      <div className="border-t border-[#D9D9D9] px-3 py-2.5 flex items-center gap-2">
-                        <div className="flex-1 px-2.5 py-1.5 text-[#8a8a8a] text-[11px] border border-[#D9D9D9]" style={{ background: "#eeece5" }}>Ask about any system, incident, or prior observation…</div>
-                        <div className="w-7 h-7 bg-[#103435] flex items-center justify-center shrink-0">
-                          <ArrowUpRight size={11} className="text-white" />
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
 
-            {/* ── Feature tabs ── */}
-            <motion.div
-              className="relative px-[46px] w-full shrink-0"
-              style={{ paddingTop: "clamp(14px, 1.8vh, 26px)", paddingBottom: "clamp(8px, 1vh, 14px)" }}
-              initial={{ opacity: 0, y: 8 }}
-              animate={meetVisible ? { opacity: 1, y: 0, transition: { duration: 0.45, delay: 0.6, ease: EASE } } : { opacity: 0, y: 8 }}
-            >
-              {/* Timeline progress bar — fills over 15.5 s */}
-              <div className="absolute left-0 top-0 h-[3px] w-full bg-[#e8e6de]" />
-              <div className="absolute left-0 top-0 h-[3px] bg-[#1d1d1d]" style={{ width: `${voiceProgress}%` }} />
+                  {/* Divider */}
+                  <div className="h-px w-full bg-[#D9D9D9]" />
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-[81px] items-start">
-                {/* ── VOICE AI tab ── */}
-                <motion.div
-                  className="flex flex-col gap-[clamp(10px,1.2vh,18px)]"
-                  animate={{ opacity: activeVoiceTab === 0 ? 1 : 0.45 }}
-                  transition={{ duration: 0.2, ease: EASE }}
-                >
+                  {/* CHAT WITH YOUR DATA tab */}
                   <motion.div
-                    className="inline-flex items-center self-start"
-                    style={{ padding: "8px 10px", border: "1px solid", gap: 10 }}
-                    animate={{
-                      background: activeVoiceTab === 0 ? "#42ead4" : "#ffffff",
-                      borderRadius: activeVoiceTab === 0 ? 0 : 44,
-                      borderColor: activeVoiceTab === 0 ? "#ededed" : "#f2f3ec",
-                    }}
+                    className="flex flex-col gap-[clamp(8px,1vh,14px)]"
+                    animate={{ opacity: activeVoiceTab === 1 ? 1 : 0.45 }}
                     transition={{ duration: 0.2, ease: EASE }}
                   >
-                    <motion.span
-                      className="block rounded-full bg-[#103435] shrink-0"
-                      style={{ width: 8, height: 8 }}
-                      animate={{ opacity: activeVoiceTab === 0 ? 1 : 0, scale: activeVoiceTab === 0 ? 1 : 0.5 }}
-                      transition={{ duration: 0.15, ease: EASE }}
-                    />
-                    <motion.p
-                      className="font-mono whitespace-nowrap"
-                      style={{ fontSize: 13, fontWeight: 500 }}
-                      animate={{ color: activeVoiceTab === 0 ? "#113637" : "#929389" }}
-                      transition={{ duration: 0.18, ease: EASE }}
-                    >VOICE AI</motion.p>
+                    <motion.div
+                      className="inline-flex items-center self-start"
+                      style={{ padding: "8px 10px", border: "1px solid", gap: 10 }}
+                      animate={{
+                        background: activeVoiceTab === 1 ? "#42ead4" : "#ffffff",
+                        borderRadius: activeVoiceTab === 1 ? 0 : 44,
+                        borderColor: activeVoiceTab === 1 ? "#ededed" : "#f2f3ec",
+                      }}
+                      transition={{ duration: 0.2, ease: EASE }}
+                    >
+                      <motion.span
+                        className="block rounded-full bg-[#103435] shrink-0"
+                        style={{ width: 8, height: 8 }}
+                        animate={{ opacity: activeVoiceTab === 1 ? 1 : 0, scale: activeVoiceTab === 1 ? 1 : 0.5 }}
+                        transition={{ duration: 0.15, ease: EASE }}
+                      />
+                      <motion.p
+                        className="font-mono whitespace-nowrap"
+                        style={{ fontSize: 13, fontWeight: 500 }}
+                        animate={{ color: activeVoiceTab === 1 ? "#113637" : "#929389" }}
+                        transition={{ duration: 0.18, ease: EASE }}
+                      >AI ASSISTANT</motion.p>
+                    </motion.div>
+                    <p className="text-black" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(16px, 1.5vw, 24px)", lineHeight: 1.15, maxWidth: 320 }}>Your data just got its voice. And it has a lot to say.</p>
+                    <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.05vw, 16px)", color: "#85867b", lineHeight: 1.55 }}>
+                      Ask anything about your vessel's full operational history in plain language — current state, past incidents, recorded observations across rotations, all in one connected space.
+                    </p>
                   </motion.div>
-                  <p className="text-black" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(16px, 1.5vw, 24px)", lineHeight: 1.15 }}>Speak and its done</p>
-                  <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.1vw, 17px)", color: "#85867b", lineHeight: 1.55 }}>
-                    Your crew shouldn't have to choose between doing the job and documenting it. Wayship's Voice-to-action turns the moment of observation into a structured, tagged, searchable entry — fully offline.
-                  </p>
-                </motion.div>
+                </div>
+              </motion.div>
 
-                {/* ── CHAT WITH YOUR DATA tab ── */}
-                <motion.div
-                  className="flex flex-col gap-[clamp(10px,1.2vh,18px)]"
-                  animate={{ opacity: activeVoiceTab === 1 ? 1 : 0.45 }}
-                  transition={{ duration: 0.2, ease: EASE }}
-                >
-                  <motion.div
-                    className="inline-flex items-center self-start"
-                    style={{ padding: "8px 10px", border: "1px solid", gap: 10 }}
-                    animate={{
-                      background: activeVoiceTab === 1 ? "#42ead4" : "#ffffff",
-                      borderRadius: activeVoiceTab === 1 ? 0 : 44,
-                      borderColor: activeVoiceTab === 1 ? "#ededed" : "#f2f3ec",
-                    }}
-                    transition={{ duration: 0.2, ease: EASE }}
-                  >
-                    <motion.span
-                      className="block rounded-full bg-[#103435] shrink-0"
-                      style={{ width: 8, height: 8 }}
-                      animate={{ opacity: activeVoiceTab === 1 ? 1 : 0, scale: activeVoiceTab === 1 ? 1 : 0.5 }}
-                      transition={{ duration: 0.15, ease: EASE }}
-                    />
-                    <motion.p
-                      className="font-mono whitespace-nowrap"
-                      style={{ fontSize: 13, fontWeight: 500 }}
-                      animate={{ color: activeVoiceTab === 1 ? "#113637" : "#929389" }}
-                      transition={{ duration: 0.18, ease: EASE }}
-                    >CHAT WITH YOUR DATA</motion.p>
-                  </motion.div>
-                  <p className="text-black" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(16px, 1.5vw, 24px)", lineHeight: 1.15, maxWidth: 320 }}>Your data just got its voice. And it has a lot to say.</p>
-                  <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.1vw, 17px)", color: "#85867b", lineHeight: 1.55 }}>
-                    Wayship lets you query your vessel's full operational history in plain language — current state, past incidents, recorded observations across rotations, all in one connected space.
-                  </p>
-                </motion.div>
-              </div>
             </motion.div>
 
           </div>
@@ -980,9 +931,6 @@ const VOICE_WAVE_H = [23, 30, 23, 15, 44, 20, 23, 30, 23, 15];
 
 function VoiceSection({ storyRef: _storyRef }: { storyRef: React.RefObject<HTMLDivElement> }) {
   const sectionRef = useRef<HTMLDivElement>(null);
-  // Extend the intersection area 300px below the viewport so revealed fires
-  // while the storytelling green section is still in view — by the time the
-  // green bg scrolls away, all content is already animated in.
   const revealed = useInView(sectionRef, { once: true, margin: "0px 0px 300px 0px" });
 
   const fadeIn = (delay: number) => ({
@@ -1030,21 +978,14 @@ function VoiceSection({ storyRef: _storyRef }: { storyRef: React.RefObject<HTMLD
           </h3>
         </div>
 
-        {/* Voice AI demo card — dark teal with right-aligned content */}
-        <motion.div
-          className="border border-[rgba(102,102,102,0.24)] relative overflow-hidden w-full"
-          style={{ background: "#0a2526", aspectRatio: "1157 / 632", minHeight: 460 }}
-          {...fadeIn(0.12)}
-        >
-          {/* Right-aligned content — positioned to match Figma proportions */}
-          <div
-            className="absolute"
-            style={{
-              left: "clamp(24px, 35.7%, 540px)",
-              top: "clamp(48px, 33.4%, 220px)",
-              right: "clamp(24px, 4%, 96px)",
-              bottom: "clamp(48px, 16%, 110px)",
-            }}
+        {/* 2-col layout: left = dark video card, right = feature descriptions */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 border border-[rgba(102,102,102,0.24)] overflow-hidden">
+
+          {/* Left — dark teal video card */}
+          <motion.div
+            className="relative overflow-hidden flex flex-col items-center justify-center"
+            style={{ background: "#0a2526", minHeight: 480, padding: "clamp(40px, 7%, 80px) clamp(32px, 6%, 64px)" }}
+            {...fadeIn(0.12)}
           >
             {/* Avatar + name + waveform header */}
             <div
@@ -1061,49 +1002,24 @@ function VoiceSection({ storyRef: _storyRef }: { storyRef: React.RefObject<HTMLD
                   </span>
                 </div>
                 <div className="flex flex-col">
-                  <p
-                    className="text-white"
-                    style={{
-                      fontFamily: "'LT Cushion', serif",
-                      fontWeight: 300,
-                      fontSize: 18,
-                      lineHeight: 1.55,
-                    }}
-                  >
+                  <p className="text-white" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: 18, lineHeight: 1.55 }}>
                     Ryan Chen
                   </p>
-                  <p
-                    style={{
-                      fontFamily: "'TT Hoves Pro', sans-serif",
-                      fontWeight: 400,
-                      fontSize: 14,
-                      lineHeight: 1.565,
-                      color: "rgba(255,255,255,0.62)",
-                    }}
-                  >
+                  <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 14, lineHeight: 1.565, color: "rgba(255,255,255,0.62)" }}>
                     2nd officer
                   </p>
                 </div>
               </div>
 
               {/* Waveform — 10 animated bars */}
-              <div
-                className="flex items-center"
-                style={{ height: 44, gap: 2.5 }}
-                aria-hidden="true"
-              >
+              <div className="flex items-center" style={{ height: 44, gap: 2.5 }} aria-hidden="true">
                 {VOICE_WAVE_H.map((h, i) => (
                   <motion.div
                     key={i}
                     className="bg-white"
                     style={{ width: 3 }}
                     animate={{ height: [4, h, 4] }}
-                    transition={{
-                      duration: 0.55 + (i % 4) * 0.12,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: i * 0.045,
-                    }}
+                    transition={{ duration: 0.55 + (i % 4) * 0.12, repeat: Infinity, ease: "easeInOut", delay: i * 0.045 }}
                   />
                 ))}
               </div>
@@ -1111,116 +1027,72 @@ function VoiceSection({ storyRef: _storyRef }: { storyRef: React.RefObject<HTMLD
 
             {/* Voice quote */}
             <p
-              className="text-white mt-[44px] md:mt-[64px]"
-              style={{
-                fontFamily: "'LT Cushion', serif",
-                fontWeight: 300,
-                fontSize: 18,
-                lineHeight: 1.55,
-                maxWidth: 451,
-              }}
+              className="text-white mt-10 text-center"
+              style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(14px, 1.2vw, 17px)", lineHeight: 1.6, maxWidth: 420 }}
             >
-              “Auxiliary Engine 2. Running hours, uh, 3585. Load is 61 percent. Lube oil is 92 degrees, hmm, that seems high. Fuel oil temperature, let me see, 123, viscosity 12.”
+              "Auxiliary Engine 2. Running hours, uh, 3585. Load is 61 percent. Lube oil is 92 degrees, hmm, that seems high. Fuel oil temperature, let me see, 123, viscosity 12."
             </p>
-          </div>
-        </motion.div>
+          </motion.div>
 
-        {/* Feature carousel — progress bar + 2-col description */}
-        <motion.div
-          className="relative px-[46px] pt-[30px] pb-[30px] mt-4"
-          {...fadeIn(0.22)}
-        >
-          {/* Progress bar — full width track + dark progress segment */}
-          <div className="absolute left-0 top-0 h-1 w-full bg-white" />
+          {/* Right — feature descriptions stacked vertically */}
           <motion.div
-            className="absolute left-0 top-0 h-1 bg-[#1d1d1d]"
-            initial={{ width: 0 }}
-            animate={revealed ? { width: "17.3%" } : { width: 0 }}
-            transition={{ duration: 0.7, delay: 0.5, ease: EASE }}
-          />
+            className="relative flex flex-col justify-center"
+            style={{ background: "#f3f2ee", padding: "clamp(40px, 6%, 72px) clamp(32px, 6%, 64px)" }}
+            {...fadeIn(0.22)}
+          >
+            {/* Progress bar */}
+            <div className="absolute left-0 top-0 h-1 w-full bg-[#e8e6de]" />
+            <motion.div
+              className="absolute left-0 top-0 h-1 bg-[#1d1d1d]"
+              initial={{ width: 0 }}
+              animate={revealed ? { width: "17.3%" } : { width: 0 }}
+              transition={{ duration: 0.7, delay: 0.5, ease: EASE }}
+            />
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-[81px] items-start">
-            {/* Tab 1 — VOICE AI (active) */}
-            <div className="flex flex-col gap-[38px]">
-              <div
-                className="inline-flex items-center gap-[10px] self-start p-[10px] border border-[#ededed]"
-                style={{ background: "#42ead4" }}
-              >
-                <span className="block w-2 h-2 rounded-full bg-[#103435]" />
-                <p
-                  className="font-mono whitespace-nowrap"
-                  style={{ fontSize: 14, color: "#113637", fontWeight: 500 }}
+            <div className="flex flex-col gap-10">
+              {/* Speech AI tab (active) */}
+              <div className="flex flex-col gap-5">
+                <div
+                  className="inline-flex items-center gap-[10px] self-start p-[10px] border border-[#ededed]"
+                  style={{ background: "#42ead4" }}
                 >
-                  VOICE AI
+                  <span className="block w-2 h-2 rounded-full bg-[#103435]" />
+                  <p className="font-mono whitespace-nowrap" style={{ fontSize: 13, color: "#113637", fontWeight: 500 }}>
+                    SPEECH AI
+                  </p>
+                </div>
+                <p className="text-black" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(20px, 1.8vw, 26px)", lineHeight: 1.15 }}>
+                  Speak ...<br />and its done!
+                </p>
+                <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.05vw, 16px)", color: "#85867b", lineHeight: 1.6 }}>
+                  Your crew shouldn't have to choose between doing the job and documenting it. Wayship's advanced automatic speech recognition turns the moment of observation into a structured, tagged, searchable entry — 4x faster than typing.
                 </p>
               </div>
-              <div className="flex flex-col gap-[15px]">
-                <p
-                  className="text-black"
-                  style={{
-                    fontFamily: "'LT Cushion', serif",
-                    fontWeight: 300,
-                    fontSize: "clamp(22px, 2vw, 28px)",
-                    lineHeight: 1.15,
-                  }}
-                >
-                  Speak and its done
-                </p>
-                <p
-                  style={{
-                    fontFamily: "'TT Hoves Pro', sans-serif",
-                    fontWeight: 400,
-                    fontSize: "clamp(15px, 1.3vw, 20px)",
-                    color: "#85867b",
-                    lineHeight: 1.55,
-                  }}
-                >
-                  Your crew shouldn't have to choose between doing the job and documenting it. Wayship's Voice-to-action turns the moment of observation into a structured, tagged, searchable entry — fully offline.
-                </p>
-              </div>
-            </div>
 
-            {/* Tab 2 — CHAT WITH YOUR DATA */}
-            <div className="flex flex-col gap-[31px]">
-              <div
-                className="inline-flex items-center self-start p-[10px] bg-white border border-[#f2f3ec]"
-                style={{ borderRadius: 44 }}
-              >
-                <p
-                  className="font-mono whitespace-nowrap"
-                  style={{ fontSize: 14, color: "#929389", fontWeight: 500 }}
+              {/* Divider */}
+              <div className="h-px w-full bg-[#D9D9D9]" />
+
+              {/* AI Assistant tab (inactive) */}
+              <div className="flex flex-col gap-5">
+                <div
+                  className="inline-flex items-center self-start p-[10px] bg-white border border-[#f2f3ec]"
+                  style={{ borderRadius: 44 }}
                 >
-                  CHAT WITH YOUR DATA
-                </p>
-              </div>
-              <div className="flex flex-col gap-[14px]">
-                <p
-                  className="text-black"
-                  style={{
-                    fontFamily: "'LT Cushion', serif",
-                    fontWeight: 300,
-                    fontSize: "clamp(22px, 2vw, 28px)",
-                    lineHeight: 1.15,
-                    maxWidth: 360,
-                  }}
-                >
+                  <p className="font-mono whitespace-nowrap" style={{ fontSize: 13, color: "#929389", fontWeight: 500 }}>
+                    AI ASSISTANT
+                  </p>
+                </div>
+                <p className="text-black" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(20px, 1.8vw, 26px)", lineHeight: 1.15, maxWidth: 340 }}>
                   Your data just got its voice. And it has a lot to say.
                 </p>
-                <p
-                  style={{
-                    fontFamily: "'TT Hoves Pro', sans-serif",
-                    fontWeight: 400,
-                    fontSize: "clamp(15px, 1.3vw, 20px)",
-                    color: "#85867b",
-                    lineHeight: 1.55,
-                  }}
-                >
-                  Wayship lets you query your vessel's full operational history in plain language — current state, past incidents, recorded observations across rotations, all in one connected space.
+                <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.05vw, 16px)", color: "#85867b", lineHeight: 1.6 }}>
+                  Ask anything about your vessel's full operational history in plain language — current state, past incidents, recorded observations across rotations, all in one connected space.
                 </p>
               </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+
+        </div>
       </Wrap>
       </div>
     </Section>
