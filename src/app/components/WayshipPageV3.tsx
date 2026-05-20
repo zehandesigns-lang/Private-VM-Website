@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence, useInView, useScroll, useTransform, useMotionValueEvent } from "motion/react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence, useInView, useReducedMotion } from "motion/react";
 import { ArrowUpRight, Plus, Check } from "lucide-react";
 import { Link } from "react-router";
 import { Header } from "./Header";
@@ -69,7 +69,7 @@ function Body({ children, className = "" }: { children: React.ReactNode; classNa
 // ── Hero ────────────────────────────────────────────────────────────────
 function WayshipHero() {
   return (
-    <Section id="hero" className="pt-[72px] min-h-[70vh] flex flex-col">
+    <Section id="hero" className="pt-[72px] h-screen flex flex-col">
       <Wrap className="flex-1 flex flex-col justify-center py-16 md:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left */}
@@ -147,6 +147,160 @@ function WayshipHero() {
           </motion.div>
         </div>
       </Wrap>
+    </Section>
+  );
+}
+
+// ── Invisible drift section ───────────────────────────────────────────────
+const DRIFT_CARDS = [
+  {
+    id: "insights",
+    align: "left" as const,
+    rotate: -5,
+    delay: 0,
+    label: "Paper trail",
+    title: "Insights buried in paper and inboxes",
+    body: "Critical observations trapped in handwritten logs, messy spreadsheets, and endless email threads",
+  },
+  {
+    id: "incidents",
+    align: "right" as const,
+    rotate: 5,
+    delay: 0.12,
+    label: "Fleet pattern",
+    title: "Repeated incidents, avoidable costs",
+    body: "The same failures recur across vessels because nothing connects the fleet's past experience to everyday actions",
+  },
+];
+
+const driftCardStyle = {
+  background: "#eeece5",
+  border: "1px solid #D9D9D9",
+  boxShadow: "0 8px 32px rgba(0,0,0,0.07), 0 2px 8px rgba(0,0,0,0.04)",
+};
+
+function DriftCard({
+  card,
+  inView,
+}: {
+  card: (typeof DRIFT_CARDS)[number];
+  inView: boolean;
+}) {
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      className="w-[min(300px,88vw)] md:w-[min(300px,32vw)] lg:w-[min(320px,28vw)] shrink-0"
+      style={{ transformOrigin: "center bottom" }}
+      initial={reduceMotion ? false : { y: -120, opacity: 0, rotate: 0 }}
+      animate={
+        inView
+          ? { y: 0, opacity: 1, rotate: card.rotate }
+          : reduceMotion
+          ? { y: 0, opacity: 1, rotate: card.rotate }
+          : { y: -120, opacity: 0, rotate: 0 }
+      }
+      transition={
+        reduceMotion
+          ? { duration: 0 }
+          : { type: "spring", stiffness: 400, damping: 30, delay: card.delay }
+      }
+    >
+      <motion.div className="overflow-hidden text-left" style={driftCardStyle}>
+        <motion.div className="px-5 py-2.5 border-b border-[#D9D9D9]" style={{ background: "#e8e6de" }}>
+          <p
+            className="text-[#103435] text-[9px] uppercase tracking-widest"
+            style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}
+          >
+            {card.label}
+          </p>
+        </motion.div>
+        <motion.div className="px-6 py-5 md:px-7 md:py-6">
+          <p
+            className="text-[#103435] mb-2.5 leading-[1.25]"
+            style={{
+              fontFamily: "'TT Hoves Pro', sans-serif",
+              fontWeight: 500,
+              fontSize: "clamp(15px, 1.35vw, 18px)",
+            }}
+          >
+            {card.title}
+          </p>
+          <p
+            className="text-[#464646] leading-[1.55]"
+            style={{
+              fontFamily: "'TT Hoves Pro', sans-serif",
+              fontWeight: 400,
+              fontSize: "clamp(13px, 1.05vw, 15px)",
+            }}
+          >
+            {card.body}
+          </p>
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+function InvisibleDriftSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(sectionRef, { once: true, amount: 0.25 });
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <Section id="invisible-drift" className="h-[80vh] overflow-hidden">
+      <motion.div ref={sectionRef} className="relative h-full flex flex-col">
+        <Wrap className="flex-shrink-0 pt-8 md:pt-10 pb-2 md:pb-4">
+          <motion.div
+            className="mx-auto max-w-[720px] text-center"
+            initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+            transition={{ duration: 0.65, ease: EASE }}
+          >
+            <p
+              className="text-[#464646] mb-4 md:mb-5 uppercase tracking-[0.12em]"
+              style={{
+                fontFamily: "'TT Hoves Pro', sans-serif",
+                fontWeight: 500,
+                fontSize: 11,
+              }}
+            >
+              The invisible drift
+            </p>
+            <h2
+              className="text-[#103435] leading-[1.12] tracking-[-1.2px] mb-4 md:mb-5"
+              style={{ fontSize: "clamp(28px, 3.4vw, 48px)" }}
+            >
+              <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>
+                Your operational knowledge is{" "}
+              </span>
+              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300 }}>
+                walking off the gangway
+              </span>
+            </h2>
+            <p
+              className="text-[#464646] leading-[1.65] mx-auto max-w-[600px]"
+              style={{
+                fontFamily: "'TT Hoves Pro', sans-serif",
+                fontWeight: 400,
+                fontSize: "clamp(14px, 1.1vw, 17px)",
+              }}
+            >
+              With every crew rotation, context-rich know-how disappears under towers of paperwork.
+              What the outgoing engineer knew about that pump — the noise it makes at load, the fix
+              that worked last time — all of it becomes invisible to the oncoming crew.
+            </p>
+          </motion.div>
+        </Wrap>
+
+        <motion.div className="relative flex-shrink-0 w-full max-w-[900px] mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-10 lg:gap-12 mt-2 md:mt-4">
+          {DRIFT_CARDS.map((card) => (
+            <DriftCard key={card.id} card={card} inView={inView} />
+          ))}
+        </motion.div>
+        {/* Fills remaining viewport height — scroll room before Wayship 6 section */}
+        <div className="flex-1 min-h-0" aria-hidden />
+      </motion.div>
     </Section>
   );
 }
@@ -231,148 +385,6 @@ function HeroCards() {
   );
 }
 
-// ── Knowledge Cards — Storytelling Bridge ───────────────────────────────
-type CardVariant = "tall" | "short";
-
-// Fixed-pixel stage so centering is exact.
-// Columns step at 131px (121px card + 10px gap). 7 cols → stage width = 786 + 121 = 907px.
-// Stage height = tallest stack: short(54) + 8gap + tall(139) = 201 → 210px.
-const STAGE_W = 907;
-const STAGE_H = 210;
-
-const CARD_PLACEMENTS: { left: number; top: number; variant: CardVariant; marker?: boolean }[] = [
-  { left:   0, top:   0, variant: "tall",  marker: true  },
-  { left: 131, top:   0, variant: "short"               },
-  { left: 131, top:  62, variant: "tall"                }, // short(54)+8gap below
-  { left: 262, top:  10, variant: "tall"                },
-  { left: 393, top:   0, variant: "tall"                },
-  { left: 393, top: 147, variant: "short"               }, // tall(139)+8gap below
-  { left: 524, top:  20, variant: "short"               },
-  { left: 655, top:   0, variant: "tall"                },
-  { left: 786, top:  30, variant: "tall"                },
-];
-
-function CardSvg({ variant, marker }: { variant: CardVariant; marker?: boolean }) {
-  const isTall = variant === "tall";
-  const h = isTall ? 139 : 54;
-  return (
-    <div style={{ position: "relative", width: 121, height: h, flexShrink: 0 }}>
-      {isTall ? (
-        <svg width="121" height="139" viewBox="0 0 121 139" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="121" height="139" fill="#E7E5DC"/>
-          <rect x="8" y="9"  width="105" height="6" fill="#555555"/>
-          <rect x="8" y="18" width="105" height="6" fill="#555555"/>
-          <rect x="8" y="27" width="45"  height="6" fill="#555555"/>
-          <rect x="8" y="36" width="45"  height="6" fill="#555555"/>
-          <rect x="8" y="45" width="90"  height="6" fill="#555555"/>
-          <rect x="8" y="54" width="70"  height="6" fill="#555555"/>
-          <rect x="8" y="63" width="70"  height="6" fill="#555555"/>
-          <rect x="8" y="72" width="90"  height="6" fill="#555555"/>
-        </svg>
-      ) : (
-        <svg width="121" height="54" viewBox="0 0 121 54" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="121" height="54" fill="#E7E5DC"/>
-          <rect x="8" y="9"  width="105" height="6" fill="#555555"/>
-          <rect x="8" y="18" width="105" height="6" fill="#555555"/>
-          <rect x="8" y="27" width="45"  height="6" fill="#555555"/>
-        </svg>
-      )}
-      {marker && (
-        <div style={{
-          position: "absolute",
-          top: -10,
-          left: 22,
-          width: 20,
-          height: 20,
-          background: "#d4f55c",
-        }} />
-      )}
-    </div>
-  );
-}
-
-// ── Skeleton word reveal ─────────────────────────────────────────────────
-// Each word has three visual states:
-//   invisible  – index >= skeletonFront: transparent placeholder, keeps layout stable
-//   skeleton   – revealedCount <= index < skeletonFront: animated shimmer bar
-//   revealed   – index < revealedCount: actual word fades in, shimmer fades out
-function SkeletonWord({
-  word,
-  revealed,
-  visible,
-  wordIndex = 0,
-}: {
-  word: string;
-  revealed: boolean;
-  visible: boolean;
-  wordIndex?: number;
-}) {
-  // Stagger shimmer phase within the visible window (cap at 12 to keep delay short)
-  const STAGGER = 0.032;
-  const shimmerDelay = (wordIndex % 12) * STAGGER;
-
-  return (
-    <span style={{ display: "inline-block", position: "relative" }}>
-      {/* Skeleton bar — only pulses when the word is in the visible-but-unrevealed window */}
-      <motion.span
-        style={{
-          position: "absolute", left: 0, right: 0,
-          top: "14%", bottom: "10%",
-          background: "rgba(255,255,255,0.22)", borderRadius: 3, display: "block",
-        }}
-        animate={
-          revealed
-            ? { opacity: 0 }
-            : visible
-            ? { opacity: [0.18, 0.60, 0.18] }
-            : { opacity: 0 }
-        }
-        transition={
-          revealed
-            ? { duration: 0.2 }
-            : visible
-            ? { duration: 1.4, delay: shimmerDelay, repeat: Infinity, ease: "easeInOut" }
-            : { duration: 0.25 }
-        }
-      />
-      {/* Actual word — fades in once revealed */}
-      <motion.span
-        style={{ display: "inline-block" }}
-        animate={revealed ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
-      >
-        {word}
-      </motion.span>
-    </span>
-  );
-}
-
-// Render words with scroll-driven skeleton wave.
-// skeletonFront is an absolute index; words in [revealedCount, skeletonFront) shimmer,
-// words >= skeletonFront are invisible placeholders that hold layout.
-function renderScrollWords(
-  text: string,
-  revealedCount: number,
-  wordOffset = 0,
-  skeletonFront = 0,
-) {
-  return text.split(" ").map((word, i) => {
-    const globalIdx = wordOffset + i;
-    const revealed = globalIdx < revealedCount;
-    const visible = !revealed && globalIdx < skeletonFront;
-    return (
-      <span key={i}>
-        <SkeletonWord
-          word={word}
-          revealed={revealed}
-          visible={visible}
-          wordIndex={globalIdx}
-        />{" "}
-      </span>
-    );
-  });
-}
-
 // Letter stagger constants
 const LETTER_DURATION = 0.21;
 const LETTER_STAGGER = 0.015;
@@ -401,70 +413,22 @@ function renderLettersStagger(
   ));
 }
 
-function StorytellingSection({ containerRef }: { containerRef: React.RefObject<HTMLDivElement> }) {
-  const [triggered, setTriggered] = useState(false);
-  const [textVisible, setTextVisible] = useState(false);
-  const [evaporating, setEvaporating] = useState(false);
-  const [text2Visible, setText2Visible] = useState(false);
-  const [para1Visible, setPara1Visible] = useState(false);
-  const [paraExiting, setParaExiting] = useState(false);
-  const [meetVisible, setMeetVisible] = useState(false);
+function StorytellingSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const meetVisible = useInView(sectionRef, { once: true, margin: "-80px" });
   const [activeVoiceTab, setActiveVoiceTab] = useState(0);
   const [voiceProgress, setVoiceProgress] = useState(0);
   const rafRef = useRef<number | null>(null);
   const animStartRef = useRef<number | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [revealedWords1, setRevealedWords1] = useState(0);
-  const [revealedWords2, setRevealedWords2] = useState(0);
-  const [revealedWords3, setRevealedWords3] = useState(0);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+  const playTimelineVideo = useCallback((reset = true) => {
+    const video = videoRef.current;
+    if (!video || !WAYSHIP_TIMELINE_VIDEO_URL) return;
+    if (reset) video.currentTime = 0;
+    void video.play().catch(() => {});
+  }, []);
 
-  // bg: stays green while storytelling runs, then fades to cream by 0.767.
-  // All breakpoints scaled by 5/6 (300vh → 360vh container).
-  const backgroundColor = useTransform(
-    scrollYProgress,
-    [0, 0.01, 0.717, 0.767],
-    ["#f3f2ee", "#2B4242", "#2B4242", "#f3f2ee"]
-  );
-
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    // All breakpoints scaled by 5/6 (300vh → 360vh container).
-    setTextVisible(v > 0.021 && v < 0.188);
-    setTriggered(v > 0.071 && v < 0.188);
-    setEvaporating(v >= 0.188);
-    setPara1Visible(v >= 0.333);
-    setParaExiting(v >= 0.717);
-    setMeetVisible(v >= 0.767);
-
-    const p1Total = 46;
-    const p2Total = 7 + 15;
-    const p3Total = 4 + 18;
-
-    setRevealedWords1(v >= 0.333
-      ? Math.round(Math.min(1, (v - 0.333) / (0.428 - 0.333)) * p1Total)
-      : 0);
-    setRevealedWords2(v >= 0.428
-      ? Math.round(Math.min(1, (v - 0.428) / (0.522 - 0.428)) * p2Total)
-      : 0);
-    setRevealedWords3(v >= 0.522
-      ? Math.round(Math.min(1, (v - 0.522) / (0.633 - 0.522)) * p3Total)
-      : 0);
-  });
-
-  // Phrase 2 appears via timer once evaporation starts; hides when paragraphs begin
-  useEffect(() => {
-    if (evaporating && !para1Visible) {
-      const timer = setTimeout(() => setText2Visible(true), 950);
-      return () => clearTimeout(timer);
-    }
-    setText2Visible(false);
-  }, [evaporating, para1Visible]);
-
-  // 15-second tab animation loop — runs while meetVisible is true
   const TOTAL_MS = 15000;
   const HALF_MS  = TOTAL_MS / 2;
   useEffect(() => {
@@ -476,12 +440,7 @@ function StorytellingSection({ containerRef }: { containerRef: React.RefObject<H
       videoRef.current?.pause();
       return;
     }
-    // Start video from beginning when section comes into view
-    const video = videoRef.current;
-    if (video && WAYSHIP_TIMELINE_VIDEO_URL) {
-      video.currentTime = 0;
-      video.play().catch(() => {});
-    }
+    playTimelineVideo();
     animStartRef.current = null;
     const tick = (ts: number) => {
       if (!animStartRef.current) animStartRef.current = ts;
@@ -492,336 +451,151 @@ function StorytellingSection({ containerRef }: { containerRef: React.RefObject<H
     };
     rafRef.current = requestAnimationFrame(tick);
     return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
-  }, [meetVisible]);
-
-  function renderLetters(text: string, globalStart: number, visible: boolean, yOffset = 6) {
-    return text.split("").map((char, i) => (
-      <motion.span
-        key={globalStart + i}
-        style={{ display: "inline-block", whiteSpace: "pre" }}
-        initial={{ opacity: 0, y: yOffset }}
-        animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: yOffset }}
-        transition={{
-          duration: LETTER_DURATION,
-          delay: (globalStart + i) * LETTER_STAGGER,
-          ease: [0.23, 1, 0.32, 1],
-        }}
-      >
-        {char}
-      </motion.span>
-    ));
-  }
-
-  const seg1 = "Knowledge ";
-  const seg2 = "accumulates with";
-  const seg3 = "every nautical mile.";
-  const seg4 = "And evaporates with";
-  const seg5 = "every handover.";
-
-  const para1 = "With every crew rotation, context-rich know-how disappears under towers of paperwork. What the outgoing engineer knew about that pump — the noise it makes at load, the fix that worked last time — all of it becomes invisible to the oncoming crew.";
-  const para2Title = "Insights buried in paper and inboxes";
-  const para2Body  = "Critical observations trapped in handwritten logs, messy spreadsheets, and endless email threads";
-  const para3Title = "Repeated incidents, avoidable costs";
-  const para3Body  = "The same failures recur across vessels because nothing connects the fleet's past experience to everyday actions";
-
-  const ltCushion: React.CSSProperties = {
-    fontFamily: "'LT Cushion', serif", fontWeight: 300,
-    fontSize: "clamp(20px, 2.4vw, 36px)", color: "rgba(255,255,255,0.85)",
-  };
-  const ttHoves: React.CSSProperties = {
-    fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600,
-    fontSize: "clamp(20px, 2.4vw, 36px)", color: "rgba(255,255,255,0.92)",
-  };
-
-  const p2TitleWords = para2Title.split(" ").length;
-  const p3TitleWords = para3Title.split(" ").length;
-
-  // How many words ahead of the reveal cursor to show as shimmer skeletons.
-  // This creates a moving "skeleton wave" — only these N words glow at any time.
-  const SKELETON_LOOKAHEAD = 10;
-  const p1Total = para1.split(" ").length;
-  const p2Total = p2TitleWords + para2Body.split(" ").length;
-  const p3Total = p3TitleWords + para3Body.split(" ").length;
-
-  // Each paragraph's skeleton wave only starts once the previous paragraph is fully revealed,
-  // so skeletons cascade sequentially: para1 → para2 → para3.
-  const skeletonFront1 = Math.min(p1Total, revealedWords1 + SKELETON_LOOKAHEAD);
-  const skeletonFront2 = revealedWords1 >= p1Total
-    ? Math.min(p2Total, revealedWords2 + SKELETON_LOOKAHEAD)
-    : 0;
-  const skeletonFront3 = revealedWords2 >= p2Total
-    ? Math.min(p3Total, revealedWords3 + SKELETON_LOOKAHEAD)
-    : 0;
+  }, [meetVisible, playTimelineVideo]);
 
   return (
-    <div ref={containerRef} style={{ height: "360vh" }}>
-      <motion.div
-        className="sticky top-0 h-screen overflow-hidden flex flex-col items-center justify-center gap-14"
-        style={{ backgroundColor }}
+    <Section>
+      <div
+        ref={sectionRef}
+        className="min-h-screen flex flex-col items-center overflow-hidden"
+        style={{ paddingTop: "clamp(80px, 10vh, 120px)", paddingBottom: "clamp(40px, 5vh, 64px)" }}
       >
-        {/* ── Phrase 1 ── */}
         <motion.div
-          className="w-full px-8 text-center"
-          style={{ lineHeight: 1.3 }}
-          animate={{ opacity: evaporating ? 0 : 1 }}
-          transition={{ duration: 0.2, ease: EASE }}
-        >
-          <div>
-            <span style={ltCushion}>{renderLetters(seg1, 0, textVisible)}</span>
-            <span style={ttHoves}>{renderLetters(seg2, seg1.length, textVisible)}</span>
-          </div>
-          <div>
-            <span style={ttHoves}>{renderLetters(seg3, seg1.length + seg2.length, textVisible)}</span>
-          </div>
-        </motion.div>
-
-        {/* ── Cards ── */}
-        <div className="overflow-hidden pointer-events-none select-none">
-          <div className="relative" style={{ width: STAGE_W, height: STAGE_H }}>
-            {CARD_PLACEMENTS.map((card, i) => (
-              <motion.div
-                key={i}
-                style={{ position: "absolute", left: card.left, top: card.top, transformOrigin: "center center" }}
-                animate={
-                  evaporating
-                    ? { filter: "blur(10px) brightness(2.5)", opacity: 0, scale: 1.18, y: -14 }
-                    : triggered
-                    ? { scale: 1, opacity: 1, filter: "blur(0px) brightness(1)", y: 0 }
-                    : { scale: 0, opacity: 0, filter: "blur(0px) brightness(1)", y: 0 }
-                }
-                transition={
-                  evaporating
-                    ? { duration: 0.65, delay: i * 0.09, ease: [0.4, 0, 1, 1] }
-                    : triggered
-                    ? {
-                        scale:   { type: "spring", duration: 0.5, bounce: 0.18, delay: i * 0.1 },
-                        opacity: { duration: 0.25, delay: i * 0.1, ease: EASE },
-                        filter:  { duration: 0.2,  delay: i * 0.1 },
-                        y:       { duration: 0.5,  delay: i * 0.1, ease: EASE },
-                      }
-                    : { duration: 0.3 }
-                }
-              >
-                <CardSvg variant={card.variant} marker={card.marker} />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── Phrase 2 — full-screen centered overlay ── */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="mx-auto w-full max-w-[1512px] px-8 md:px-16 lg:px-[115px] text-center" style={{ lineHeight: 1.2 }}>
-            <div>
-              <span style={{ ...ltCushion, fontSize: "clamp(28px, 3.6vw, 56px)" }}>
-                {renderLetters(seg4, 0, text2Visible, 0)}
-              </span>
-            </div>
-            <div>
-              <span style={{ ...ttHoves, fontSize: "clamp(28px, 3.6vw, 56px)" }}>
-                {renderLetters(seg5, seg4.length, text2Visible, 0)}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* ── Paragraphs panel — skeleton wave precedes reveal cursor ── */}
-        <motion.div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          animate={
-            paraExiting
-              ? { opacity: 0, filter: "blur(14px)", y: -28 }
-              : para1Visible
-              ? { opacity: 1, filter: "blur(0px)", y: 0 }
-              : { opacity: 0, filter: "blur(0px)", y: 0 }
-          }
-          transition={{ duration: 0.55, ease: EASE }}
-        >
-          <div className="mx-auto w-full max-w-[1512px] px-8 md:px-16 lg:px-[115px]">
-            <div className="mx-auto max-w-[860px]" style={{ textAlign: "left" }}>
-
-              {/* Para 1 */}
-              <p style={{
-                fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500,
-                fontSize: "clamp(15px, 1.96vw, 31px)", color: "rgba(255,255,255,0.88)",
-                lineHeight: 1.35, marginBottom: "clamp(20px, 2.1vw, 36px)",
-              }}>
-                {renderScrollWords(para1, revealedWords1, 0, skeletonFront1)}
-              </p>
-
-              {/* Para 2 */}
-              <p style={{
-                fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500,
-                fontSize: "clamp(15px, 1.96vw, 31px)", color: "rgba(255,255,255,0.88)",
-                lineHeight: 1.35, marginBottom: "clamp(20px, 2.1vw, 36px)",
-              }}>
-                {renderScrollWords(para2Title + " " + para2Body, revealedWords2, 0, skeletonFront2)}
-              </p>
-
-              {/* Para 3 */}
-              <p style={{
-                fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500,
-                fontSize: "clamp(15px, 1.96vw, 31px)", color: "rgba(255,255,255,0.88)",
-                lineHeight: 1.35,
-              }}>
-                {renderScrollWords(para3Title + " " + para3Body, revealedWords3, 0, skeletonFront3)}
-              </p>
-
-            </div>
-          </div>
-        </motion.div>
-
-        {/* ── Meet Wayship + AI-Native + Voice content — staggered reveal ── */}
-        <motion.div
-          className="absolute inset-0 flex flex-col items-center overflow-hidden pointer-events-none"
-          style={{ paddingTop: "clamp(80px, 10vh, 120px)", paddingBottom: "clamp(10px, 1.5vh, 20px)" }}
+          className="w-full max-w-[1512px] px-8 md:px-16 lg:px-[115px] flex flex-col items-center"
+          style={{ gap: "clamp(8px, 1.1vh, 16px)" }}
+          initial={{ opacity: 0 }}
           animate={meetVisible ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.35, ease: EASE }}
         >
-          <div
-            className="w-full max-w-[1512px] px-8 md:px-16 lg:px-[115px] flex flex-col items-center"
-            style={{ gap: "clamp(8px, 1.1vh, 16px)", height: "100%" }}
+          <h2
+            className="text-center tracking-[-1.5px] shrink-0"
+            style={{ fontSize: "clamp(26px, 3vw, 48px)", lineHeight: 1.15 }}
           >
+            <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, color: "rgba(16,52,53,0.75)" }}>
+              {renderLettersStagger("Meet the all-new ", meetVisible)}
+            </span>
+            <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, color: "#103435" }}>
+              {renderLettersStagger("Wayship 6", meetVisible, "Meet the all-new ".length)}
+            </span>
+          </h2>
 
-            {/* ── "Meet the all-new Wayship 6" ── */}
-            <h2
-              className="text-center tracking-[-1.5px] shrink-0"
-              style={{ fontSize: "clamp(26px, 3vw, 48px)", lineHeight: 1.15 }}
-            >
-              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, color: "rgba(16,52,53,0.75)" }}>
-                {renderLettersStagger("Meet the all-new ", meetVisible)}
-              </span>
-              <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, color: "#103435" }}>
-                {renderLettersStagger("Wayship 6", meetVisible, "Meet the all-new ".length)}
-              </span>
-            </h2>
+          <motion.h3
+            className="text-center text-black tracking-[-0.8px] shrink-0"
+            style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 40, lineHeight: 1.1, marginTop: 100 }}
+            initial={{ opacity: 0, y: 6 }}
+            animate={meetVisible ? { opacity: 1, y: 0, transition: { duration: 0.4, delay: 0.3, ease: EASE } } : { opacity: 0, y: 6 }}
+          >
+            <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300 }}>AI-Native </span>
+            <span style={{ fontWeight: 500 }}>Features</span>
+          </motion.h3>
 
-            {/* ── AI-Native Features label ── */}
-            <motion.h3
-              className="text-center text-black tracking-[-0.8px] shrink-0"
-              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 40, lineHeight: 1.1, marginTop: 100 }}
-              initial={{ opacity: 0, y: 6 }}
-              animate={meetVisible ? { opacity: 1, y: 0, transition: { duration: 0.4, delay: 0.3, ease: EASE } } : { opacity: 0, y: 6 }}
-            >
-              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300 }}>AI-Native </span>
-              <span style={{ fontWeight: 500 }}>Features</span>
-            </motion.h3>
-
-            {/* ── 2-col layout: left = video, right = feature descriptions ── */}
-            <motion.div
-              className="w-full grid grid-cols-1 lg:grid-cols-2 border border-[rgba(102,102,102,0.24)] overflow-hidden shrink-0"
-              style={{ flex: "1 1 0", minHeight: 0 }}
-              initial={{ opacity: 0, y: 12 }}
-              animate={meetVisible ? { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.45, ease: EASE } } : { opacity: 0, y: 12 }}
-            >
-              {/* Left — video (min-height prevents collapse when video is position:absolute) */}
-              <div className="relative overflow-hidden min-h-[280px] lg:min-h-[320px] h-full" style={{ background: "#0a2526" }}>
-                {WAYSHIP_TIMELINE_VIDEO_URL ? (
-                  <video
-                    ref={videoRef}
-                    src={WAYSHIP_TIMELINE_VIDEO_URL}
-                    loop
-                    muted
-                    playsInline
-                    preload="auto"
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                ) : null}
-              </div>
-
-              {/* Right — feature descriptions stacked vertically */}
-              <motion.div
-                className="relative flex flex-col justify-center"
-                style={{ background: "#f3f2ee", padding: "clamp(32px, 5%, 56px) clamp(28px, 5%, 56px)" }}
-                initial={{ opacity: 0, y: 8 }}
-                animate={meetVisible ? { opacity: 1, y: 0, transition: { duration: 0.45, delay: 0.6, ease: EASE } } : { opacity: 0, y: 8 }}
-              >
-                {/* Timeline progress bar */}
-                <div className="absolute left-0 top-0 h-[3px] w-full bg-[#e8e6de]" />
-                <div className="absolute left-0 top-0 h-[3px] bg-[#1d1d1d]" style={{ width: `${voiceProgress}%` }} />
-
-                <div className="flex flex-col gap-8">
-                  {/* VOICE AI tab */}
-                  <motion.div
-                    className="flex flex-col gap-[clamp(8px,1vh,14px)]"
-                    animate={{ opacity: activeVoiceTab === 0 ? 1 : 0.45 }}
-                    transition={{ duration: 0.2, ease: EASE }}
-                  >
-                    <motion.div
-                      className="inline-flex items-center self-start"
-                      style={{ padding: "8px 10px", border: "1px solid", gap: 10 }}
-                      animate={{
-                        background: activeVoiceTab === 0 ? "#42ead4" : "#ffffff",
-                        borderRadius: activeVoiceTab === 0 ? 0 : 44,
-                        borderColor: activeVoiceTab === 0 ? "#ededed" : "#f2f3ec",
-                      }}
-                      transition={{ duration: 0.2, ease: EASE }}
-                    >
-                      <motion.span
-                        className="block rounded-full bg-[#103435] shrink-0"
-                        style={{ width: 8, height: 8 }}
-                        animate={{ opacity: activeVoiceTab === 0 ? 1 : 0, scale: activeVoiceTab === 0 ? 1 : 0.5 }}
-                        transition={{ duration: 0.15, ease: EASE }}
-                      />
-                      <motion.p
-                        className="font-mono whitespace-nowrap"
-                        style={{ fontSize: 13, fontWeight: 500 }}
-                        animate={{ color: activeVoiceTab === 0 ? "#113637" : "#929389" }}
-                        transition={{ duration: 0.18, ease: EASE }}
-                      >SPEECH AI</motion.p>
-                    </motion.div>
-                    <p className="text-black" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(16px, 1.5vw, 24px)", lineHeight: 1.15 }}>Speak ...<br />and its done!</p>
-                    <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.05vw, 16px)", color: "#85867b", lineHeight: 1.55 }}>
-                      Your crew shouldn't have to choose between doing the job and documenting it. Wayship's advanced automatic speech recognition turns the moment of observation into a structured, tagged, searchable entry — 4x faster than typing.
-                    </p>
-                  </motion.div>
-
-                  {/* Divider */}
-                  <div className="h-px w-full bg-[#D9D9D9]" />
-
-                  {/* CHAT WITH YOUR DATA tab */}
-                  <motion.div
-                    className="flex flex-col gap-[clamp(8px,1vh,14px)]"
-                    animate={{ opacity: activeVoiceTab === 1 ? 1 : 0.45 }}
-                    transition={{ duration: 0.2, ease: EASE }}
-                  >
-                    <motion.div
-                      className="inline-flex items-center self-start"
-                      style={{ padding: "8px 10px", border: "1px solid", gap: 10 }}
-                      animate={{
-                        background: activeVoiceTab === 1 ? "#42ead4" : "#ffffff",
-                        borderRadius: activeVoiceTab === 1 ? 0 : 44,
-                        borderColor: activeVoiceTab === 1 ? "#ededed" : "#f2f3ec",
-                      }}
-                      transition={{ duration: 0.2, ease: EASE }}
-                    >
-                      <motion.span
-                        className="block rounded-full bg-[#103435] shrink-0"
-                        style={{ width: 8, height: 8 }}
-                        animate={{ opacity: activeVoiceTab === 1 ? 1 : 0, scale: activeVoiceTab === 1 ? 1 : 0.5 }}
-                        transition={{ duration: 0.15, ease: EASE }}
-                      />
-                      <motion.p
-                        className="font-mono whitespace-nowrap"
-                        style={{ fontSize: 13, fontWeight: 500 }}
-                        animate={{ color: activeVoiceTab === 1 ? "#113637" : "#929389" }}
-                        transition={{ duration: 0.18, ease: EASE }}
-                      >AI ASSISTANT</motion.p>
-                    </motion.div>
-                    <p className="text-black" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(16px, 1.5vw, 24px)", lineHeight: 1.15, maxWidth: 320 }}>Your data just got its voice. And it has a lot to say.</p>
-                    <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.05vw, 16px)", color: "#85867b", lineHeight: 1.55 }}>
-                      Ask anything about your vessel's full operational history in plain language — current state, past incidents, recorded observations across rotations, all in one connected space.
-                    </p>
-                  </motion.div>
-                </div>
-              </motion.div>
-
+          <motion.div
+            className="w-full grid grid-cols-1 lg:grid-cols-2 border border-[rgba(102,102,102,0.24)] overflow-hidden shrink-0"
+            style={{ minHeight: "clamp(320px, 50vh, 520px)" }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={meetVisible ? { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.45, ease: EASE } } : { opacity: 0, y: 12 }}
+          >
+            <motion.div className="relative overflow-hidden min-h-[280px] lg:min-h-[320px] h-full" style={{ background: "#0a2526" }}>
+              {WAYSHIP_TIMELINE_VIDEO_URL ? (
+                <video
+                  ref={videoRef}
+                  src={WAYSHIP_TIMELINE_VIDEO_URL}
+                  loop
+                  muted
+                  playsInline
+                  autoPlay={meetVisible}
+                  preload="auto"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  onCanPlay={() => meetVisible && playTimelineVideo(false)}
+                />
+              ) : null}
             </motion.div>
 
-          </div>
-        </motion.div>
+            <motion.div
+              className="relative flex flex-col justify-center"
+              style={{ background: "#f3f2ee", padding: "clamp(32px, 5%, 56px) clamp(28px, 5%, 56px)" }}
+              initial={{ opacity: 0, y: 8 }}
+              animate={meetVisible ? { opacity: 1, y: 0, transition: { duration: 0.45, delay: 0.6, ease: EASE } } : { opacity: 0, y: 8 }}
+            >
+              <div className="absolute left-0 top-0 h-[3px] w-full bg-[#e8e6de]" />
+              <motion.div className="absolute left-0 top-0 h-[3px] bg-[#1d1d1d]" style={{ width: `${voiceProgress}%` }} />
 
-      </motion.div>
-    </div>
+              <motion.div className="flex flex-col gap-8">
+                <motion.div
+                  className="flex flex-col gap-[clamp(8px,1vh,14px)]"
+                  animate={{ opacity: activeVoiceTab === 0 ? 1 : 0.45 }}
+                  transition={{ duration: 0.2, ease: EASE }}
+                >
+                  <motion.div
+                    className="inline-flex items-center self-start"
+                    style={{ padding: "8px 10px", border: "1px solid", gap: 10 }}
+                    animate={{
+                      background: activeVoiceTab === 0 ? "#42ead4" : "#ffffff",
+                      borderRadius: activeVoiceTab === 0 ? 0 : 44,
+                      borderColor: activeVoiceTab === 0 ? "#ededed" : "#f2f3ec",
+                    }}
+                    transition={{ duration: 0.2, ease: EASE }}
+                  >
+                    <motion.span
+                      className="block rounded-full bg-[#103435] shrink-0"
+                      style={{ width: 8, height: 8 }}
+                      animate={{ opacity: activeVoiceTab === 0 ? 1 : 0, scale: activeVoiceTab === 0 ? 1 : 0.5 }}
+                      transition={{ duration: 0.15, ease: EASE }}
+                    />
+                    <motion.p
+                      className="font-mono whitespace-nowrap"
+                      style={{ fontSize: 13, fontWeight: 500 }}
+                      animate={{ color: activeVoiceTab === 0 ? "#113637" : "#929389" }}
+                      transition={{ duration: 0.18, ease: EASE }}
+                    >SPEECH AI</motion.p>
+                  </motion.div>
+                  <p className="text-black" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(16px, 1.5vw, 24px)", lineHeight: 1.15 }}>Speak ...<br />and its done!</p>
+                  <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.05vw, 16px)", color: "#85867b", lineHeight: 1.55 }}>
+                    Your crew shouldn't have to choose between doing the job and documenting it. Wayship's advanced automatic speech recognition turns the moment of observation into a structured, tagged, searchable entry — 4x faster than typing.
+                  </p>
+                </motion.div>
+
+                <div className="h-px w-full bg-[#D9D9D9]" />
+
+                <motion.div
+                  className="flex flex-col gap-[clamp(8px,1vh,14px)]"
+                  animate={{ opacity: activeVoiceTab === 1 ? 1 : 0.45 }}
+                  transition={{ duration: 0.2, ease: EASE }}
+                >
+                  <motion.div
+                    className="inline-flex items-center self-start"
+                    style={{ padding: "8px 10px", border: "1px solid", gap: 10 }}
+                    animate={{
+                      background: activeVoiceTab === 1 ? "#42ead4" : "#ffffff",
+                      borderRadius: activeVoiceTab === 1 ? 0 : 44,
+                      borderColor: activeVoiceTab === 1 ? "#ededed" : "#f2f3ec",
+                    }}
+                    transition={{ duration: 0.2, ease: EASE }}
+                  >
+                    <motion.span
+                      className="block rounded-full bg-[#103435] shrink-0"
+                      style={{ width: 8, height: 8 }}
+                      animate={{ opacity: activeVoiceTab === 1 ? 1 : 0, scale: activeVoiceTab === 1 ? 1 : 0.5 }}
+                      transition={{ duration: 0.15, ease: EASE }}
+                    />
+                    <motion.p
+                      className="font-mono whitespace-nowrap"
+                      style={{ fontSize: 13, fontWeight: 500 }}
+                      animate={{ color: activeVoiceTab === 1 ? "#113637" : "#929389" }}
+                      transition={{ duration: 0.18, ease: EASE }}
+                    >AI ASSISTANT</motion.p>
+                  </motion.div>
+                  <p className="text-black" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(16px, 1.5vw, 24px)", lineHeight: 1.15, maxWidth: 320 }}>Your data just got its voice. And it has a lot to say.</p>
+                  <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.05vw, 16px)", color: "#85867b", lineHeight: 1.55 }}>
+                    Ask anything about your vessel's full operational history in plain language — current state, past incidents, recorded observations across rotations, all in one connected space.
+                  </p>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </div>
+    </Section>
   );
 }
 
@@ -1663,27 +1437,7 @@ function DeployStrip() {
 }
 
 // ── Main export ──────────────────────────────────────────────────────────
-export function WayshipPageV2() {
-  const storyRef = useRef<HTMLDivElement>(null);
-  const heroRef = useRef<HTMLDivElement>(null);
-
-  // Green overlay on hero: fades in as hero scrolls out (40%→100% of hero height)
-  const { scrollYProgress: heroScroll } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const heroOverlayOpacity = useTransform(heroScroll, [0.35, 1], [0, 1]);
-
-  // Rail color: transitions from default grey → teal as bg darkens, then back
-  const { scrollYProgress: storyProgress } = useScroll({
-    target: storyRef,
-    offset: ["start start", "end end"],
-  });
-  const railColor = useTransform(
-    storyProgress,
-    [0, 0.01, 0.717, 0.767],
-    ["#D9D9D9", "#385859", "#385859", "#D9D9D9"]
-  );
+export function WayshipPageV3() {
 
   useEffect(() => {
     document.title =
@@ -1696,8 +1450,8 @@ export function WayshipPageV2() {
       {/* Page rails (match home page) */}
       <div className="absolute inset-0 pointer-events-none z-[60]">
         <div className="relative h-full max-w-[1512px] mx-auto">
-          <motion.div className="absolute top-0 bottom-0 left-[12px] md:left-[44px] lg:left-[95px] w-px" style={{ background: railColor }} />
-          <motion.div className="absolute top-0 bottom-0 right-[12px] md:right-[44px] lg:right-[95px] w-px" style={{ background: railColor }} />
+          <motion.div className="absolute top-0 bottom-0 left-[12px] md:left-[44px] lg:left-[95px] w-px bg-[#D9D9D9]" />
+          <motion.div className="absolute top-0 bottom-0 right-[12px] md:right-[44px] lg:right-[95px] w-px bg-[#D9D9D9]" />
         </div>
       </div>
 
@@ -1706,15 +1460,9 @@ export function WayshipPageV2() {
       <main className="bg-[#f3f2ee]">
         {/* Anchor aliases so the home header links still land somewhere sensible */}
         <div id="advantage" />
-        <div ref={heroRef} className="relative">
-          <WayshipHero />
-          {/* Green overlay that fades in as hero scrolls out */}
-          <motion.div
-            className="absolute inset-0 pointer-events-none"
-            style={{ background: "#2B4242", opacity: heroOverlayOpacity }}
-          />
-        </div>
-        <StorytellingSection containerRef={storyRef} />
+        <WayshipHero />
+        <InvisibleDriftSection />
+        <StorytellingSection />
         <ContentDivider />
         <CoreFeaturesSection />
         <ContentDivider />

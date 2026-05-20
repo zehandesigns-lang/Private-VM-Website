@@ -1,11 +1,7 @@
 /// <reference types="vite/client" />
 
-declare module "*.mp4" {
-  const src: string;
-  export default src;
-}
-
 interface ImportMetaEnv {
+  readonly VITE_WAYSHIP_TIMELINE_VIDEO_URL?: string;
 }
 
 interface ImportMeta {
