@@ -9,7 +9,7 @@ import { ContentDivider } from "./RailDivider";
 import epsLogo from "@/assets/logos/eastern-pacific.png";
 import imgTk from "@/assets/logos/tk.png";
 import imgWilhelmsen from "@/assets/logos/wilhelmsen.png";
-import { WAYSHIP_TIMELINE_VIDEO_URL } from "@/app/constants/wayship";
+import { ABS_TYPE_APPROVAL_LOGO, WAYSHIP_TIMELINE_VIDEO_URL } from "@/app/constants/wayship";
 
 // ── Tokens ─────────────────────────────────────────────────────────────
 const EASE: [number, number, number, number] = [0.23, 1, 0.32, 1];
@@ -1289,8 +1289,6 @@ const FEATURES = [
   { title: "Structured Handovers", desc: "Auto-generated handover reports compiled from outgoing crew entries. Incoming officers board knowing the vessel — not just the procedures.", chip: "Auto-generated" },
 ];
 
-const ABS_LOGO_SRC = "http://localhost:3845/assets/fbc4c686b88442074b0d89414d2cfc484b1f7110.png";
-
 const FLAG_LIST = [
   { src: "/flag-sg.svg", name: "Singapore" },
   { src: "/flag-uae.svg", name: "UAE" },
@@ -1401,7 +1399,7 @@ function FlagApprovalSection() {
               style={{ mixBlendMode: "luminosity" }}
             >
               <img
-                src={ABS_LOGO_SRC}
+                src={ABS_TYPE_APPROVAL_LOGO}
                 alt="ABS Type Approval"
                 className="w-full h-full object-cover"
               />
