@@ -6,9 +6,20 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { CTASection } from "./CTASection";
 import { ContentDivider } from "./RailDivider";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
 import epsLogo from "@/assets/logos/eastern-pacific.png";
 import imgTk from "@/assets/logos/tk.png";
 import imgWilhelmsen from "@/assets/logos/wilhelmsen.png";
+import flagBahamas from "@/assets/flags/Bahamas.svg";
+import flagLiberia from "@/assets/flags/Liberia.svg";
+import flagMalta from "@/assets/flags/Malta.svg";
+import flagPanama from "@/assets/flags/Panama.svg";
+import lloydsRegisterLogo from "@/assets/logos/lloyds-register.png";
 import { ABS_TYPE_APPROVAL_LOGO, WAYSHIP_TIMELINE_VIDEO_URL } from "@/app/constants/wayship";
 
 // ── Tokens ─────────────────────────────────────────────────────────────
@@ -95,7 +106,7 @@ function WayshipHero() {
               style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(15px, 1.1vw, 18px)" }}
               variants={fadeUp} initial="hidden" animate="visible" custom={0.12}
             >
-              Speak it. Type it. It's structured, tagged, and live on your fleet dashboard in under 60 seconds. Wayship turns vessel operations data into structured, searchable intelligence — delivered at the right moment, for the right decision.
+              Wayship turns vessel operations data into structured, searchable intelligence — delivered at the right moment, for the right decision.
             </motion.p>
 
             <motion.div className="flex flex-wrap items-center gap-4"
@@ -136,11 +147,11 @@ function WayshipHero() {
             </motion.div>
           </div>
 
-          {/* Right — floating cards */}
+          {/* Right — floating cards (opacity-only entrance so card float loops aren't blocked) */}
           <motion.div
             className="hidden lg:block relative h-[380px]"
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
           >
             <HeroCards />
@@ -305,23 +316,44 @@ function InvisibleDriftSection() {
   );
 }
 
-// Floating cards for hero
+// Floating cards for hero — continuous float loop (matches WayshipPage.tsx)
+const HERO_CARD_FLOAT = [
+  { y: [0, -10, 0] as const, duration: 6.5, rotate: -4, origin: "right bottom" },
+  { y: [0, -7, 0] as const, duration: 5.2, rotate: 5, origin: "left center" },
+  { y: [0, -8, 0] as const, duration: 7.1, rotate: -3, origin: "top center" },
+] as const;
+
 function HeroCards() {
+  const reduceMotion = useReducedMotion();
   const cardBase = { background: "#f3f2ee", border: "1px solid #D9D9D9", boxShadow: "0 8px 32px rgba(0,0,0,0.07), 0 2px 8px rgba(0,0,0,0.04)" };
+  const floatTransition = (duration: number) =>
+    reduceMotion
+      ? { duration: 0 }
+      : { duration, repeat: Infinity, ease: "easeInOut" as const };
+
   return (
     <>
       {/* Card A — Fleet overview */}
       <motion.div
         className="absolute top-0 left-0 w-[300px] overflow-hidden"
-        style={cardBase}
-        animate={{ y: [0, -10, 0] }}
-        transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          ...cardBase,
+          transformOrigin: HERO_CARD_FLOAT[0].origin,
+          rotate: HERO_CARD_FLOAT[0].rotate,
+        }}
+        initial={false}
+        animate={reduceMotion ? undefined : { y: HERO_CARD_FLOAT[0].y }}
+        transition={floatTransition(HERO_CARD_FLOAT[0].duration)}
       >
         <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#D9D9D9]" style={{ background: "#eeece5" }}>
           <span className="text-[#103435] text-[9px] uppercase tracking-widest font-mono">Fleet overview</span>
           <span className="flex items-center gap-1.5">
-            <motion.span className="w-1.5 h-1.5 bg-emerald-500"
-              animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.4, repeat: Infinity }} />
+            <motion.span
+              className="w-1.5 h-1.5 bg-emerald-500"
+              initial={false}
+              animate={reduceMotion ? undefined : { opacity: [1, 0.3, 1] }}
+              transition={reduceMotion ? { duration: 0 } : { duration: 1.4, repeat: Infinity }}
+            />
             <span className="text-emerald-700 text-[9px]">Live</span>
           </span>
         </div>
@@ -344,9 +376,14 @@ function HeroCards() {
       {/* Card B — Data points captured */}
       <motion.div
         className="absolute top-20 right-0 w-[210px] overflow-hidden"
-        style={cardBase}
-        animate={{ y: [0, -7, 0] }}
-        transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          ...cardBase,
+          transformOrigin: HERO_CARD_FLOAT[1].origin,
+          rotate: HERO_CARD_FLOAT[1].rotate,
+        }}
+        initial={false}
+        animate={reduceMotion ? undefined : { y: HERO_CARD_FLOAT[1].y }}
+        transition={floatTransition(HERO_CARD_FLOAT[1].duration)}
       >
         <div className="px-4 py-2.5 border-b border-[#D9D9D9]" style={{ background: "#eeece5" }}>
           <span className="text-[#103435] text-[9px] uppercase tracking-widest font-mono">Data Points Captured</span>
@@ -366,9 +403,14 @@ function HeroCards() {
       {/* Card C — Voice entry */}
       <motion.div
         className="absolute bottom-0 left-5 w-[280px] overflow-hidden"
-        style={cardBase}
-        animate={{ y: [0, -8, 0] }}
-        transition={{ duration: 7.1, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          ...cardBase,
+          transformOrigin: HERO_CARD_FLOAT[2].origin,
+          rotate: HERO_CARD_FLOAT[2].rotate,
+        }}
+        initial={false}
+        animate={reduceMotion ? undefined : { y: HERO_CARD_FLOAT[2].y }}
+        transition={floatTransition(HERO_CARD_FLOAT[2].duration)}
       >
         <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#D9D9D9]" style={{ background: "#eeece5" }}>
           <span className="text-[#103435] text-[9px] uppercase tracking-widest font-mono">Latest · Pacific Jasper</span>
@@ -480,13 +522,18 @@ function StorytellingSection() {
           </h2>
 
           <motion.h3
-            className="text-center text-black tracking-[-0.8px] shrink-0"
-            style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 40, lineHeight: 1.1, marginTop: 100 }}
+            className="text-left text-black tracking-[-0.8px] shrink-0 max-w-[720px] self-start w-full"
+            style={{ fontSize: "clamp(22px, 2.6vw, 36px)", lineHeight: 1.15, marginTop: 100 }}
             initial={{ opacity: 0, y: 6 }}
             animate={meetVisible ? { opacity: 1, y: 0, transition: { duration: 0.4, delay: 0.3, ease: EASE } } : { opacity: 0, y: 6 }}
           >
-            <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300 }}>AI-Native </span>
-            <span style={{ fontWeight: 500 }}>Features</span>
+            <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>
+              Purpose-built Wayship AI,
+            </span>
+            <br />
+            <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300 }}>
+              designed from the ground up for seafarers
+            </span>
           </motion.h3>
 
           <motion.div
@@ -723,7 +770,7 @@ function VoiceSection({ storyRef: _storyRef }: { storyRef: React.RefObject<HTMLD
       <div ref={sectionRef}>
       <Wrap className="pt-14 md:pt-20 pb-0">
 
-        {/* ── AI-Native Features heading ── */}
+        {/* ── Wayship AI heading ── */}
         <div className="flex flex-col items-center gap-[14px] mb-12">
           <motion.div
             className="flex items-center gap-2"
@@ -736,22 +783,23 @@ function VoiceSection({ storyRef: _storyRef }: { storyRef: React.RefObject<HTMLD
             </p>
           </motion.div>
           <h3
-            className="text-center text-black tracking-[-0.8px]"
-            style={{ fontSize: "clamp(22px, 2.6vw, 36px)", lineHeight: 1.1 }}
+            className="text-center text-black tracking-[-0.8px] max-w-[720px]"
+            style={{ fontSize: "clamp(22px, 2.6vw, 36px)", lineHeight: 1.15 }}
           >
-            <motion.span
-              style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "italic", display: "inline" }}
-              initial={{ opacity: 0, y: 8 }}
-              animate={revealed ? { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.08, ease: EASE } } : { opacity: 0, y: 8 }}
-            >
-              AI-Native{" "}
-            </motion.span>
             <motion.span
               style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, display: "inline" }}
               initial={{ opacity: 0, y: 8 }}
+              animate={revealed ? { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.08, ease: EASE } } : { opacity: 0, y: 8 }}
+            >
+              Purpose-built Wayship AI,
+            </motion.span>
+            <br />
+            <motion.span
+              style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, display: "inline" }}
+              initial={{ opacity: 0, y: 8 }}
               animate={revealed ? { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.14, ease: EASE } } : { opacity: 0, y: 8 }}
             >
-              Features
+              designed from the ground up for seafarers
             </motion.span>
           </h3>
         </div>
@@ -885,79 +933,226 @@ const CHAT_MESSAGES = [
   { role: "ai", time: "06:13", text: "**Yes — 2 prior instances found.**\n\nApril 2024 (outgoing crew): same temp rise at similar load, resolved with lube oil change. January 2024: logged as #routine, no follow-up required." },
 ];
 
-// ── One Report illustration (right panel of hero feature card) ─────────────
-function DispatchIllustration() {
+// ── 1Report dispatch illustration (right panel of feature card) ───────────
+const ONE_REPORT_INPUTS = ["Noon", "Emissions", "Cargo", "BDN", "SOF"];
+
+const ONE_REPORT_DESTINATIONS = [
+  { id: "imos", label: "IMOS", sub: "Voyage data", left: "17%" },
+  { id: "signal", label: "Signal", sub: "Performance", left: "50%" },
+  { id: "api", label: "Custom API", sub: "Stakeholders", left: "83%" },
+] as const;
+
+const ROUTE_PATHS = [
+  "M 260 132 L 260 192 L 88 254",
+  "M 260 192 L 260 254",
+  "M 260 192 L 432 254",
+] as const;
+
+/** Packet waypoints in SVG viewBox coords (520×380) — matches ROUTE_PATHS geometry */
+const ROUTE_PACKET_ANIMS = [
+  { cx: [260, 260, 88], cy: [132, 192, 254] },
+  { cx: [260, 260, 260], cy: [132, 192, 254] },
+  { cx: [260, 260, 432], cy: [132, 192, 254] },
+] as const;
+
+function OneReportDispatchIllustration() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const reduceMotion = useReducedMotion();
+
   return (
-    <svg
-      className="absolute inset-0 w-full h-full"
-      viewBox="0 0 585 421"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="xMidYMid slice"
+    <div
+      ref={ref}
+      className="relative h-full min-h-[340px] w-full overflow-hidden bg-[#e7e5dc]"
+      aria-hidden
     >
-      <rect width="585" height="421" fill="#e7e5dc" />
+      {/* Connector lines */}
+      <svg
+        className="pointer-events-none absolute inset-0 h-full w-full"
+        viewBox="0 0 520 380"
+        preserveAspectRatio="xMidYMid meet"
+      >
+        {ROUTE_PATHS.map((d, i) => (
+          <g key={d}>
+            <motion.path
+              d={d}
+              fill="none"
+              stroke="#c5c2b8"
+              strokeWidth={2}
+              strokeLinecap="round"
+              initial={{ pathLength: reduceMotion ? 1 : 0, opacity: 0.35 }}
+              animate={
+                inView
+                  ? { pathLength: 1, opacity: 1 }
+                  : { pathLength: reduceMotion ? 1 : 0, opacity: 0.35 }
+              }
+              transition={{ duration: 0.7, delay: 0.25 + i * 0.12, ease: EASE }}
+            />
+          </g>
+        ))}
+        {!reduceMotion &&
+          inView &&
+          ROUTE_PACKET_ANIMS.map((route, i) => (
+            <motion.circle
+              key={i}
+              r={4}
+              fill="#42ead4"
+              style={{ filter: "drop-shadow(0 0 4px rgba(66, 234, 212, 0.55))" }}
+              initial={{ cx: route.cx[0], cy: route.cy[0], opacity: 0 }}
+              animate={{
+                cx: [...route.cx, route.cx[2]],
+                cy: [...route.cy, route.cy[2]],
+                opacity: [0, 1, 1, 0],
+              }}
+              transition={{
+                duration: 2,
+                delay: 0.85 + i * 0.35,
+                repeat: Infinity,
+                repeatDelay: 1,
+                ease: "linear",
+              }}
+            />
+          ))}
+      </svg>
 
-      {/* Large centre document card */}
-      <rect x="232" y="78" width="121" height="114" fill="#cdcabc" />
-      <rect x="240" y="87"  width="105" height="6" fill="#8d8b85" />
-      <rect x="240" y="96"  width="105" height="6" fill="#8d8b85" />
-      <rect x="240" y="105" width="45"  height="6" fill="#8d8b85" />
-      <rect x="240" y="114" width="45"  height="6" fill="#8d8b85" />
-      <rect x="240" y="123" width="90"  height="6" fill="#8d8b85" />
-      <rect x="240" y="132" width="70"  height="6" fill="#8d8b85" />
-      <rect x="240" y="141" width="70"  height="6" fill="#8d8b85" />
-      <rect x="240" y="150" width="90"  height="6" fill="#8d8b85" />
+      {/* Central 1Report entry card */}
+      <motion.div
+        className="absolute left-1/2 top-[6%] w-[min(240px,48%)] -translate-x-1/2 overflow-hidden border border-[#d9d9d9] bg-white shadow-[0_12px_40px_rgba(0,0,0,0.08)]"
+        initial={{ opacity: 0, y: 16, scale: 0.96 }}
+        animate={
+          inView
+            ? { opacity: 1, y: 0, scale: 1 }
+            : { opacity: 0, y: 16, scale: 0.96 }
+        }
+        transition={{ duration: 0.55, ease: EASE }}
+      >
+        <div className="flex items-center gap-2 border-b border-[#e8e6de] bg-[#42ead4]/30 px-3 py-2">
+          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#103435]" />
+          <span className="font-mono text-[9px] font-medium uppercase tracking-widest text-[#103435]">
+            1 Report
+          </span>
+          {inView && !reduceMotion && (
+            <motion.span
+              className="ml-auto h-1.5 w-1.5 rounded-full bg-emerald-500"
+              animate={{ opacity: [1, 0.3, 1] }}
+              transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+            />
+          )}
+        </div>
+        <div className="flex flex-wrap gap-1.5 border-b border-[#e8e6de] bg-[#faf9f6] px-3 py-2.5">
+          {ONE_REPORT_INPUTS.map((tag, i) => (
+            <motion.span
+              key={tag}
+              className="rounded-full border border-[#d0cec6] bg-white px-2 py-0.5 font-mono text-[9px] uppercase tracking-wide text-[#929389]"
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={
+                inView
+                  ? { opacity: 1, scale: 1 }
+                  : { opacity: 0, scale: 0.92 }
+              }
+              transition={{ duration: 0.3, delay: 0.12 + i * 0.05, ease: EASE }}
+            >
+              {tag}
+            </motion.span>
+          ))}
+        </div>
+        <div className="space-y-2 p-3">
+          {[
+            { w: "100%", delay: 0.15 },
+            { w: "88%", delay: 0.22 },
+            { w: "72%", delay: 0.29 },
+            { w: "94%", delay: 0.36 },
+          ].map((line, i) => (
+            <motion.div
+              key={i}
+              className="h-[5px] rounded-sm bg-[#e8e6de]"
+              style={{ width: line.w, transformOrigin: "left center" }}
+              initial={{ scaleX: 0, opacity: 0.4 }}
+              animate={
+                inView
+                  ? { scaleX: 1, opacity: 1 }
+                  : { scaleX: 0, opacity: 0.4 }
+              }
+              transition={{ duration: 0.4, delay: 0.2 + line.delay, ease: EASE }}
+            />
+          ))}
+          <motion.div
+            className="mt-2 inline-flex items-center gap-1.5 rounded border border-[#2f615a]/20 bg-[#e7efe8] px-2 py-0.5"
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.35, delay: 0.55, ease: EASE }}
+          >
+            <span className="font-mono text-[8px] uppercase tracking-wide text-[#2f615a]">
+              Routing…
+            </span>
+          </motion.div>
+        </div>
+      </motion.div>
 
-      {/* Connector tree */}
-      <path d="M292 192 L292 272" stroke="#8d8b85" strokeWidth="1.5" />
-      <path d="M116 272 L467 272"  stroke="#8d8b85" strokeWidth="1.5" />
-      <path d="M116 272 L116 303"  stroke="#8d8b85" strokeWidth="1.5" />
-      <path d="M292 272 L292 303"  stroke="#8d8b85" strokeWidth="1.5" />
-      <path d="M467 272 L467 303"  stroke="#8d8b85" strokeWidth="1.5" />
+      {/* Destination systems */}
+      {ONE_REPORT_DESTINATIONS.map((dest, i) => (
+        <motion.div
+          key={dest.id}
+          className="absolute w-[108px] -translate-x-1/2 overflow-hidden border border-[#d9d9d9] bg-[#f3f2ee] shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
+          style={{ left: dest.left, top: "62%" }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+          transition={{ duration: 0.45, delay: 0.45 + i * 0.1, ease: EASE }}
+        >
+          <div className="border-b border-[#e8e6de] bg-white px-2.5 py-1.5">
+            <p
+              className="font-mono text-[10px] font-medium uppercase tracking-wide text-[#103435]"
+            >
+              {dest.label}
+            </p>
+          </div>
+          <div className="space-y-1.5 p-2">
+            <div className="h-[4px] w-full rounded-sm bg-[#d9d9d9]" />
+            <div className="h-[4px] w-4/5 rounded-sm bg-[#d9d9d9]" />
+            <p className="pt-0.5 font-mono text-[8px] text-[#929389]">{dest.sub}</p>
+          </div>
+          {inView && !reduceMotion && (
+            <motion.div
+              className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-[#42ead4]"
+              initial={{ scale: 0 }}
+              animate={{ scale: [0, 1.2, 1] }}
+              transition={{
+                duration: 0.35,
+                delay: 1.1 + i * 0.2,
+                repeat: Infinity,
+                repeatDelay: 2.5,
+              }}
+            />
+          )}
+        </motion.div>
+      ))}
 
-      {/* Small card — left */}
-      <rect x="80"  y="303" width="72" height="41" fill="#cdcabc" />
-      <rect x="84.76" y="308.36" width="62.48" height="3.57" fill="#8d8b85" />
-      <rect x="84.76" y="313.71" width="62.48" height="3.57" fill="#8d8b85" />
-      <rect x="84.76" y="319.07" width="26.78" height="3.57" fill="#8d8b85" />
-      <rect x="84.76" y="324.42" width="26.78" height="3.57" fill="#8d8b85" />
-      <rect x="84.76" y="329.78" width="53.55" height="3.57" fill="#8d8b85" />
-      <rect x="84.76" y="335.13" width="41.65" height="3.57" fill="#8d8b85" />
-
-      {/* Small card — centre */}
-      <rect x="255" y="303" width="72" height="41" fill="#cdcabc" />
-      <rect x="260"  y="309" width="21"    height="3"    fill="#8d8b85" />
-      <rect x="260"  y="314" width="21"    height="3"    fill="#8d8b85" />
-      <rect x="259.76" y="319.07" width="26.78" height="3.57" fill="#8d8b85" />
-      <rect x="259.76" y="324.42" width="26.78" height="3.57" fill="#8d8b85" />
-      <rect x="259.76" y="329.78" width="53.55" height="3.57" fill="#8d8b85" />
-      <rect x="259.76" y="335.13" width="41.65" height="3.57" fill="#8d8b85" />
-
-      {/* Small card — right */}
-      <rect x="431" y="303" width="72" height="41" fill="#cdcabc" />
-      <rect x="436"  y="309" width="21"    height="3"    fill="#8d8b85" />
-      <rect x="436"  y="314" width="21"    height="3"    fill="#8d8b85" />
-      <rect x="435.76" y="319.07" width="26.78" height="3.57" fill="#8d8b85" />
-      <rect x="435.76" y="324.42" width="26.78" height="3.57" fill="#8d8b85" />
-      <rect x="435.76" y="329.78" width="53.55" height="3.57" fill="#8d8b85" />
-      <rect x="435.76" y="335.13" width="41.65" height="3.57" fill="#8d8b85" />
-    </svg>
+      {/* Auto-routing label */}
+      <motion.p
+        className="absolute bottom-[3%] left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[9px] uppercase tracking-[0.14em] text-[#929389]"
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.4, delay: 0.7, ease: EASE }}
+      >
+        Auto-routed per stakeholder
+      </motion.p>
+    </div>
   );
 }
 
 // ── Core Features Section ─────────────────────────────────────────────────
 const CORE_FEATURES_3 = [
   {
-    title: "Digital Log books",
-    desc: "Full suite of bridge and engine logbooks replacing paper — automatic data validation, offline capability, real-time sync when connected.",
+    title: "30+ Digital Record Books",
+    desc: "A complete suite of bridge and engine digital records that serves as a drop-in replacement for paper logbooks — with automatic validation, offline-first reliability, and fail-safe real-time sync.",
   },
   {
-    title: "MARPOL Record books",
-    desc: "All MARPOL record books per MEPC 312(74) and Ballast Record Book per MEPC 369(80). Class and flag approved — exactly what auditors expect.",
+    title: "All MARPOL Records",
+    desc: "Digital MARPOL record books per MEPC 312(74) and Ballast Water record per MEPC 369(80) — fully compliant and class-approved.",
   },
   {
-    title: "100+ Check lists",
-    desc: "Tailored to operational checklists, permits, surveys, audits, and inspections. 8+ collaborative permit types with multi-level approval workflows.",
+    title: "80+ Configurable Checklists",
+    desc: "Highly customizable operational checklists, permits, surveys, audits, and inspections with real-time collaboration and multi-level approval workflows.",
   },
 ];
 
@@ -968,12 +1163,13 @@ function CoreFeaturesSection() {
 
         {/* Heading */}
         <motion.div
-          className="mb-8 text-center"
+          className="mb-8 text-left"
           variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}
         >
-          <h2 className="text-[#1d1d1d] tracking-[-1.5px]" style={{ lineHeight: 1.1, fontSize: "clamp(28px, 3.2vw, 40px)" }}>
-            <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Your fave features, </span>
-            <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300 }}>Now even Better</span>
+          <h2 className="text-[#1d1d1d] tracking-[-1.5px] max-w-[720px]" style={{ lineHeight: 1.15, fontSize: "clamp(28px, 3.2vw, 40px)" }}>
+            <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Your favorite Wayship experience,</span>
+            <br />
+            <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300 }}>now even better</span>
           </h2>
         </motion.div>
 
@@ -996,7 +1192,7 @@ function CoreFeaturesSection() {
             {/* Text content — bottom-left */}
             <motion.div className="absolute left-[38px] z-10" style={{ bottom: 44, maxWidth: 520 }}>
               <h3 className="text-black mb-3" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(20px, 2vw, 26px)", lineHeight: 1.25, letterSpacing: "-0.48px" }}>
-                Single Entry. Multiple Reports.
+                Single entry. Multi-system reporting.
               </h3>
               <p className="mb-3" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 16, color: "#85867b", lineHeight: 1.55 }}>
                 Your crew shouldn't be filling the same voyage data separately for noon report, emissions compliance, cargo operations, BDN, and statement of facts.
@@ -1019,7 +1215,7 @@ function CoreFeaturesSection() {
 
             {/* Illustration — right half */}
             <div className="hidden md:block absolute top-0 bottom-0 right-0" style={{ left: "49%" }}>
-              <DispatchIllustration />
+              <OneReportDispatchIllustration />
             </div>
           </motion.div>
 
@@ -1055,22 +1251,59 @@ function CoreFeaturesSection() {
 
 // ── Features Grid ────────────────────────────────────────────────────────
 const FEATURES = [
-  { title: "Digital Logbooks", desc: "Full suite of bridge and engine logbooks replacing paper — automatic data validation, offline capability, real-time sync when connected.", chip: "Works offline" },
-  { title: "MARPOL Record Books", desc: "All MARPOL record books per MEPC 312(74) and Ballast Record Book per MEPC 369(80). Class and flag approved — exactly what auditors expect.", chip: "MEPC 312(74) · 369(80)" },
-  { title: "Configurable Checklists", desc: "Tailored to operational checklists, permits, surveys, audits, and inspections. 8+ collaborative permit types with multi-level approval workflows.", chip: "Fully configurable" },
+  { title: "30+ Digital Record Books", desc: "A complete suite of bridge and engine digital records that serves as a drop-in replacement for paper logbooks — with automatic validation, offline-first reliability, and fail-safe real-time sync.", chip: "Works offline" },
+  { title: "All MARPOL Records", desc: "Digital MARPOL record books per MEPC 312(74) and Ballast Water record per MEPC 369(80) — fully compliant and class-approved.", chip: "MEPC 312(74) · 369(80)" },
+  { title: "80+ Configurable Checklists", desc: "Highly customizable operational checklists, permits, surveys, audits, and inspections with real-time collaboration and multi-level approval workflows.", chip: "Fully configurable" },
   { title: "Noon Reporting", desc: "One entry, zero duplication. Noon reporting eliminates parallel form-filling. Data flows to your performance and routing partners via scalable API.", chip: "API-ready" },
   { title: "Cross-fleet Search", desc: "Search years of operational history across every vessel in your fleet. Find how a failure mode was handled before — across rotations, across vessels, across time.", chip: "Full-text + filters" },
   { title: "Structured Handovers", desc: "Auto-generated handover reports compiled from outgoing crew entries. Incoming officers board knowing the vessel — not just the procedures.", chip: "Auto-generated" },
 ];
 
 const FLAG_LIST = [
-  { src: "/flag-sg.svg", name: "Singapore" },
-  { src: "/flag-uae.svg", name: "UAE" },
-  { src: "/flag-uk.svg", name: "UK" },
-  { src: "/flag-us.svg", name: "U.S.A" },
+  { src: flagLiberia, name: "Liberia" },
+  { src: flagBahamas, name: "Bahamas" },
+  { src: flagPanama, name: "Panama" },
+  { src: flagMalta, name: "Malta" },
+];
+
+const ALL_FLAG_STATES = [
+  "Antigua & Barbuda",
+  "Bahamas",
+  "Belgium",
+  "Bermuda",
+  "Brazil",
+  "Cyprus",
+  "Denmark",
+  "Ecuador",
+  "Egypt",
+  "Estonia",
+  "Faroe Islands",
+  "Finland",
+  "Germany",
+  "Gibraltar",
+  "Hong Kong",
+  "Kiribati",
+  "Liberia",
+  "Malta",
+  "Marshall Islands",
+  "Norway",
+  "Panama",
+  "Portugal",
+  "Portugal MAR",
+  "United Kingdom",
+  "Singapore",
+  "Sweden",
+  "Tuvalu",
+];
+
+const FLAG_STATE_COLUMNS = [
+  ALL_FLAG_STATES.slice(0, Math.ceil(ALL_FLAG_STATES.length / 2)),
+  ALL_FLAG_STATES.slice(Math.ceil(ALL_FLAG_STATES.length / 2)),
 ];
 
 function FlagApprovalSection() {
+  const [flagsDialogOpen, setFlagsDialogOpen] = useState(false);
+
   return (
     <section className="bg-white relative">
       <Wrap className="py-20 md:py-28">
@@ -1118,9 +1351,10 @@ function FlagApprovalSection() {
               >
                 25+ FLAGS ACCEPT WAYSHIP
               </p>
-              <a
-                href="#"
-                className="border-b border-black text-black whitespace-nowrap"
+              <button
+                type="button"
+                onClick={() => setFlagsDialogOpen(true)}
+                className="border-b border-black text-black whitespace-nowrap bg-transparent cursor-pointer hover:opacity-70 transition-opacity"
                 style={{
                   fontFamily: "'TT Hoves Pro', sans-serif",
                   fontSize: 14,
@@ -1128,8 +1362,49 @@ function FlagApprovalSection() {
                 }}
               >
                 View All Flags
-              </a>
+              </button>
             </div>
+
+            <Dialog open={flagsDialogOpen} onOpenChange={setFlagsDialogOpen}>
+              <DialogContent
+                className="sm:max-w-[640px] bg-[#f3f2ee] border border-[#D9D9D9] rounded-none p-8 md:p-10 gap-8"
+                style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}
+              >
+                <DialogHeader className="text-center sm:text-center">
+                  <DialogTitle
+                    className="text-black tracking-[-0.5px]"
+                    style={{
+                      fontFamily: "'TT Hoves Pro', sans-serif",
+                      fontWeight: 500,
+                      fontSize: "clamp(22px, 2.4vw, 28px)",
+                      lineHeight: 1.2,
+                    }}
+                  >
+                    Accepted by 25+ Flag States
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 md:gap-x-16 gap-y-1">
+                  {FLAG_STATE_COLUMNS.map((column, colIndex) => (
+                    <ul key={colIndex} className="flex flex-col gap-1 list-none m-0 p-0">
+                      {column.map((flag) => (
+                        <li
+                          key={flag}
+                          className="text-[#1d1d1d]"
+                          style={{
+                            fontFamily: "'TT Hoves Pro', sans-serif",
+                            fontWeight: 400,
+                            fontSize: 16,
+                            lineHeight: 1.5,
+                          }}
+                        >
+                          {flag}
+                        </li>
+                      ))}
+                    </ul>
+                  ))}
+                </div>
+              </DialogContent>
+            </Dialog>
 
             {/* Flag cards */}
             <div className="flex gap-[17px]">
@@ -1158,24 +1433,36 @@ function FlagApprovalSection() {
           {/* Divider */}
           <div className="h-px w-full" style={{ background: "hsla(47, 4%, 93%, 1)" }} />
 
-          {/* ABS Type Approval bar */}
-          <div className="border-[0.7px] border-[#d9d9d9] flex items-center justify-between px-[17px]">
-            <p style={{ fontSize: 24, letterSpacing: "-0.48px", lineHeight: 1.2 }}>
-              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300 }}>
-                Type Approved{" "}
+          {/* Type approval — ABS & Lloyd's Registry */}
+          <div className="border-[0.7px] border-[#d9d9d9] flex items-center justify-between gap-6 px-[17px] py-4">
+            <p
+              className="min-w-0 flex-1"
+              style={{ fontSize: "clamp(18px, 2.2vw, 24px)", letterSpacing: "-0.48px", lineHeight: 1.25 }}
+            >
+              <span
+                className="block"
+                style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300 }}
+              >
+                Type approved by
               </span>
-              <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>
-                by ABS
+              <span
+                className="block"
+                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}
+              >
+                American Bureau of Shipping and Lloyd&apos;s Registry
               </span>
             </p>
-            <div
-              className="shrink-0 w-[113px] h-[113px]"
-              style={{ mixBlendMode: "luminosity" }}
-            >
+            <div className="flex shrink-0 items-center gap-4 md:gap-6">
               <img
                 src={ABS_TYPE_APPROVAL_LOGO}
-                alt="ABS Type Approval"
-                className="w-full h-full object-cover"
+                alt="American Bureau of Shipping"
+                className="h-[72px] md:h-[90px] w-auto object-contain"
+                style={{ mixBlendMode: "luminosity" }}
+              />
+              <img
+                src={lloydsRegisterLogo}
+                alt="Lloyd's Registry"
+                className="h-[72px] md:h-[90px] w-[72px] md:w-[90px] object-contain"
               />
             </div>
           </div>
@@ -1293,7 +1580,7 @@ function ComplianceSection() {
                 </div>
                 <p className="text-[#5a5a5a] text-[9px] uppercase tracking-widest font-mono mb-3">Flag state approvals</p>
                 <div className="flex flex-wrap gap-2">
-                  {["Liberia", "Bahamas", "Malta", "Singapore"].map((flag) => (
+                  {["Liberia", "Bahamas", "Panama", "Malta"].map((flag) => (
                     <span key={flag} className="px-3 py-1 text-[11px] text-[#103435] font-mono border border-[#D9D9D9]"
                       style={{ background: "#eeece5" }}>
                       {flag}
@@ -1459,7 +1746,9 @@ export function WayshipPageV3() {
         {/* Anchor aliases so the home header links still land somewhere sensible */}
         <div id="advantage" />
         <WayshipHero />
+        <ContentDivider />
         <InvisibleDriftSection />
+        <ContentDivider />
         <StorytellingSection />
         <ContentDivider />
         <CoreFeaturesSection />
