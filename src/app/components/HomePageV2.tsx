@@ -208,10 +208,6 @@ function AdvantageTabs() {
       <div className={tab !== "smartport" ? "hidden" : ""}>
         <div className="grid grid-cols-1 items-stretch lg:grid-cols-2 border border-t-0 border-[#D9D9D9] overflow-hidden">
           <div className="border-b lg:border-b-0 lg:border-r border-[#D9D9D9] p-8 md:p-10 lg:p-12">
-            <p className="mb-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.08em] text-[#416668]">
-              <span className="h-1 w-1 shrink-0 bg-[#416668]" aria-hidden />
-              Smartport
-            </p>
             <h3
               className="text-[#103435] leading-[1.15] mb-4"
               style={{ ...lc, fontSize: "clamp(22px, 2.5vw, 30px)" }}

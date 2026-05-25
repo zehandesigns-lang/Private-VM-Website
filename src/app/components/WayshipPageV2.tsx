@@ -1213,9 +1213,8 @@ function CoreFeaturesSection() {
           >
             {/* 1 REPORT badge — top-left */}
             <div className="absolute left-[38px] top-[31px] z-10">
-              <div className="inline-flex items-center gap-[10px] p-[10px] border border-[#ededed]" style={{ background: "#42ead4" }}>
-                <span className="block w-2 h-2 rounded-full bg-[#103435]" />
-                <p className="font-mono whitespace-nowrap" style={{ fontSize: 14, color: "#113637", fontWeight: 500 }}>1 REPORT</p>
+              <div className="inline-flex items-center p-[10px] border border-[#ededed]" style={{ background: "#42ead4" }}>
+                <p className="font-mono whitespace-nowrap" style={{ fontSize: 14, color: "#113637", fontWeight: 500 }}>1Report</p>
               </div>
             </div>
 
