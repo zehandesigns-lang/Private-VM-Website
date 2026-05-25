@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence, useInView, useReducedMotion } from "motion/react";
+import { motion, AnimatePresence, useInView, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { ArrowUpRight, Plus, Check } from "lucide-react";
 import { Link } from "react-router";
+import { useLenis } from "lenis/react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { CTASection } from "./CTASection";
@@ -19,8 +20,8 @@ import flagBahamas from "@/assets/flags/Bahamas.svg";
 import flagLiberia from "@/assets/flags/Liberia.svg";
 import flagMalta from "@/assets/flags/Malta.svg";
 import flagPanama from "@/assets/flags/Panama.svg";
-import lloydsRegisterLogo from "@/assets/logos/lloyds-register.png";
 import { ABS_TYPE_APPROVAL_LOGO, WAYSHIP_TIMELINE_VIDEO_URL } from "@/app/constants/wayship";
+import { useIsMobile } from "./ui/use-mobile";
 
 // ── Tokens ─────────────────────────────────────────────────────────────
 const EASE: [number, number, number, number] = [0.23, 1, 0.32, 1];
@@ -36,7 +37,7 @@ const fadeUp = {
 // ── Shared wrappers ─────────────────────────────────────────────────────
 function Wrap({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px] ${className}`}>
+    <div className={`mx-auto max-w-[1512px] px-5 sm:px-8 md:px-16 lg:px-[115px] ${className}`}>
       {children}
     </div>
   );
@@ -80,9 +81,9 @@ function Body({ children, className = "" }: { children: React.ReactNode; classNa
 // ── Hero ────────────────────────────────────────────────────────────────
 function WayshipHero() {
   return (
-    <Section id="hero" className="pt-[72px] h-screen flex flex-col">
-      <Wrap className="flex-1 flex flex-col justify-center py-16 md:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+    <Section id="hero" className="pt-[72px] min-h-screen flex flex-col">
+      <Wrap className="flex-1 flex flex-col justify-center py-10 sm:py-14 md:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
           {/* Left */}
           <div>
             <motion.h1
@@ -109,8 +110,28 @@ function WayshipHero() {
               Wayship turns vessel operations data into structured, searchable intelligence — delivered at the right moment, for the right decision.
             </motion.p>
 
-            <motion.div className="flex flex-wrap items-center gap-4"
-              variants={fadeUp} initial="hidden" animate="visible" custom={0.18}>
+            {/* Trust strip — above CTAs per design */}
+            <motion.div
+              className="max-w-full"
+              variants={fadeUp} initial="hidden" animate="visible" custom={0.18}
+            >
+              <div className="flex flex-wrap items-center gap-x-10 gap-y-4 min-w-0">
+                <p className="text-[#464646] uppercase tracking-widest text-[10px] shrink-0 self-center" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>Trusted by</p>
+                <div className="flex items-center gap-8 flex-wrap">
+                  {[
+                    { src: epsLogo, alt: "Eastern Pacific Shipping", h: "h-10" },
+                    { src: imgTk, alt: "Teekay", h: "h-8" },
+                    { src: imgWilhelmsen, alt: "Wilhelmsen", h: "h-8" },
+                  ].map((logo) => (
+                    <img key={logo.alt} src={logo.src} alt={logo.alt}
+                      className={`${logo.h} w-auto object-contain grayscale opacity-70`} />
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div className="flex flex-wrap items-center gap-4 mt-10"
+              variants={fadeUp} initial="hidden" animate="visible" custom={0.24}>
               <Link
                 to="/book-demo"
                 className="bg-[#0e3233] hover:bg-[#1a5052] text-white px-6 py-3 transition-colors duration-150 inline-flex items-center gap-2"
@@ -125,36 +146,18 @@ function WayshipHero() {
                 See how it works
               </a>
             </motion.div>
-
-            {/* Trust strip — directly below CTAs per design */}
-            <motion.div
-              className="mt-10 max-w-full"
-              variants={fadeUp} initial="hidden" animate="visible" custom={0.24}
-            >
-              <div className="pt-6 flex flex-wrap items-center gap-x-10 gap-y-4 min-w-0">
-                <p className="text-[#464646] uppercase tracking-widest text-[10px] shrink-0 self-center" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>Trusted by</p>
-                <div className="flex items-center gap-8 flex-wrap">
-                  {[
-                    { src: epsLogo, alt: "Eastern Pacific Shipping", h: "h-10" },
-                    { src: imgTk, alt: "Teekay", h: "h-8" },
-                    { src: imgWilhelmsen, alt: "Wilhelmsen", h: "h-8" },
-                  ].map((logo) => (
-                    <img key={logo.alt} src={logo.src} alt={logo.alt}
-                      className={`${logo.h} w-auto object-contain grayscale opacity-70`} />
-                  ))}
-                </div>
-              </div>
-            </motion.div>
           </div>
 
-          {/* Right — floating cards (opacity-only entrance so card float loops aren't blocked) */}
+          {/* Right — floating cards (scaled on tablet, full layout on lg+) */}
           <motion.div
-            className="hidden lg:block relative h-[380px]"
+            className="relative mx-auto w-full max-w-[360px] h-[260px] sm:max-w-[400px] sm:h-[300px] lg:mx-0 lg:max-w-none lg:h-[380px]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
           >
-            <HeroCards />
+            <div className="absolute left-1/2 top-0 h-[380px] w-[380px] -translate-x-1/2 origin-top scale-[0.68] sm:scale-[0.78] lg:left-0 lg:right-0 lg:translate-x-0 lg:scale-100 lg:w-auto">
+              <HeroCards />
+            </div>
           </motion.div>
         </div>
       </Wrap>
@@ -259,9 +262,9 @@ function InvisibleDriftSection() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <Section id="invisible-drift" className="h-[80vh] overflow-hidden">
+    <Section id="invisible-drift" className="min-h-0 py-12 sm:py-16 md:py-20 md:min-h-[80vh] md:overflow-hidden">
       <motion.div ref={sectionRef} className="relative h-full flex flex-col">
-        <Wrap className="flex-shrink-0 pt-8 md:pt-10 pb-2 md:pb-4">
+        <Wrap className="flex-shrink-0 pt-0 md:pt-10 pb-2 md:pb-4">
           <motion.div
             className="mx-auto max-w-[720px] text-center"
             initial={reduceMotion ? false : { opacity: 0, y: 24 }}
@@ -304,12 +307,12 @@ function InvisibleDriftSection() {
           </motion.div>
         </Wrap>
 
-        <motion.div className="relative flex-shrink-0 w-full max-w-[900px] mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-10 lg:gap-12 mt-2 md:mt-4">
+        <motion.div className="relative flex-shrink-0 w-full max-w-[900px] mx-auto flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 mt-4 md:mt-4">
           {DRIFT_CARDS.map((card) => (
             <DriftCard key={card.id} card={card} inView={inView} />
           ))}
         </motion.div>
-        {/* Fills remaining viewport height — scroll room before Wayship 6 section */}
+        {/* Fills remaining viewport height — scroll room before Wayship section */}
         <div className="flex-1 min-h-0" aria-hidden />
       </motion.div>
     </Section>
@@ -464,6 +467,13 @@ function StorytellingSection() {
   const animStartRef = useRef<number | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // Scroll-driven heading: slides from the right rail toward center as the section enters view
+  const { scrollYProgress: storyScroll } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const headingX = useTransform(storyScroll, [0, 0.5], ["17vw", "0vw"]);
+
   const playTimelineVideo = useCallback((reset = true) => {
     const video = videoRef.current;
     if (!video || !WAYSHIP_TIMELINE_VIDEO_URL) return;
@@ -499,31 +509,35 @@ function StorytellingSection() {
     <Section>
       <div
         ref={sectionRef}
-        className="min-h-screen flex flex-col items-center overflow-hidden"
-        style={{ paddingTop: "clamp(80px, 10vh, 120px)", paddingBottom: "clamp(40px, 5vh, 64px)" }}
+        className="min-h-0 md:min-h-screen flex flex-col items-center overflow-hidden"
+        style={{ paddingTop: "clamp(96px, 14vh, 200px)", paddingBottom: "clamp(32px, 5vh, 64px)" }}
       >
         <motion.div
-          className="w-full max-w-[1512px] px-8 md:px-16 lg:px-[115px] flex flex-col items-center"
+          className="w-full max-w-[1512px] px-5 sm:px-8 md:px-16 lg:px-[115px] flex flex-col items-center"
           style={{ gap: "clamp(8px, 1.1vh, 16px)" }}
           initial={{ opacity: 0 }}
           animate={meetVisible ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.35, ease: EASE }}
         >
-          <h2
-            className="text-center tracking-[-1.5px] shrink-0"
-            style={{ fontSize: "clamp(26px, 3vw, 48px)", lineHeight: 1.15 }}
+          <motion.h2
+            className="text-center tracking-[-2.4px] shrink-0 will-change-transform"
+            style={{
+              fontSize: "clamp(40px, 5.8vw, 88px)",
+              lineHeight: 1.05,
+              x: headingX,
+            }}
           >
             <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, color: "rgba(16,52,53,0.75)" }}>
               {renderLettersStagger("Meet the all-new ", meetVisible)}
             </span>
             <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, color: "#103435" }}>
-              {renderLettersStagger("Wayship 6", meetVisible, "Meet the all-new ".length)}
+              {renderLettersStagger("Wayship", meetVisible, "Meet the all-new ".length)}
             </span>
-          </h2>
+          </motion.h2>
 
           <motion.h3
-            className="text-left text-black tracking-[-0.8px] shrink-0 max-w-[720px] self-start w-full"
-            style={{ fontSize: "clamp(22px, 2.6vw, 36px)", lineHeight: 1.15, marginTop: 100 }}
+            className="text-left text-black tracking-[-0.8px] shrink-0 max-w-[720px] self-start w-full mt-16 sm:mt-20 md:mt-28 lg:mt-[140px]"
+            style={{ fontSize: "clamp(22px, 2.6vw, 36px)", lineHeight: 1.15 }}
             initial={{ opacity: 0, y: 6 }}
             animate={meetVisible ? { opacity: 1, y: 0, transition: { duration: 0.4, delay: 0.3, ease: EASE } } : { opacity: 0, y: 6 }}
           >
@@ -568,27 +582,18 @@ function StorytellingSection() {
               <motion.div className="absolute left-0 top-0 h-[3px] bg-[#1d1d1d]" style={{ width: `${voiceProgress}%` }} />
 
               <motion.div className="flex flex-col gap-8">
-                <motion.div
-                  className="flex flex-col gap-[clamp(8px,1vh,14px)]"
-                  animate={{ opacity: activeVoiceTab === 0 ? 1 : 0.45 }}
-                  transition={{ duration: 0.2, ease: EASE }}
-                >
+                <motion.div className="flex flex-col gap-[clamp(8px,1vh,14px)]">
                   <motion.div
                     className="inline-flex items-center self-start"
-                    style={{ padding: "8px 10px", border: "1px solid", gap: 10 }}
+                    style={{ padding: "8px 10px", border: "1px solid" }}
                     animate={{
                       background: activeVoiceTab === 0 ? "#42ead4" : "#ffffff",
                       borderRadius: activeVoiceTab === 0 ? 0 : 44,
                       borderColor: activeVoiceTab === 0 ? "#ededed" : "#f2f3ec",
+                      opacity: activeVoiceTab === 0 ? 1 : 0.45,
                     }}
                     transition={{ duration: 0.2, ease: EASE }}
                   >
-                    <motion.span
-                      className="block rounded-full bg-[#103435] shrink-0"
-                      style={{ width: 8, height: 8 }}
-                      animate={{ opacity: activeVoiceTab === 0 ? 1 : 0, scale: activeVoiceTab === 0 ? 1 : 0.5 }}
-                      transition={{ duration: 0.15, ease: EASE }}
-                    />
                     <motion.p
                       className="font-mono whitespace-nowrap"
                       style={{ fontSize: 13, fontWeight: 500 }}
@@ -604,27 +609,18 @@ function StorytellingSection() {
 
                 <div className="h-px w-full bg-[#D9D9D9]" />
 
-                <motion.div
-                  className="flex flex-col gap-[clamp(8px,1vh,14px)]"
-                  animate={{ opacity: activeVoiceTab === 1 ? 1 : 0.45 }}
-                  transition={{ duration: 0.2, ease: EASE }}
-                >
+                <motion.div className="flex flex-col gap-[clamp(8px,1vh,14px)]">
                   <motion.div
                     className="inline-flex items-center self-start"
-                    style={{ padding: "8px 10px", border: "1px solid", gap: 10 }}
+                    style={{ padding: "8px 10px", border: "1px solid" }}
                     animate={{
                       background: activeVoiceTab === 1 ? "#42ead4" : "#ffffff",
                       borderRadius: activeVoiceTab === 1 ? 0 : 44,
                       borderColor: activeVoiceTab === 1 ? "#ededed" : "#f2f3ec",
+                      opacity: activeVoiceTab === 1 ? 1 : 0.45,
                     }}
                     transition={{ duration: 0.2, ease: EASE }}
                   >
-                    <motion.span
-                      className="block rounded-full bg-[#103435] shrink-0"
-                      style={{ width: 8, height: 8 }}
-                      animate={{ opacity: activeVoiceTab === 1 ? 1 : 0, scale: activeVoiceTab === 1 ? 1 : 0.5 }}
-                      transition={{ duration: 0.15, ease: EASE }}
-                    />
                     <motion.p
                       className="font-mono whitespace-nowrap"
                       style={{ fontSize: 13, fontWeight: 500 }}
@@ -779,7 +775,7 @@ function VoiceSection({ storyRef: _storyRef }: { storyRef: React.RefObject<HTMLD
           >
             <span className="block w-2 h-2 rounded-full bg-[#42ead4]" />
             <p className="font-mono uppercase whitespace-nowrap" style={{ fontSize: 12, color: "#929389", fontWeight: 500 }}>
-              WAYSHIP 6
+              WAYSHIP
             </p>
           </motion.div>
           <h3
@@ -809,16 +805,16 @@ function VoiceSection({ storyRef: _storyRef }: { storyRef: React.RefObject<HTMLD
 
           {/* Left — dark teal video card */}
           <motion.div
-            className="relative overflow-hidden flex flex-col items-center justify-center"
-            style={{ background: "#0a2526", minHeight: 480, padding: "clamp(40px, 7%, 80px) clamp(32px, 6%, 64px)" }}
+            className="relative overflow-hidden flex flex-col items-center justify-center min-h-[300px] sm:min-h-[400px] lg:min-h-[480px]"
+            style={{ background: "#0a2526", padding: "clamp(28px, 6%, 80px) clamp(20px, 5%, 64px)" }}
             {...fadeIn(0.12)}
           >
             {/* Avatar + name + waveform header */}
             <div
-              className="inline-flex items-center px-[13px] py-[10px]"
-              style={{ background: "#0b1e04", gap: 37 }}
+              className="inline-flex flex-col sm:flex-row items-center w-full max-w-full gap-4 sm:gap-9 px-3 sm:px-[13px] py-[10px]"
+              style={{ background: "#0b1e04" }}
             >
-              <div className="flex items-center gap-[10px]">
+              <div className="flex items-center gap-[10px] shrink-0">
                 <div
                   className="w-[51px] h-[51px] overflow-hidden shrink-0 flex items-center justify-center"
                   style={{ background: "#103435" }}
@@ -853,8 +849,8 @@ function VoiceSection({ storyRef: _storyRef }: { storyRef: React.RefObject<HTMLD
 
             {/* Voice quote */}
             <p
-              className="text-white mt-10 text-center"
-              style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(14px, 1.2vw, 17px)", lineHeight: 1.6, maxWidth: 420 }}
+              className="text-white mt-6 sm:mt-10 text-center px-2 w-full max-w-[420px]"
+              style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(14px, 1.2vw, 17px)", lineHeight: 1.6 }}
             >
               "Auxiliary Engine 2. Running hours, uh, 3585. Load is 61 percent. Lube oil is 92 degrees, hmm, that seems high. Fuel oil temperature, let me see, 123, viscosity 12."
             </p>
@@ -863,7 +859,7 @@ function VoiceSection({ storyRef: _storyRef }: { storyRef: React.RefObject<HTMLD
           {/* Right — feature descriptions stacked vertically */}
           <motion.div
             className="relative flex flex-col justify-center"
-            style={{ background: "#f3f2ee", padding: "clamp(40px, 6%, 72px) clamp(32px, 6%, 64px)" }}
+            style={{ background: "#f3f2ee", padding: "clamp(28px, 5%, 72px) clamp(20px, 5%, 64px)" }}
             {...fadeIn(0.22)}
           >
             {/* Progress bar */}
@@ -942,82 +938,56 @@ const ONE_REPORT_DESTINATIONS = [
   { id: "api", label: "Custom API", sub: "Stakeholders", left: "83%" },
 ] as const;
 
-const ROUTE_PATHS = [
-  "M 260 132 L 260 192 L 88 254",
-  "M 260 192 L 260 254",
-  "M 260 192 L 432 254",
-] as const;
-
-/** Packet waypoints in SVG viewBox coords (520×380) — matches ROUTE_PATHS geometry */
-const ROUTE_PACKET_ANIMS = [
-  { cx: [260, 260, 88], cy: [132, 192, 254] },
-  { cx: [260, 260, 260], cy: [132, 192, 254] },
-  { cx: [260, 260, 432], cy: [132, 192, 254] },
-] as const;
+const ROUTE_GEOMETRY = {
+  desktop: {
+    viewBox: "0 0 520 380",
+    paths: [
+      "M 260 132 L 260 192 L 88 254",
+      "M 260 192 L 260 254",
+      "M 260 192 L 432 254",
+    ],
+    packets: [
+      { cx: [260, 260, 88], cy: [132, 192, 254] },
+      { cx: [260, 260, 260], cy: [132, 192, 254] },
+      { cx: [260, 260, 432], cy: [132, 192, 254] },
+    ],
+    hubTop: "6%",
+    destTop: "62%",
+  },
+  mobile: {
+    viewBox: "0 0 520 450",
+    paths: [
+      "M 260 175 L 260 248 L 88 318",
+      "M 260 248 L 260 318",
+      "M 260 248 L 432 318",
+    ],
+    packets: [
+      { cx: [260, 260, 88], cy: [175, 248, 318] },
+      { cx: [260, 260, 260], cy: [175, 248, 318] },
+      { cx: [260, 260, 432], cy: [175, 248, 318] },
+    ],
+    hubTop: "4%",
+    destTop: "68%",
+  },
+} as const;
 
 function OneReportDispatchIllustration() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const reduceMotion = useReducedMotion();
+  const isMobile = useIsMobile();
+  const geo = isMobile ? ROUTE_GEOMETRY.mobile : ROUTE_GEOMETRY.desktop;
 
   return (
     <div
       ref={ref}
-      className="relative h-full min-h-[340px] w-full overflow-hidden bg-[#e7e5dc]"
+      className="relative h-full min-h-0 w-full flex-1 overflow-hidden bg-[#e7e5dc] md:min-h-0 md:flex-none"
       aria-hidden
     >
-      {/* Connector lines */}
-      <svg
-        className="pointer-events-none absolute inset-0 h-full w-full"
-        viewBox="0 0 520 380"
-        preserveAspectRatio="xMidYMid meet"
-      >
-        {ROUTE_PATHS.map((d, i) => (
-          <g key={d}>
-            <motion.path
-              d={d}
-              fill="none"
-              stroke="#c5c2b8"
-              strokeWidth={2}
-              strokeLinecap="round"
-              initial={{ pathLength: reduceMotion ? 1 : 0, opacity: 0.35 }}
-              animate={
-                inView
-                  ? { pathLength: 1, opacity: 1 }
-                  : { pathLength: reduceMotion ? 1 : 0, opacity: 0.35 }
-              }
-              transition={{ duration: 0.7, delay: 0.25 + i * 0.12, ease: EASE }}
-            />
-          </g>
-        ))}
-        {!reduceMotion &&
-          inView &&
-          ROUTE_PACKET_ANIMS.map((route, i) => (
-            <motion.circle
-              key={i}
-              r={4}
-              fill="#42ead4"
-              style={{ filter: "drop-shadow(0 0 4px rgba(66, 234, 212, 0.55))" }}
-              initial={{ cx: route.cx[0], cy: route.cy[0], opacity: 0 }}
-              animate={{
-                cx: [...route.cx, route.cx[2]],
-                cy: [...route.cy, route.cy[2]],
-                opacity: [0, 1, 1, 0],
-              }}
-              transition={{
-                duration: 2,
-                delay: 0.85 + i * 0.35,
-                repeat: Infinity,
-                repeatDelay: 1,
-                ease: "linear",
-              }}
-            />
-          ))}
-      </svg>
-
       {/* Central 1Report entry card */}
       <motion.div
-        className="absolute left-1/2 top-[6%] w-[min(240px,48%)] -translate-x-1/2 overflow-hidden border border-[#d9d9d9] bg-white shadow-[0_12px_40px_rgba(0,0,0,0.08)]"
+        className="absolute left-1/2 z-[2] w-[min(240px,48%)] max-md:w-[min(220px,92%)] -translate-x-1/2 overflow-hidden border border-[#d9d9d9] bg-white shadow-[0_12px_40px_rgba(0,0,0,0.08)]"
+        style={{ top: geo.hubTop }}
         initial={{ opacity: 0, y: 16, scale: 0.96 }}
         animate={
           inView
@@ -1027,9 +997,8 @@ function OneReportDispatchIllustration() {
         transition={{ duration: 0.55, ease: EASE }}
       >
         <div className="flex items-center gap-2 border-b border-[#e8e6de] bg-[#42ead4]/30 px-3 py-2">
-          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#103435]" />
-          <span className="font-mono text-[9px] font-medium uppercase tracking-widest text-[#103435]">
-            1 Report
+          <span className="font-mono text-[9px] font-medium tracking-widest text-[#103435]">
+            1Report
           </span>
           {inView && !reduceMotion && (
             <motion.span
@@ -1089,12 +1058,62 @@ function OneReportDispatchIllustration() {
         </div>
       </motion.div>
 
+      {/* Connector lines — above hub, below destination cards */}
+      <svg
+        className="pointer-events-none absolute inset-0 z-[1] h-full w-full"
+        viewBox={geo.viewBox}
+        preserveAspectRatio="xMidYMid meet"
+      >
+        {geo.paths.map((d, i) => (
+          <g key={d}>
+            <motion.path
+              d={d}
+              fill="none"
+              stroke="#c5c2b8"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: reduceMotion ? 1 : 0, opacity: 0.35 }}
+              animate={
+                inView
+                  ? { pathLength: 1, opacity: 1 }
+                  : { pathLength: reduceMotion ? 1 : 0, opacity: 0.35 }
+              }
+              transition={{ duration: 0.7, delay: 0.25 + i * 0.12, ease: EASE }}
+            />
+          </g>
+        ))}
+        {!reduceMotion &&
+          inView &&
+          geo.packets.map((route, i) => (
+            <motion.circle
+              key={i}
+              r={4}
+              fill="#42ead4"
+              style={{ filter: "drop-shadow(0 0 4px rgba(66, 234, 212, 0.55))" }}
+              initial={{ cx: route.cx[0], cy: route.cy[0], opacity: 0 }}
+              animate={{
+                cx: [...route.cx, route.cx[2]],
+                cy: [...route.cy, route.cy[2]],
+                opacity: [0, 1, 1, 0],
+              }}
+              transition={{
+                duration: 2,
+                delay: 0.85 + i * 0.35,
+                repeat: Infinity,
+                repeatDelay: 1,
+                ease: "linear",
+              }}
+            />
+          ))}
+      </svg>
+
       {/* Destination systems */}
       {ONE_REPORT_DESTINATIONS.map((dest, i) => (
         <motion.div
           key={dest.id}
-          className="absolute w-[108px] -translate-x-1/2 overflow-hidden border border-[#d9d9d9] bg-[#f3f2ee] shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
-          style={{ left: dest.left, top: "62%" }}
+          className="absolute z-[2] w-[94px] max-md:w-[96px] md:w-[108px] -translate-x-1/2 overflow-hidden border border-[#d9d9d9] bg-[#f3f2ee] shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
+          style={{ left: dest.left, top: geo.destTop }}
           initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
           transition={{ duration: 0.45, delay: 0.45 + i * 0.1, ease: EASE }}
@@ -1106,10 +1125,10 @@ function OneReportDispatchIllustration() {
               {dest.label}
             </p>
           </div>
-          <div className="space-y-1.5 p-2">
+          <div className="space-y-1.5 p-2 max-md:p-2.5 max-md:pb-3">
             <div className="h-[4px] w-full rounded-sm bg-[#d9d9d9]" />
             <div className="h-[4px] w-4/5 rounded-sm bg-[#d9d9d9]" />
-            <p className="pt-0.5 font-mono text-[8px] text-[#929389]">{dest.sub}</p>
+            <p className="pt-1 font-mono text-[8px] leading-snug text-[#929389]">{dest.sub}</p>
           </div>
           {inView && !reduceMotion && (
             <motion.div
@@ -1129,7 +1148,7 @@ function OneReportDispatchIllustration() {
 
       {/* Auto-routing label */}
       <motion.p
-        className="absolute bottom-[3%] left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[9px] uppercase tracking-[0.14em] text-[#929389]"
+        className="absolute bottom-[2%] max-md:bottom-[5%] left-1/2 max-w-[92%] -translate-x-1/2 text-center font-mono text-[9px] max-md:text-[7px] uppercase tracking-[0.14em] max-md:tracking-[0.12em] text-[#929389] pointer-events-none"
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 0.4, delay: 0.7, ease: EASE }}
@@ -1163,7 +1182,7 @@ function CoreFeaturesSection() {
 
         {/* Heading */}
         <motion.div
-          className="mb-8 text-left"
+          className="mb-6 sm:mb-8 text-left"
           variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}
         >
           <h2 className="text-[#1d1d1d] tracking-[-1.5px] max-w-[720px]" style={{ lineHeight: 1.15, fontSize: "clamp(28px, 3.2vw, 40px)" }}>
@@ -1177,27 +1196,30 @@ function CoreFeaturesSection() {
 
           {/* ── Large 1 REPORT card ── */}
           <motion.div
-            className="border border-[#D9D9D9] relative overflow-hidden w-full"
-            style={{ minHeight: 421 }}
+            className="border border-[#D9D9D9] relative w-full overflow-hidden min-h-[421px] max-md:flex max-md:flex-col max-md:min-h-0"
             variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}
           >
-            {/* 1 REPORT badge — top-left */}
-            <div className="absolute left-[38px] top-[31px] z-10">
-              <div className="inline-flex items-center gap-[10px] p-[10px] border border-[#ededed]" style={{ background: "#42ead4" }}>
-                <span className="block w-2 h-2 rounded-full bg-[#103435]" />
-                <p className="font-mono whitespace-nowrap" style={{ fontSize: 14, color: "#113637", fontWeight: 500 }}>1 REPORT</p>
+            {/* 1 REPORT badge */}
+            <div className="absolute left-5 top-5 z-20 md:left-[38px] md:top-[31px]">
+              <div className="inline-flex items-center p-[10px] border border-[#ededed]" style={{ background: "#42ead4" }}>
+                <p className="font-mono whitespace-nowrap" style={{ fontSize: 14, color: "#113637", fontWeight: 500 }}>1Report</p>
               </div>
             </div>
 
-            {/* Text content — bottom-left */}
-            <motion.div className="absolute left-[38px] z-10" style={{ bottom: 44, maxWidth: 520 }}>
+            {/* Illustration — #e7e5dc fills panel height on mobile (width stays in card) */}
+            <div className="max-md:relative max-md:flex max-md:flex-col max-md:w-full max-md:min-h-[540px] max-md:shrink-0 max-md:overflow-hidden max-md:bg-[#e7e5dc] max-md:pt-16 md:absolute md:inset-y-0 md:right-0 md:left-[49%] md:flex-none md:min-h-0 md:pt-0 md:bg-transparent">
+              <OneReportDispatchIllustration />
+            </div>
+
+            {/* Text — below illustration on mobile, bottom-left on md+ */}
+            <motion.div className="relative z-10 max-md:shrink-0 max-md:border-t max-md:border-[#D9D9D9] max-md:bg-[#f3f2ee] max-md:px-5 max-md:py-6 md:absolute md:left-[38px] md:bottom-[44px] md:max-w-[520px] md:px-0 md:py-0 md:bg-transparent">
               <h3 className="text-black mb-3" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(20px, 2vw, 26px)", lineHeight: 1.25, letterSpacing: "-0.48px" }}>
                 Single entry. Multi-system reporting.
               </h3>
-              <p className="mb-3" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 16, color: "#85867b", lineHeight: 1.55 }}>
+              <p className="mb-3 max-md:text-sm md:text-base" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, color: "#85867b", lineHeight: 1.55 }}>
                 Your crew shouldn't be filling the same voyage data separately for noon report, emissions compliance, cargo operations, BDN, and statement of facts.
               </p>
-              <p className="mb-5" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 16, color: "#85867b", lineHeight: 1.55 }}>
+              <p className="mb-5 max-md:text-sm md:text-base" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, color: "#85867b", lineHeight: 1.55 }}>
                 1Report captures all of it in a single, structured entry — then programmatically routes what's relevant to each party, via API or automated emails. IMOS, Signal, internal and external stakeholders — each gets exactly what they need, automatically.
               </p>
               <motion.div className="flex flex-wrap gap-2">
@@ -1212,11 +1234,6 @@ function CoreFeaturesSection() {
                 ))}
               </motion.div>
             </motion.div>
-
-            {/* Illustration — right half */}
-            <div className="hidden md:block absolute top-0 bottom-0 right-0" style={{ left: "49%" }}>
-              <OneReportDispatchIllustration />
-            </div>
           </motion.div>
 
           {/* ── 3-column features row ── */}
@@ -1228,8 +1245,7 @@ function CoreFeaturesSection() {
             {CORE_FEATURES_3.map((item, i) => (
               <motion.div
                 key={item.title}
-                className="flex flex-col gap-[21px] items-start p-8 border-b md:border-b-0 md:border-l border-[#D9D9D9] first:border-l-0 last:border-b-0"
-                style={{ minHeight: 291 }}
+                className="flex flex-col gap-[21px] items-start p-6 sm:p-8 border-b md:border-b-0 md:border-l border-[#D9D9D9] first:border-l-0 last:border-b-0 md:min-h-[291px]"
                 variants={fadeUp} initial="hidden" whileInView="visible"
                 viewport={{ once: true, margin: "-60px" }} custom={i * 0.07}
               >
@@ -1301,15 +1317,41 @@ const FLAG_STATE_COLUMNS = [
   ALL_FLAG_STATES.slice(Math.ceil(ALL_FLAG_STATES.length / 2)),
 ];
 
+/** ~6 list rows visible on mobile before inner scroll (16px × 1.5 line-height + gap-1). */
+const FLAGS_DIALOG_MOBILE_MAX_H = "calc(6 * 1.5rem + 5 * 0.25rem)";
+
 function FlagApprovalSection() {
   const [flagsDialogOpen, setFlagsDialogOpen] = useState(false);
+  const lenis = useLenis();
+
+  useEffect(() => {
+    if (!flagsDialogOpen) return;
+    const html = document.documentElement;
+    const body = document.body;
+    const scrollbarWidth = window.innerWidth - html.clientWidth;
+    const prevHtmlOverflow = html.style.overflow;
+    const prevBodyOverflow = body.style.overflow;
+    const prevBodyPaddingRight = body.style.paddingRight;
+    html.style.overflow = "hidden";
+    body.style.overflow = "hidden";
+    if (scrollbarWidth > 0) {
+      body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+    lenis?.stop();
+    return () => {
+      html.style.overflow = prevHtmlOverflow;
+      body.style.overflow = prevBodyOverflow;
+      body.style.paddingRight = prevBodyPaddingRight;
+      lenis?.start();
+    };
+  }, [flagsDialogOpen, lenis]);
 
   return (
     <section className="bg-white relative">
       <Wrap className="py-20 md:py-28">
         {/* Heading */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-16"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -1330,7 +1372,7 @@ function FlagApprovalSection() {
 
         {/* Compliance content panel */}
         <motion.div
-          className="max-w-[595px] mx-auto flex flex-col gap-[35px]"
+          className="w-full max-w-[595px] mx-auto flex flex-col gap-8 sm:gap-[35px]"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -1339,12 +1381,11 @@ function FlagApprovalSection() {
           {/* Flags section */}
           <div className="flex flex-col gap-[38px]">
             {/* Row: label + link */}
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <p
-                className="whitespace-nowrap"
+                className="text-base sm:text-lg sm:whitespace-nowrap"
                 style={{
                   fontFamily: "'Geist Mono', monospace",
-                  fontSize: 18,
                   color: "#929389",
                   letterSpacing: "-0.36px",
                 }}
@@ -1354,7 +1395,7 @@ function FlagApprovalSection() {
               <button
                 type="button"
                 onClick={() => setFlagsDialogOpen(true)}
-                className="border-b border-black text-black whitespace-nowrap bg-transparent cursor-pointer hover:opacity-70 transition-opacity"
+                className="border-b border-black text-black self-start sm:self-auto bg-transparent cursor-pointer hover:opacity-70 transition-opacity"
                 style={{
                   fontFamily: "'TT Hoves Pro', sans-serif",
                   fontSize: 14,
@@ -1367,10 +1408,10 @@ function FlagApprovalSection() {
 
             <Dialog open={flagsDialogOpen} onOpenChange={setFlagsDialogOpen}>
               <DialogContent
-                className="sm:max-w-[640px] bg-[#f3f2ee] border border-[#D9D9D9] rounded-none p-8 md:p-10 gap-8"
+                className="sm:max-w-[640px] bg-[#f3f2ee] border border-[#D9D9D9] rounded-none p-8 md:p-10 gap-8 max-md:max-h-[min(90dvh,640px)] max-md:overflow-hidden max-md:flex max-md:flex-col"
                 style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}
               >
-                <DialogHeader className="text-center sm:text-center">
+                <DialogHeader className="text-center sm:text-center shrink-0">
                   <DialogTitle
                     className="text-black tracking-[-0.5px]"
                     style={{
@@ -1383,7 +1424,28 @@ function FlagApprovalSection() {
                     Accepted by 25+ Flag States
                   </DialogTitle>
                 </DialogHeader>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 md:gap-x-16 gap-y-1">
+                {/* Mobile: one column, ~6 rows visible, scroll for the rest */}
+                <ul
+                  className="sm:hidden flex flex-col gap-1 list-none m-0 p-0 min-h-0 overflow-y-auto overscroll-contain pr-1 -mr-1"
+                  style={{ maxHeight: FLAGS_DIALOG_MOBILE_MAX_H }}
+                >
+                  {ALL_FLAG_STATES.map((flag) => (
+                    <li
+                      key={flag}
+                      className="text-[#1d1d1d] shrink-0"
+                      style={{
+                        fontFamily: "'TT Hoves Pro', sans-serif",
+                        fontWeight: 400,
+                        fontSize: 16,
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      {flag}
+                    </li>
+                  ))}
+                </ul>
+                {/* Desktop: two columns, no inner scroll */}
+                <div className="hidden sm:grid sm:grid-cols-2 gap-x-10 md:gap-x-16 gap-y-1">
                   {FLAG_STATE_COLUMNS.map((column, colIndex) => (
                     <ul key={colIndex} className="flex flex-col gap-1 list-none m-0 p-0">
                       {column.map((flag) => (
@@ -1407,18 +1469,17 @@ function FlagApprovalSection() {
             </Dialog>
 
             {/* Flag cards */}
-            <div className="flex gap-[17px]">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-[17px]">
               {FLAG_LIST.map(({ src, name }) => (
                 <div
                   key={name}
-                  className="flex-1 flex flex-col items-center gap-[12px] px-[26px] py-[19px] border-[0.7px] border-[#d9d9d9]"
+                  className="flex flex-col items-center gap-[12px] px-4 py-4 sm:px-[26px] sm:py-[19px] border-[0.7px] border-[#d9d9d9]"
                 >
-                  <img src={src} alt={name} className="w-11 h-11 shrink-0" />
+                  <img src={src} alt={name} className="w-10 h-10 sm:w-11 sm:h-11 shrink-0" />
                   <p
-                    className="whitespace-nowrap"
+                    className="text-center text-sm sm:text-base"
                     style={{
                       fontFamily: "'Geist Mono', monospace",
-                      fontSize: 16,
                       color: "#929389",
                       letterSpacing: "-0.32px",
                     }}
@@ -1433,8 +1494,8 @@ function FlagApprovalSection() {
           {/* Divider */}
           <div className="h-px w-full" style={{ background: "hsla(47, 4%, 93%, 1)" }} />
 
-          {/* Type approval — ABS & Lloyd's Registry */}
-          <div className="border-[0.7px] border-[#d9d9d9] flex items-center justify-between gap-6 px-[17px] py-4">
+          {/* Type approval — ABS */}
+          <div className="border-[0.7px] border-[#d9d9d9] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 px-4 py-4 sm:px-[17px]">
             <p
               className="min-w-0 flex-1"
               style={{ fontSize: "clamp(18px, 2.2vw, 24px)", letterSpacing: "-0.48px", lineHeight: 1.25 }}
@@ -1449,22 +1510,15 @@ function FlagApprovalSection() {
                 className="block"
                 style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}
               >
-                American Bureau of Shipping and Lloyd&apos;s Registry
+                American Bureau of Shipping
               </span>
             </p>
-            <div className="flex shrink-0 items-center gap-4 md:gap-6">
-              <img
-                src={ABS_TYPE_APPROVAL_LOGO}
-                alt="American Bureau of Shipping"
-                className="h-[72px] md:h-[90px] w-auto object-contain"
-                style={{ mixBlendMode: "luminosity" }}
-              />
-              <img
-                src={lloydsRegisterLogo}
-                alt="Lloyd's Registry"
-                className="h-[72px] md:h-[90px] w-[72px] md:w-[90px] object-contain"
-              />
-            </div>
+            <img
+              src={ABS_TYPE_APPROVAL_LOGO}
+              alt="American Bureau of Shipping"
+              className="h-14 sm:h-[72px] md:h-[90px] w-auto shrink-0 self-start sm:self-center object-contain"
+              style={{ mixBlendMode: "luminosity" }}
+            />
           </div>
         </motion.div>
       </Wrap>
@@ -1475,8 +1529,8 @@ function FlagApprovalSection() {
 function FeaturesSection() {
   return (
     <Section id="features">
-      <Wrap className="py-20 md:py-28">
-        <motion.div className="mb-14" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}>
+      <Wrap className="py-14 sm:py-20 md:py-28">
+        <motion.div className="mb-10 sm:mb-14" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}>
           <Label>Platform capabilities</Label>
           <SectionTitle>
             <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Six years of reliability</span>{" "}
@@ -1657,10 +1711,10 @@ function ROISection() {
                     { dot: "bg-blue-500", text: "[Voice AI] Observation logged: favourable current — Seaboard Galaxy", time: "1h ago" },
                     { dot: "bg-emerald-600", text: "Handover complete: 247 entries transferred to incoming crew — Logan Explorer", time: "3h ago" },
                   ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-2.5 py-2.5 border-b border-[#D9D9D9] last:border-0">
+                    <div key={i} className="flex items-start gap-2.5 py-2.5 border-b border-[#D9D9D9] last:border-0 min-w-0">
                       <div className={`w-1.5 h-1.5 shrink-0 mt-1.5 ${item.dot}`} />
-                      <p className="text-[#464646] text-[11px] leading-[1.5] flex-1">{item.text}</p>
-                      <span className="text-[#8a8a8a] text-[9px] font-mono whitespace-nowrap">{item.time}</span>
+                      <p className="text-[#464646] text-[11px] leading-[1.5] flex-1 min-w-0">{item.text}</p>
+                      <span className="text-[#8a8a8a] text-[9px] font-mono shrink-0">{item.time}</span>
                     </div>
                   ))}
                 </div>
@@ -1731,9 +1785,9 @@ export function WayshipPageV3() {
   }, []);
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen overflow-x-clip">
       {/* Page rails (match home page) */}
-      <div className="absolute inset-0 pointer-events-none z-[60]">
+      <div className="absolute inset-0 pointer-events-none z-[60] hidden sm:block">
         <div className="relative h-full max-w-[1512px] mx-auto">
           <motion.div className="absolute top-0 bottom-0 left-[12px] md:left-[44px] lg:left-[95px] w-px bg-[#D9D9D9]" />
           <motion.div className="absolute top-0 bottom-0 right-[12px] md:right-[44px] lg:right-[95px] w-px bg-[#D9D9D9]" />

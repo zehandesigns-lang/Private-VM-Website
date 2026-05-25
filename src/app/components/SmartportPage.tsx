@@ -117,13 +117,6 @@ function CaseStudyStatsIllustration() {
 }
 
 function SmartportHero() {
-  const activity = [
-    { name: "MV Siddharth · AAN submitted, ICEGATE sync", time: "8m", kind: "g" as const },
-    { name: "Port dues · IRN generated, GST filed", time: "22m", kind: "g" as const },
-    { name: "Land lease Plot 14-B · Renewal in 7 days", time: "1h", kind: "a" as const },
-    { name: "Gate pass #43839 · HDFC payment cleared", time: "2h", kind: "g" as const },
-  ];
-
   return (
     <Section id="hero" className="relative overflow-hidden pt-[72px]">
       <div
@@ -143,103 +136,43 @@ function SmartportHero() {
         aria-hidden
       />
       <Wrap className="relative py-14 md:py-20 lg:py-24">
-        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
-          <div>
-            <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.05}>
-              <span className="mb-8 inline-flex items-center gap-2 border border-[#103435]/20 bg-[#103435]/8 px-3 py-1.5"
-                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 11, fontWeight: 500, color: "#2f615a", letterSpacing: "0.1em", textTransform: "uppercase" }}>
-                <motion.span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-600"
-                  animate={{ opacity: [1, 0.3, 1] }}
-                  transition={{ duration: 1.8, repeat: Infinity }}
-                  aria-hidden
-                />
-                Secondary &amp; regional ports · Globally deployable
-              </span>
-            </motion.div>
-            <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.1} className="mb-6">
-              <SplitHeading
-                as="h1"
-                className="leading-[1.05] tracking-[-2px]"
-                sans="Drive Port Productivity."
-                serif="Minimize Turnaround Times."
-              />
-            </motion.div>
-            <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.15} className="mb-8 max-w-[440px]">
-              <Body>
-                Smartport is the unified cloud platform that digitizes and automates the manual, paperwork-heavy business processes of secondary ports — from vessel call to cargo handling.
-              </Body>
-            </motion.div>
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              custom={0.18}
-              className="mb-8 flex flex-wrap gap-3"
+        <div className="mx-auto flex max-w-[860px] flex-col items-center text-center">
+          <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.1} className="mb-6">
+            <SplitHeading
+              as="h1"
+              className="leading-[1.05] tracking-[-2px]"
+              sans="Drive Port Productivity."
+              serif="Minimize Turnaround Times."
+            />
+          </motion.div>
+          <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.15} className="mb-8 max-w-[560px]">
+            <Body>
+              Smartport is the unified cloud platform that digitizes and automates the manual, paperwork-heavy business processes of secondary ports — from vessel call to cargo handling.
+            </Body>
+          </motion.div>
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.18}
+            className="flex flex-wrap justify-center gap-3"
+          >
+            <Link
+              to="/book-demo"
+              className="inline-flex items-center gap-2 bg-[#0e3233] px-6 py-3 text-white transition-colors hover:bg-[#416668]"
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
             >
-              <Link
-                to="/book-demo"
-                className="inline-flex items-center gap-2 bg-[#0e3233] px-6 py-3 text-white transition-colors hover:bg-[#416668]"
-                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
-              >
-                Get a Demo
-                <ArrowUpRight size={15} />
-              </Link>
-              <a
-                href="#case-study"
-                className="inline-flex items-center border border-[#D9D9D9] px-6 py-3 text-[#464646] transition-colors hover:border-[#0e3233]/30"
-                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}
-              >
-                See the APMB case study
-              </a>
-            </motion.div>
-          </div>
-
-          <div className="flex flex-col gap-4 pt-1">
-            <div className="overflow-hidden border border-[#D9D9D9] bg-[#f3f2ee]">
-              <div className="flex items-center justify-between border-b border-[#D9D9D9] bg-[#ebe9e3]/80 px-4 py-3">
-                <span className="font-mono text-[9px] uppercase tracking-wider text-[#615D5D]">Port operations · Live</span>
-                <span className="rounded-sm border border-[#2f615a]/30 bg-[#2f615a]/10 px-2 py-0.5 font-mono text-[10px] text-[#0e3233]">
-                  ● Active
-                </span>
-              </div>
-              <div className="p-4">
-                {activity.map((row) => (
-                  <div
-                    key={row.name}
-                    className="flex items-center justify-between gap-4 border-b border-[#E4E2DC] py-2 last:border-0"
-                  >
-                    <span className="flex items-center gap-2 text-[12.5px] text-[#464646]">
-                      <span
-                        className={`h-1.5 w-1.5 shrink-0 rounded-full ${row.kind === "g" ? "bg-[#2f615a]" : "bg-[#ff9905]"}`}
-                      />
-                      {row.name}
-                    </span>
-                    <span className="shrink-0 font-mono text-[10px] text-[#615D5D]">{row.time}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="overflow-hidden border border-[#416668]/35 bg-[#f3f2ee]">
-              <div className="flex items-center justify-between border-b border-[#416668]/20 bg-[#416668]/10 px-4 py-2.5">
-                <span className="font-mono text-[9px] uppercase tracking-wider text-[#416668]">Port network</span>
-                <span className="rounded-sm border border-[#2f615a]/25 bg-[#2f615a]/10 px-2 py-0.5 font-mono text-[10px] text-[#0e3233]">
-                  1 cluster live
-                </span>
-              </div>
-              <div className="flex flex-col gap-2 p-3">
-                <div className="flex items-center gap-3 rounded-md border border-[#D9D9D9] bg-[#ebe9e3] px-3 py-2.5">
-                  <span className="h-2 w-2 shrink-0 rounded-full bg-[#2f615a] shadow-[0_0_0_2px_rgba(47,97,90,0.2)]" />
-                  <span className="flex-1 text-[12px] text-[#464646]">APMB · Andhra Pradesh, India</span>
-                  <span className="font-mono text-[9.5px] text-[#615D5D]">12 ports</span>
-                </div>
-                <div className="flex items-center gap-3 rounded-md border border-dashed border-[#D9D9D9] bg-[#f3f2ee] px-3 py-2.5">
-                  <span className="h-2 w-2 shrink-0 rounded-full bg-[#ff9905]/50" />
-                  <span className="flex-1 text-[12px] text-[#615D5D]">Your cluster</span>
-                  <span className="font-mono text-[9.5px] text-[#615D5D]/70">Deploying</span>
-                </div>
-              </div>
-            </div>
-          </div>
+              Get a Demo
+              <ArrowUpRight size={15} />
+            </Link>
+            <a
+              href="#case-study"
+              className="inline-flex items-center border border-[#D9D9D9] px-6 py-3 text-[#464646] transition-colors hover:border-[#0e3233]/30"
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}
+            >
+              See the APMB case study
+            </a>
+          </motion.div>
         </div>
       </Wrap>
     </Section>
