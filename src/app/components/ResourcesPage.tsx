@@ -67,7 +67,7 @@ export function ResourcesPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, delay: 0.22, ease: EASE }}
                 className="text-[#888] leading-[1.65] max-w-[420px]"
-                style={{ ...tt, fontSize: 16 }}
+                style={{ ...tt, fontSize: 18 }}
               >
                 Case studies, product demos, and ideas from the Volteo team. We&apos;re putting it together — check back soon.
               </motion.p>

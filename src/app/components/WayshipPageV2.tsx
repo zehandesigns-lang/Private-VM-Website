@@ -92,7 +92,7 @@ function WayshipHero() {
 
             <motion.p
               className="text-[#464646] leading-[1.65] mb-8 max-w-[480px]"
-              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(15px, 1.1vw, 18px)" }}
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 18 }}
               variants={fadeUp} initial="hidden" animate="visible" custom={0.12}
             >
               Speak it. Type it. It's structured, tagged, and live on your fleet dashboard in under 60 seconds. Wayship turns vessel operations data into structured, searchable intelligence — delivered at the right moment, for the right decision.
