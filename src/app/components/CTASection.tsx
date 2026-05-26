@@ -44,7 +44,7 @@ export function CTASection({ variant = "default" }: CTASectionProps) {
       />
       <AnimatedDitherBackground className="pointer-events-none z-[1] opacity-[0.72]" ditherMix={0.34} />
 
-      <div className="relative z-10 mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px] py-24 md:py-32">
+      <div className="relative z-10 mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px] py-28">
         <motion.div
           className="max-w-[580px] mx-auto text-center"
           variants={fadeUp}

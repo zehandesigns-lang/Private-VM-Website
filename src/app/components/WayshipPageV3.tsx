@@ -82,13 +82,13 @@ function Body({ children, className = "" }: { children: React.ReactNode; classNa
 function WayshipHero() {
   return (
     <Section id="hero" className="pt-[72px] min-h-screen flex flex-col">
-      <Wrap className="flex-1 flex flex-col justify-center py-10 sm:py-14 md:py-20">
+      <Wrap className="flex-1 flex flex-col justify-center pt-[60px] pb-28">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
           {/* Left */}
           <div>
             <motion.h1
               className="text-[#103435] leading-[1.05] tracking-[-2px] mb-6"
-              style={{ fontSize: "clamp(38px, 4.8vw, 70px)" }}
+              style={{ fontSize: "clamp(38px, 4.8vw, 56px)" }}
               variants={fadeUp} initial="hidden" animate="visible" custom={0.05}
             >
               <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>
@@ -104,7 +104,7 @@ function WayshipHero() {
 
             <motion.p
               className="text-[#464646] leading-[1.65] mb-8 max-w-[480px]"
-              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(15px, 1.1vw, 18px)" }}
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 18 }}
               variants={fadeUp} initial="hidden" animate="visible" custom={0.12}
             >
               Wayship turns vessel operations data into structured, searchable intelligence — delivered at the right moment, for the right decision.
@@ -140,7 +140,7 @@ function WayshipHero() {
                 Get a Demo
                 <ArrowUpRight size={15} />
               </Link>
-              <a href="#voice"
+              <a href="#meet-wayship"
                 className="text-[#2f615a] border-b border-[#2f615a] pb-0.5 hover:opacity-70 transition-opacity inline-flex items-center gap-1.5"
                 style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}>
                 See how it works
@@ -262,9 +262,9 @@ function InvisibleDriftSection() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <Section id="invisible-drift" className="min-h-0 py-12 sm:py-16 md:py-20 md:min-h-[80vh] md:overflow-hidden">
+    <Section id="invisible-drift" className="min-h-0 py-28 md:min-h-[80vh] md:overflow-hidden">
       <motion.div ref={sectionRef} className="relative h-full flex flex-col">
-        <Wrap className="flex-shrink-0 pt-0 md:pt-10 pb-2 md:pb-4">
+        <Wrap className="flex-shrink-0 pt-0 pb-2 md:pb-4">
           <motion.div
             className="mx-auto max-w-[720px] text-center"
             initial={reduceMotion ? false : { opacity: 0, y: 24 }}
@@ -467,12 +467,13 @@ function StorytellingSection() {
   const animStartRef = useRef<number | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Scroll-driven heading: slides from the right rail toward center as the section enters view
+  // Scroll-driven heading: drops in from above and grows subtly as the section enters view
   const { scrollYProgress: storyScroll } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
   });
-  const headingX = useTransform(storyScroll, [0, 0.5], ["17vw", "0vw"]);
+  const headingY = useTransform(storyScroll, [0, 0.5], ["-80px", "0px"]);
+  const headingScale = useTransform(storyScroll, [0, 0.5], [0.92, 1]);
 
   const playTimelineVideo = useCallback((reset = true) => {
     const video = videoRef.current;
@@ -506,11 +507,10 @@ function StorytellingSection() {
   }, [meetVisible, playTimelineVideo]);
 
   return (
-    <Section>
+    <Section id="meet-wayship">
       <div
         ref={sectionRef}
-        className="min-h-0 md:min-h-screen flex flex-col items-center overflow-hidden"
-        style={{ paddingTop: "clamp(96px, 14vh, 200px)", paddingBottom: "clamp(32px, 5vh, 64px)" }}
+        className="min-h-0 md:min-h-screen flex flex-col items-center overflow-hidden py-28"
       >
         <motion.div
           className="w-full max-w-[1512px] px-5 sm:px-8 md:px-16 lg:px-[115px] flex flex-col items-center"
@@ -524,7 +524,8 @@ function StorytellingSection() {
             style={{
               fontSize: "clamp(40px, 5.8vw, 88px)",
               lineHeight: 1.05,
-              x: headingX,
+              y: headingY,
+              scale: headingScale,
             }}
           >
             <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, color: "rgba(16,52,53,0.75)" }}>
@@ -536,7 +537,7 @@ function StorytellingSection() {
           </motion.h2>
 
           <motion.h3
-            className="text-left text-black tracking-[-0.8px] shrink-0 max-w-[720px] self-start w-full mt-16 sm:mt-20 md:mt-28 lg:mt-[140px]"
+            className="text-left text-black tracking-[-0.8px] shrink-0 max-w-[720px] self-start w-full mt-16 sm:mt-20 md:mt-28 lg:mt-[140px] mb-6 sm:mb-8"
             style={{ fontSize: "clamp(22px, 2.6vw, 36px)", lineHeight: 1.15 }}
             initial={{ opacity: 0, y: 6 }}
             animate={meetVisible ? { opacity: 1, y: 0, transition: { duration: 0.4, delay: 0.3, ease: EASE } } : { opacity: 0, y: 6 }}
@@ -585,10 +586,9 @@ function StorytellingSection() {
                 <motion.div className="flex flex-col gap-[clamp(8px,1vh,14px)]">
                   <motion.div
                     className="inline-flex items-center self-start"
-                    style={{ padding: "8px 10px", border: "1px solid" }}
+                    style={{ padding: "8px 10px", border: "1px solid", borderRadius: 0 }}
                     animate={{
                       background: activeVoiceTab === 0 ? "#42ead4" : "#ffffff",
-                      borderRadius: activeVoiceTab === 0 ? 0 : 44,
                       borderColor: activeVoiceTab === 0 ? "#ededed" : "#f2f3ec",
                       opacity: activeVoiceTab === 0 ? 1 : 0.45,
                     }}
@@ -612,10 +612,9 @@ function StorytellingSection() {
                 <motion.div className="flex flex-col gap-[clamp(8px,1vh,14px)]">
                   <motion.div
                     className="inline-flex items-center self-start"
-                    style={{ padding: "8px 10px", border: "1px solid" }}
+                    style={{ padding: "8px 10px", border: "1px solid", borderRadius: 0 }}
                     animate={{
                       background: activeVoiceTab === 1 ? "#42ead4" : "#ffffff",
-                      borderRadius: activeVoiceTab === 1 ? 0 : 44,
                       borderColor: activeVoiceTab === 1 ? "#ededed" : "#f2f3ec",
                       opacity: activeVoiceTab === 1 ? 1 : 0.45,
                     }}
@@ -1178,7 +1177,7 @@ const CORE_FEATURES_3 = [
 function CoreFeaturesSection() {
   return (
     <Section id="core-features">
-      <Wrap className="py-20 md:py-28">
+      <Wrap className="py-28">
 
         {/* Heading */}
         <motion.div
@@ -1245,7 +1244,7 @@ function CoreFeaturesSection() {
             {CORE_FEATURES_3.map((item, i) => (
               <motion.div
                 key={item.title}
-                className="flex flex-col gap-[21px] items-start p-6 sm:p-8 border-b md:border-b-0 md:border-l border-[#D9D9D9] first:border-l-0 last:border-b-0 md:min-h-[291px]"
+                className="flex flex-col gap-[21px] items-start p-6 sm:p-8 border-b md:border-b-0 md:border-l border-[#D9D9D9] first:border-l-0 last:border-b-0"
                 variants={fadeUp} initial="hidden" whileInView="visible"
                 viewport={{ once: true, margin: "-60px" }} custom={i * 0.07}
               >
@@ -1348,7 +1347,7 @@ function FlagApprovalSection() {
 
   return (
     <section className="bg-white relative">
-      <Wrap className="py-20 md:py-28">
+      <Wrap className="py-28">
         {/* Heading */}
         <motion.div
           className="text-center mb-10 sm:mb-16"
@@ -1385,12 +1384,13 @@ function FlagApprovalSection() {
               <p
                 className="text-base sm:text-lg sm:whitespace-nowrap"
                 style={{
-                  fontFamily: "'Geist Mono', monospace",
+                  fontFamily: "'TT Hoves Pro', sans-serif",
+                  fontWeight: 500,
                   color: "#929389",
                   letterSpacing: "-0.36px",
                 }}
               >
-                25+ FLAGS ACCEPT WAYSHIP
+                Accepted by Major Flags
               </p>
               <button
                 type="button"

@@ -184,7 +184,7 @@ export function BookDemoPage() {
               </h1>
               <p
                 className="text-[#f3f2ee]/80 leading-[1.75] max-w-[440px] mb-8"
-                style={{ ...tt, fontWeight: 400, fontSize: "clamp(15px, 1.1vw, 17px)" }}
+                style={{ ...tt, fontWeight: 400, fontSize: 18 }}
               >
                 Wayship captures operational intelligence across 350+ vessels. Smartport gives secondary ports the digital infrastructure to run efficiently and profitably. Book a 30-minute demo with our product specialists to see what that looks like for your operation.
               </p>

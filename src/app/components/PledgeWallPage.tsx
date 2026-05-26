@@ -118,7 +118,7 @@ export function PledgeWallPage() {
               </motion.h1>
               <motion.p
                 className="text-[#464646] leading-[1.75] max-w-[620px]"
-                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.05vw, 17px)" }}
+                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 18 }}
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, ease: EASE, delay: 0.06 }}

@@ -86,7 +86,7 @@ export function HeroSection() {
                 style={{
                   fontFamily: "'TT Hoves Pro', sans-serif",
                   fontWeight: 450,
-                  fontSize: "clamp(15px, 1.1vw, 18px)",
+                  fontSize: 18,
                 }}
               >
                 Volteo is purpose-built maritime intelligence — six years of

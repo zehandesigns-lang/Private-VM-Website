@@ -444,8 +444,8 @@ export function HomePageV2() {
                   initial="hidden"
                   animate="visible"
                   custom={0.15}
-                  className="text-[#f3f2ee]/80 max-w-[440px] mx-auto leading-[1.8] mb-8"
-                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 16 }}
+                  className="text-[#f3f2ee]/80 max-w-[680px] mx-auto leading-[1.8] mb-8"
+                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 18 }}
                 >
                   World's leading maritime teams rely on Wayship to transform vessel operations data into structured, searchable intelligence, and Smartport to run secondary ports at their fullest potential
                 </motion.p>

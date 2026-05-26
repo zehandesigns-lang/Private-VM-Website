@@ -52,20 +52,22 @@ function SplitHeading({
   serif,
   className = "",
   as = "h2",
+  inline = false,
 }: {
   sans: React.ReactNode;
   serif: React.ReactNode;
   className?: string;
   as?: "h1" | "h2";
+  inline?: boolean;
 }) {
   const Tag = as;
   return (
     <Tag
       className={`text-[#103435] leading-[1.08] tracking-[-1.5px] ${className}`}
-      style={{ fontSize: as === "h1" ? "clamp(38px, 4.8vw, 70px)" : "clamp(30px, 3.2vw, 50px)" }}
+      style={{ fontSize: as === "h1" ? "clamp(38px, 4.8vw, 70px)" : "clamp(30px, 3.2vw, 50px)", textWrap: "balance" }}
     >
       <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>{sans}</span>
-      <br />
+      {inline ? " " : <br />}
       <span style={lc}>{serif}</span>
     </Tag>
   );
@@ -146,9 +148,12 @@ function SmartportHero() {
             />
           </motion.div>
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.15} className="mb-8 max-w-[560px]">
-            <Body>
+            <p
+              className="text-[#464646] leading-[1.65]"
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 18 }}
+            >
               Smartport is the unified cloud platform that digitizes and automates the manual, paperwork-heavy business processes of secondary ports — from vessel call to cargo handling.
-            </Body>
+            </p>
           </motion.div>
           <motion.div
             variants={fadeUp}
@@ -192,8 +197,9 @@ function PredictabilitySection() {
         <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-20">
           <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}>
             <SplitHeading
-              sans="Leveling the playing field through"
-              serif="Operational Predictability"
+              sans={<>Leveling the playing<br className="hidden md:block" />field through</>}
+              serif={<>Operational<br className="hidden md:block" />Predictability</>}
+              inline
             />
           </motion.div>
           <motion.div
