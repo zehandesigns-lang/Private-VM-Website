@@ -172,8 +172,7 @@ const DRIFT_CARDS = [
     align: "left" as const,
     rotate: -5,
     delay: 0,
-    label: "Paper trail",
-    title: "Insights buried in paper and inboxes",
+    title: "Insights buried in paperwork and inboxes",
     body: "Critical observations trapped in handwritten logs, messy spreadsheets, and endless email threads",
   },
   {
@@ -181,7 +180,6 @@ const DRIFT_CARDS = [
     align: "right" as const,
     rotate: 5,
     delay: 0.12,
-    label: "Fleet pattern",
     title: "Repeated incidents, avoidable costs",
     body: "The same failures recur across vessels because nothing connects the fleet's past experience to everyday actions",
   },
@@ -221,17 +219,12 @@ function DriftCard({
       }
     >
       <motion.div className="overflow-hidden text-left" style={driftCardStyle}>
-        <motion.div className="px-5 py-2.5 border-b border-[#D9D9D9]" style={{ background: "#e8e6de" }}>
+        <motion.div
+          className="px-6 py-6 md:px-7 md:py-7 border-b border-[#D9D9D9]"
+          style={{ background: "#e8e6de" }}
+        >
           <p
-            className="text-[#103435] text-[9px] uppercase tracking-widest"
-            style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}
-          >
-            {card.label}
-          </p>
-        </motion.div>
-        <motion.div className="px-6 py-5 md:px-7 md:py-6">
-          <p
-            className="text-[#103435] mb-2.5 leading-[1.25]"
+            className="text-[#103435] leading-[1.25]"
             style={{
               fontFamily: "'TT Hoves Pro', sans-serif",
               fontWeight: 500,
@@ -240,6 +233,8 @@ function DriftCard({
           >
             {card.title}
           </p>
+        </motion.div>
+        <motion.div className="px-6 py-6 md:px-7 md:py-7">
           <p
             className="text-[#464646] leading-[1.55]"
             style={{
@@ -461,10 +456,6 @@ function renderLettersStagger(
 function StorytellingSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const meetVisible = useInView(sectionRef, { once: true, margin: "-80px" });
-  const [activeVoiceTab, setActiveVoiceTab] = useState(0);
-  const [voiceProgress, setVoiceProgress] = useState(0);
-  const rafRef = useRef<number | null>(null);
-  const animStartRef = useRef<number | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Scroll-driven heading: drops in from above and grows subtly as the section enters view
@@ -482,28 +473,12 @@ function StorytellingSection() {
     void video.play().catch(() => {});
   }, []);
 
-  const TOTAL_MS = 15000;
-  const HALF_MS  = TOTAL_MS / 2;
   useEffect(() => {
     if (!meetVisible) {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      animStartRef.current = null;
-      setActiveVoiceTab(0);
-      setVoiceProgress(0);
       videoRef.current?.pause();
       return;
     }
     playTimelineVideo();
-    animStartRef.current = null;
-    const tick = (ts: number) => {
-      if (!animStartRef.current) animStartRef.current = ts;
-      const elapsed = (ts - animStartRef.current) % TOTAL_MS;
-      setVoiceProgress((elapsed / TOTAL_MS) * 100);
-      setActiveVoiceTab(elapsed < HALF_MS ? 0 : 1);
-      rafRef.current = requestAnimationFrame(tick);
-    };
-    rafRef.current = requestAnimationFrame(tick);
-    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
   }, [meetVisible, playTimelineVideo]);
 
   return (
@@ -579,28 +554,8 @@ function StorytellingSection() {
               initial={{ opacity: 0, y: 8 }}
               animate={meetVisible ? { opacity: 1, y: 0, transition: { duration: 0.45, delay: 0.6, ease: EASE } } : { opacity: 0, y: 8 }}
             >
-              <div className="absolute left-0 top-0 h-[3px] w-full bg-[#e8e6de]" />
-              <motion.div className="absolute left-0 top-0 h-[3px] bg-[#1d1d1d]" style={{ width: `${voiceProgress}%` }} />
-
               <motion.div className="flex flex-col gap-8">
                 <motion.div className="flex flex-col gap-[clamp(8px,1vh,14px)]">
-                  <motion.div
-                    className="inline-flex items-center self-start"
-                    style={{ padding: "8px 10px", border: "1px solid", borderRadius: 0 }}
-                    animate={{
-                      background: activeVoiceTab === 0 ? "#42ead4" : "#ffffff",
-                      borderColor: activeVoiceTab === 0 ? "#ededed" : "#f2f3ec",
-                      opacity: activeVoiceTab === 0 ? 1 : 0.45,
-                    }}
-                    transition={{ duration: 0.2, ease: EASE }}
-                  >
-                    <motion.p
-                      className="font-mono whitespace-nowrap"
-                      style={{ fontSize: 13, fontWeight: 500 }}
-                      animate={{ color: activeVoiceTab === 0 ? "#113637" : "#929389" }}
-                      transition={{ duration: 0.18, ease: EASE }}
-                    >SPEECH AI</motion.p>
-                  </motion.div>
                   <p className="text-black" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(16px, 1.5vw, 24px)", lineHeight: 1.15 }}>Speak ...<br />and its done!</p>
                   <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.05vw, 16px)", color: "#85867b", lineHeight: 1.55 }}>
                     Your crew shouldn't have to choose between doing the job and documenting it. Wayship's advanced automatic speech recognition turns the moment of observation into a structured, tagged, searchable entry — 4x faster than typing.
@@ -610,24 +565,7 @@ function StorytellingSection() {
                 <div className="h-px w-full bg-[#D9D9D9]" />
 
                 <motion.div className="flex flex-col gap-[clamp(8px,1vh,14px)]">
-                  <motion.div
-                    className="inline-flex items-center self-start"
-                    style={{ padding: "8px 10px", border: "1px solid", borderRadius: 0 }}
-                    animate={{
-                      background: activeVoiceTab === 1 ? "#42ead4" : "#ffffff",
-                      borderColor: activeVoiceTab === 1 ? "#ededed" : "#f2f3ec",
-                      opacity: activeVoiceTab === 1 ? 1 : 0.45,
-                    }}
-                    transition={{ duration: 0.2, ease: EASE }}
-                  >
-                    <motion.p
-                      className="font-mono whitespace-nowrap"
-                      style={{ fontSize: 13, fontWeight: 500 }}
-                      animate={{ color: activeVoiceTab === 1 ? "#113637" : "#929389" }}
-                      transition={{ duration: 0.18, ease: EASE }}
-                    >AI ASSISTANT</motion.p>
-                  </motion.div>
-                  <p className="text-black" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(16px, 1.5vw, 24px)", lineHeight: 1.15, maxWidth: 320 }}>Your data just got its voice. And it has a lot to say.</p>
+                  <p className="text-black" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(16px, 1.5vw, 24px)", lineHeight: 1.15 }}>Your data just got its voice.<br />And it has a lot to say.</p>
                   <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.05vw, 16px)", color: "#85867b", lineHeight: 1.55 }}>
                     Ask anything about your vessel's full operational history in plain language — current state, past incidents, recorded observations across rotations, all in one connected space.
                   </p>
@@ -1364,7 +1302,7 @@ function FlagApprovalSection() {
               Approved for use on
             </span>
             <span className="block" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300 }}>
-              All Vessel Types
+              all vessel types
             </span>
           </h2>
         </motion.div>
@@ -1390,7 +1328,7 @@ function FlagApprovalSection() {
                   letterSpacing: "-0.36px",
                 }}
               >
-                Accepted by Major Flags
+                All major flags accept Wayship
               </p>
               <button
                 type="button"
@@ -1402,13 +1340,13 @@ function FlagApprovalSection() {
                   letterSpacing: "-0.28px",
                 }}
               >
-                View All Flags
+                Show more
               </button>
             </div>
 
             <Dialog open={flagsDialogOpen} onOpenChange={setFlagsDialogOpen}>
               <DialogContent
-                className="sm:max-w-[640px] bg-[#f3f2ee] border border-[#D9D9D9] rounded-none p-8 md:p-10 gap-8 max-md:max-h-[min(90dvh,640px)] max-md:overflow-hidden max-md:flex max-md:flex-col"
+                className="sm:max-w-[500px] bg-[#f3f2ee] border border-[#D9D9D9] rounded-none p-8 md:p-10 gap-8 max-md:max-h-[min(90dvh,640px)] max-md:overflow-hidden max-md:flex max-md:flex-col"
                 style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}
               >
                 <DialogHeader className="text-center sm:text-center shrink-0">
@@ -1445,7 +1383,7 @@ function FlagApprovalSection() {
                   ))}
                 </ul>
                 {/* Desktop: two columns, no inner scroll */}
-                <div className="hidden sm:grid sm:grid-cols-2 gap-x-10 md:gap-x-16 gap-y-1">
+                <div className="hidden sm:grid sm:grid-cols-[auto_auto] gap-x-10 md:gap-x-16 gap-y-1 w-fit mx-auto">
                   {FLAG_STATE_COLUMNS.map((column, colIndex) => (
                     <ul key={colIndex} className="flex flex-col gap-1 list-none m-0 p-0">
                       {column.map((flag) => (
