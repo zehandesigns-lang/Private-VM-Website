@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useRoutes, Navigate } from "react-router";
 import { ReactLenis, type LenisRef } from "lenis/react";
-import { WayshipPage } from "./components/WayshipPage";
-import { WayshipPageV2 } from "./components/WayshipPageV2";
 import { WayshipPageV3 } from "./components/WayshipPageV3";
 import { HomePageV2 } from "./components/HomePageV2";
 import { PageRouteTransition } from "./components/PageRouteTransition";
@@ -53,9 +51,7 @@ export default function App() {
       { path: "/", element: <HomePageV2 /> },
       // Backwards-compatible alias for any old bookmarks/links.
       { path: "/home-v2", element: <Navigate to="/" replace /> },
-      { path: "/wayship", element: <WayshipPage /> },
-      { path: "/wayshipv2", element: <WayshipPageV2 /> },
-      { path: "/wayshipV3", element: <WayshipPageV3 /> },
+      { path: "/wayship", element: <WayshipPageV3 /> },
       { path: "/smartport", element: <SmartportPage /> },
       { path: "/about", element: <AboutPageV2 /> },
       { path: "/book-demo", element: <BookDemoPage /> },
