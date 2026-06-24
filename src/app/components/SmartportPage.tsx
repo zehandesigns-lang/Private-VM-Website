@@ -187,7 +187,7 @@ function SmartportHero() {
 function PredictabilitySection() {
   const paragraphs = [
     "For secondary ports, competing with mega-hubs isn\u2019t about matching physical footprint \u2014 it\u2019s about mastering operational predictability.",
-    "By eliminating towers of paperwork and siloed data, Smartport unlocks a highly efficient ecosystem that moves vessels in and out of berth with clockwork precision, giving liner agents the one commitment they value above all else: absolute predictability.",
+    "By eliminating towers of paperwork and siloed data, Smartport unlocks a highly efficient ecosystem that moves vessels in and out of berth with clockwork precision, giving liner freight forwarding agents the one commitment they value above all else: absolute clarity in port processes.",
     "As a unified digital platform, Smartport replaces disconnected systems with real-time coordination across vessel traffic, berth allocation, yard activities, billing, and regulatory tasks \u2014 optimizing productivity at every single stage.",
   ];
 
