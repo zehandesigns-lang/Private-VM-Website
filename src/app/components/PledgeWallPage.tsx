@@ -11,13 +11,13 @@ import { Avatar, AvatarFallback } from "./ui/avatar";
 const EASE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
 const tt: CSSProperties = {
-  fontFamily: "'TT Hoves Pro', sans-serif",
+  fontFamily: "'Inter', sans-serif",
   fontWeight: 500,
   fontStyle: "normal",
 };
 
 const lc: CSSProperties = {
-  fontFamily: "'LT Cushion', serif",
+  fontFamily: "'Source Serif 4', serif",
   fontWeight: 300,
   fontStyle: "normal",
 };
@@ -118,7 +118,7 @@ export function PledgeWallPage() {
               </motion.h1>
               <motion.p
                 className="text-[#464646] leading-[1.75] max-w-[620px]"
-                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 18 }}
+                style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 18 }}
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, ease: EASE, delay: 0.06 }}
@@ -136,13 +136,13 @@ export function PledgeWallPage() {
                     <p className="text-[#103435] text-[28px] leading-none mt-2" style={{ ...tt, fontWeight: 600 }}>
                       {formatCount(SEED_SIGNERS.length)}
                     </p>
-                    <p className="text-[#717182] text-[12.5px] mt-2" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400 }}>
+                    <p className="text-[#717182] text-[12.5px] mt-2" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400 }}>
                       Showing {formatCount(signers.length)} matching your filter.
                     </p>
                   </div>
                   <div className="hidden sm:block text-right">
                     <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-[#615D5D]">Updated</p>
-                    <p className="text-[#464646] text-[12.5px] mt-2" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400 }}>
+                    <p className="text-[#464646] text-[12.5px] mt-2" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400 }}>
                       {new Date(SEED_SIGNERS[0]!.signedAt).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })}
                     </p>
                   </div>
@@ -158,7 +158,7 @@ export function PledgeWallPage() {
                       onChange={(e) => setQuery(e.target.value)}
                       placeholder="Search by name, company, or title…"
                       className="h-10 pl-9 rounded-md border-[rgba(0,0,0,0.1)] bg-[#f3f3f5] text-[#262627] placeholder:text-[#717182] focus-visible:border-[#0e3233]/35 focus-visible:ring-[#0e3233]/12"
-                      style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400 }}
+                      style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400 }}
                     />
                   </div>
                   <div className="flex items-center gap-2">
@@ -200,7 +200,7 @@ export function PledgeWallPage() {
                 {signers.length ? "Signed members" : "No matches"}
               </p>
             </div>
-            <p className="hidden md:block text-[#717182] text-[12.5px]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400 }}>
+            <p className="hidden md:block text-[#717182] text-[12.5px]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400 }}>
               Tip: try searching by company.
             </p>
           </div>
@@ -230,10 +230,10 @@ export function PledgeWallPage() {
                     </Avatar>
 
                     <div className="min-w-0">
-                      <p className="text-[#262627] leading-tight truncate" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 14 }}>
+                      <p className="text-[#262627] leading-tight truncate" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 14 }}>
                         {s.name}
                       </p>
-                      <p className="text-[#717182] leading-tight truncate mt-1" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 12.5 }}>
+                      <p className="text-[#717182] leading-tight truncate mt-1" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 12.5 }}>
                         {[s.title, s.company].filter(Boolean).join(" · ") || "Signed supporter"}
                       </p>
                     </div>

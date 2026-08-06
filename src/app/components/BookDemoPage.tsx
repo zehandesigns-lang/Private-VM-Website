@@ -13,8 +13,8 @@ import { cn } from "./ui/utils";
 
 const EASE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
-const tt = { fontFamily: "'TT Hoves Pro', sans-serif" } as const;
-const lc = { fontFamily: "'LT Cushion', serif", fontWeight: 300 as const };
+const tt = { fontFamily: "'Inter', sans-serif" } as const;
+const lc = { fontFamily: "'Source Serif 4', serif", fontWeight: 300 as const };
 
 const CTA_RADIAL_STACK = `
   radial-gradient(ellipse 130% 70% at 50% -35%, rgba(252, 247, 227, 0.16), transparent 52%),

@@ -126,7 +126,7 @@ function LRow({ label, value, delay = 0, accent = false }: { label: string; valu
     >
       <span className="text-[#464646] text-[9px] font-mono tracking-wide">{label}</span>
       <span className={`text-[10px] ${accent ? "text-[#103435]" : "text-[#1d1d1d]"}`}
-        style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: accent ? 600 : 500 }}>{value}</span>
+        style={{ fontFamily: "'Inter', sans-serif", fontWeight: accent ? 600 : 500 }}>{value}</span>
     </motion.div>
   );
 }
@@ -135,7 +135,7 @@ function LHeader({ title, meta, pulse }: { title: string; meta: string; pulse?: 
   return (
     <div className="flex items-center justify-between px-3 py-2.5 border-b border-[#D9D9D9]" style={{ background: "#eeece5" }}>
       <p className="text-[#103435] text-[9px] uppercase tracking-[0.1em]"
-        style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600 }}>{title}</p>
+        style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}>{title}</p>
       <div className="flex items-center gap-1.5">
         {pulse && (
           <motion.span className="w-1.5 h-1.5 bg-red-500"
@@ -164,7 +164,7 @@ function VoiceCommandUI() {
       <div className="px-3 pt-3 pb-3 space-y-2.5">
         {/* Context pill */}
         <div className="border border-[#D9D9D9] px-3 py-2" style={{ background: "#eeece5" }}>
-          <p className="text-[#103435] text-[10px]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>
+          <p className="text-[#103435] text-[10px]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>
             Aux engine #2 · 02:14 · Chief Engineer
           </p>
           <p className="text-[#464646] text-[9px] mt-0.5">Port of Colombo approach</p>
@@ -193,7 +193,7 @@ function VoiceCommandUI() {
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.14 }}>
               <div className="flex-1 h-px bg-[#D9D9D9]" />
               <span className="text-[#103435] text-[8px] uppercase tracking-widest"
-                style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>structured instantly</span>
+                style={{ fontFamily: "'Inter', sans-serif" }}>structured instantly</span>
               <div className="flex-1 h-px bg-[#D9D9D9]" />
             </motion.div>
           )}
@@ -207,7 +207,7 @@ function VoiceCommandUI() {
               transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}>
               <div className="flex items-center justify-between px-3 py-2 border-b border-[#D9D9D9]" style={{ background: "#eeece5" }}>
                 <span className="text-[#103435] text-[9px] uppercase tracking-widest"
-                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600 }}>Entry logged</span>
+                  style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}>Entry logged</span>
                 <span className="text-emerald-700 text-[9px] flex items-center gap-1">
                   <motion.span className="w-1 h-1 bg-emerald-600 inline-block"
                     animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.1, repeat: Infinity }} />
@@ -326,7 +326,7 @@ function DigitalLogbooksUI() {
             transition={{ duration: 0.15, delay: i * 0.07, ease: [0.23, 1, 0.32, 1] }}>
             <div>
               <p className="text-[#1d1d1d] text-[10px]"
-                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>{row.book}</p>
+                style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>{row.book}</p>
               <p className="text-[#464646] text-[9px] font-mono mt-0.5">{row.ref}</p>
             </div>
             <div className="flex items-center gap-1.5">
@@ -343,7 +343,7 @@ function DigitalLogbooksUI() {
         initial={{ opacity: 0 }} animate={{ opacity: 1 }}
         transition={{ duration: 0.2, delay: 0.42 }}>
         <span className="text-[#103435] text-[9px] uppercase tracking-widest"
-          style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600 }}>ISO 21745 · MARPOL · 5 Flag States</span>
+          style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}>ISO 21745 · MARPOL · 5 Flag States</span>
         <div className="flex items-center gap-1">
           <motion.span className="w-1.5 h-1.5 bg-emerald-600"
             animate={{ opacity: [1, 0.4, 1] }} transition={{ duration: 1.4, repeat: Infinity }} />
@@ -379,7 +379,7 @@ function StructuredHandoversUI() {
         <div className="flex items-center justify-between mb-2">
           <div className="text-center">
             <p className="text-[#103435] text-[9px] uppercase tracking-wide"
-              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600 }}>Capt. Eriksson</p>
+              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}>Capt. Eriksson</p>
             <p className="text-[#464646] text-[8px]">Outgoing</p>
           </div>
           <div className="flex-1 mx-3">
@@ -396,7 +396,7 @@ function StructuredHandoversUI() {
           </div>
           <div className="text-center">
             <p className="text-[#103435] text-[9px] uppercase tracking-wide"
-              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600 }}>Capt. Mwangi</p>
+              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}>Capt. Mwangi</p>
             <p className="text-[#464646] text-[8px]">Incoming</p>
           </div>
         </div>
@@ -413,7 +413,7 @@ function StructuredHandoversUI() {
                     <path d="M1.5 4.5l2 2L7.5 2" stroke="#059669" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                   <span className="text-[#1d1d1d] text-[9px]"
-                    style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400 }}>{item}</span>
+                    style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400 }}>{item}</span>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -427,7 +427,7 @@ function StructuredHandoversUI() {
             initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}>
             <span className="text-[#103435] text-[9px]"
-              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Handover complete</span>
+              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>Handover complete</span>
             <span className="text-emerald-700 text-[9px]">Knowledge stays on the ship ✓</span>
           </motion.div>
         )}
@@ -773,7 +773,7 @@ function MobileProductBlock({ tab }: { tab: typeof tabs[number] }) {
           <h3
             className="text-black mb-4"
             style={{
-              fontFamily: "'TT Hoves Pro', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontWeight: 400,
               fontSize: "clamp(22px, 2vw, 34px)",
             }}
@@ -786,7 +786,7 @@ function MobileProductBlock({ tab }: { tab: typeof tabs[number] }) {
           <p
             className="text-[#464646] leading-[1.6]"
             style={{
-              fontFamily: "'TT Hoves Pro', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontWeight: 400,
               fontSize: 14,
             }}
@@ -838,7 +838,7 @@ function MobileProductBlock({ tab }: { tab: typeof tabs[number] }) {
                     : "border-[#D9D9D9] bg-white/80 active:bg-[#eeece5]/80"
                 }`}
                 style={{
-                  fontFamily: "'TT Hoves Pro', sans-serif",
+                  fontFamily: "'Inter', sans-serif",
                   fontWeight: selected ? 500 : 400,
                   fontSize: 12,
                   lineHeight: 1.35,
@@ -858,7 +858,7 @@ function MobileProductBlock({ tab }: { tab: typeof tabs[number] }) {
           <p
             className="text-[#5a5a5a] leading-[1.65]"
             style={{
-              fontFamily: "'TT Hoves Pro', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontWeight: 400,
               fontSize: 14,
             }}
@@ -939,10 +939,10 @@ export function VolteoAdvantageSection() {
             className="text-[#103435] tracking-tight"
             style={{ fontSize: "clamp(32px, 3.5vw, 54px)" }}
           >
-            <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>
+            <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>
               The Volteo{" "}
             </span>
-            <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300 }}>
+            <span style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300 }}>
               Advantage
             </span>
           </h2>
@@ -990,7 +990,7 @@ export function VolteoAdvantageSection() {
                   <span
                     className="transition-colors duration-150"
                     style={{
-                      fontFamily: "'TT Hoves Pro', sans-serif",
+                      fontFamily: "'Inter', sans-serif",
                       fontWeight: activeTab === tab.key ? 500 : 400,
                       fontSize: 18,
                       color: activeTab === tab.key ? "#000" : "#464646",
@@ -1024,7 +1024,7 @@ export function VolteoAdvantageSection() {
                     <h3
                       className="text-black mb-4"
                       style={{
-                        fontFamily: "'TT Hoves Pro', sans-serif",
+                        fontFamily: "'Inter', sans-serif",
                         fontWeight: 400,
                         fontSize: "clamp(22px, 2vw, 34px)",
                       }}
@@ -1037,7 +1037,7 @@ export function VolteoAdvantageSection() {
                     <p
                       className="text-[#464646] leading-[1.6] max-w-[480px]"
                       style={{
-                        fontFamily: "'TT Hoves Pro', sans-serif",
+                        fontFamily: "'Inter', sans-serif",
                         fontWeight: 400,
                         fontSize: "clamp(13px, 1.05vw, 16px)",
                       }}
@@ -1064,7 +1064,7 @@ export function VolteoAdvantageSection() {
                             <span
                               className={`transition-colors duration-150 ${isPreview ? "text-[#1d1d1d]" : "text-[#464646] group-hover:text-[#1d1d1d]"}`}
                               style={{
-                                fontFamily: "'TT Hoves Pro', sans-serif",
+                                fontFamily: "'Inter', sans-serif",
                                 fontWeight: isPreview ? 500 : 400,
                                 fontSize: "clamp(13px, 1vw, 16px)",
                               }}
@@ -1095,7 +1095,7 @@ export function VolteoAdvantageSection() {
                                 <p
                                   className="px-8 pb-5 text-[#5a5a5a] leading-[1.6]"
                                   style={{
-                                    fontFamily: "'TT Hoves Pro', sans-serif",
+                                    fontFamily: "'Inter', sans-serif",
                                     fontWeight: 400,
                                     fontSize: "clamp(12px, 0.95vw, 14px)",
                                   }}

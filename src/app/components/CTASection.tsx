@@ -55,24 +55,24 @@ export function CTASection({ variant = "default" }: CTASectionProps) {
           <h2
             className="text-[#fcf7e3] leading-[1.1] tracking-[-1.5px] mb-5"
             style={{
-              fontFamily: "'TT Hoves Pro', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontWeight: 500,
               fontSize: "clamp(32px, 3.5vw, 52px)",
               textShadow: "0 1px 24px rgba(0,0,0,0.25)",
             }}
           >
             {isTeam ? (
-              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>Join our team</span>
+              <span style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300, fontStyle: "normal" }}>Join our team</span>
             ) : (
               <>
                 Capture the knowledge before it walks off the{" "}
-                <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>gangway</span>
+                <span style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300, fontStyle: "normal" }}>gangway</span>
               </>
             )}
           </h2>
           <p
             className="text-[#f3f2ee]/80 leading-[1.65] mb-10"
-            style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.1vw, 17px)" }}
+            style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.1vw, 17px)" }}
           >
             {isTeam ? (
               <>
@@ -89,7 +89,7 @@ export function CTASection({ variant = "default" }: CTASectionProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#fcf7e3] text-[#0e3233] px-7 py-3 hover:bg-white transition-colors duration-150 inline-flex items-center justify-center gap-2 shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
-                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
+                style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 15 }}
               >
                 Careers
                 <ArrowUpRight size={15} />
@@ -99,7 +99,7 @@ export function CTASection({ variant = "default" }: CTASectionProps) {
                 <Link
                   to="/book-demo"
                   className="bg-[#fcf7e3] text-[#0e3233] px-7 py-3 hover:bg-white transition-colors duration-150 inline-flex items-center justify-center gap-2 shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
-                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
+                  style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 15 }}
                 >
                   Get a Demo
                   <ArrowUpRight size={15} />
