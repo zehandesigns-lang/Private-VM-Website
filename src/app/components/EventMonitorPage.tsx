@@ -12,8 +12,8 @@ const RADIAL_STACK = `
   linear-gradient(168deg, #0e3233 0%, #0b282a 42%, #0d2f30 100%)
 `;
 
-const tt = { fontFamily: "'TT Hoves Pro', sans-serif" } as const;
-const lc = { fontFamily: "'LT Cushion', serif", fontWeight: 300 as const, fontStyle: "normal" as const };
+const tt = { fontFamily: "'Inter', sans-serif" } as const;
+const lc = { fontFamily: "'Source Serif 4', serif", fontWeight: 300 as const, fontStyle: "normal" as const };
 const EASE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 // Gravity-like: starts slow, accelerates into the slot. Single smooth curve so the
 // paper never appears to pause mid-fall.

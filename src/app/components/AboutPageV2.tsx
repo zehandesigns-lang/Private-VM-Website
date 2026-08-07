@@ -16,22 +16,22 @@ const EASE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 const EASE_STRONG: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const ltCushion: CSSProperties = {
-  fontFamily: "'LT Cushion', serif",
+  fontFamily: "'Source Serif 4', serif",
   fontWeight: 300,
 };
 
 const ttHoves: CSSProperties = {
-  fontFamily: "'TT Hoves Pro', sans-serif",
+  fontFamily: "'Inter', sans-serif",
   fontWeight: 400,
 };
 
 const ttHovesMedium: CSSProperties = {
-  fontFamily: "'TT Hoves Pro', sans-serif",
+  fontFamily: "'Inter', sans-serif",
   fontWeight: 500,
 };
 
 const ttHovesBold: CSSProperties = {
-  fontFamily: "'TT Hoves Pro', sans-serif",
+  fontFamily: "'Inter', sans-serif",
   fontWeight: 600,
 };
 

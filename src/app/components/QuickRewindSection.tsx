@@ -48,10 +48,10 @@ function StatCard({ prefix = "", value, suffix, description, badge, start, borde
       {/* Badge — absolutely pinned to top-right, out of flow so numbers stay aligned */}
       {badge && (
         <div className="absolute top-4 right-4 md:right-6 inline-flex items-center gap-1.5 bg-[#2f615a] px-3 py-1.5">
-          <span className="text-[#f3f2ee] text-[11px]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400 }}>⊕</span>
+          <span className="text-[#f3f2ee] text-[11px]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400 }}>⊕</span>
           <span
             className="text-[#f3f2ee] tracking-[0.6px] text-[11px]"
-            style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}
+            style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
           >
             {badge}
           </span>
@@ -62,7 +62,7 @@ function StatCard({ prefix = "", value, suffix, description, badge, start, borde
       <div
         className="text-black leading-none tracking-tight mb-3"
         style={{
-          fontFamily: "'LT Cushion', serif",
+          fontFamily: "'Source Serif 4', serif",
           fontWeight: 400,
           fontSize: "clamp(52px, 5.5vw, 84px)",
         }}
@@ -73,7 +73,7 @@ function StatCard({ prefix = "", value, suffix, description, badge, start, borde
       {/* Description */}
       <p
         className="text-[#464646] leading-[1.4] max-w-[260px]"
-        style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.1vw, 18px)" }}
+        style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.1vw, 18px)" }}
       >
         {description}
       </p>
@@ -162,10 +162,10 @@ export function QuickRewindSection() {
             className="text-[#103435] tracking-tight"
             style={{ fontSize: "clamp(32px, 3.5vw, 54px)", letterSpacing: "-1.62px" }}
           >
-            <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>
+            <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>
               Quick{" "}
             </span>
-            <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300 }}>
+            <span style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300 }}>
               Rewind
             </span>
           </h2>
@@ -218,7 +218,7 @@ export function QuickRewindSection() {
           <h2
             className="text-[#103435] tracking-tight"
             style={{
-              fontFamily: "'TT Hoves Pro', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontWeight: 500,
               fontSize: "clamp(28px, 3vw, 46px)",
               letterSpacing: "-1.38px",
@@ -228,7 +228,7 @@ export function QuickRewindSection() {
           </h2>
           <p
             className="text-[#464646] mt-2"
-            style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.1vw, 18px)" }}
+            style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.1vw, 18px)" }}
           >
             Customers who trusted us to help transform their operations
           </p>

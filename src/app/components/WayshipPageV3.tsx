@@ -54,7 +54,7 @@ function Section({ id, children, className = "" }: { id?: string; children: Reac
 function Label({ children }: { children: React.ReactNode }) {
   return (
     <p className="text-[#464646] uppercase tracking-[0.12em] mb-4"
-      style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 11 }}>
+      style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 11 }}>
       {children}
     </p>
   );
@@ -72,7 +72,7 @@ function SectionTitle({ children, className = "" }: { children: React.ReactNode;
 function Body({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
     <p className={`text-[#464646] leading-[1.65] ${className}`}
-      style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.05vw, 17px)" }}>
+      style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.05vw, 17px)" }}>
       {children}
     </p>
   );
@@ -91,20 +91,20 @@ function WayshipHero() {
               style={{ fontSize: "clamp(38px, 4.8vw, 56px)" }}
               variants={fadeUp} initial="hidden" animate="visible" custom={0.05}
             >
-              <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>
+              <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>
                 The fastest way to capture{" "}
               </span>
-              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300 }}>
+              <span style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300 }}>
                 operational intelligence
               </span>
-              <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>
+              <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>
                 {" "}across your fleet
               </span>
             </motion.h1>
 
             <motion.p
               className="text-[#464646] leading-[1.65] mb-8 max-w-[480px]"
-              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 18 }}
+              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 18 }}
               variants={fadeUp} initial="hidden" animate="visible" custom={0.12}
             >
               Wayship turns vessel operations data into structured, searchable intelligence — delivered at the right moment, for the right decision.
@@ -116,7 +116,7 @@ function WayshipHero() {
               variants={fadeUp} initial="hidden" animate="visible" custom={0.18}
             >
               <div className="flex flex-wrap items-center gap-x-10 gap-y-4 min-w-0">
-                <p className="text-[#464646] uppercase tracking-widest text-[10px] shrink-0 self-center" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>Trusted by</p>
+                <p className="text-[#464646] uppercase tracking-widest text-[10px] shrink-0 self-center" style={{ fontFamily: "'Inter', sans-serif" }}>Trusted by</p>
                 <div className="flex items-center gap-8 flex-wrap">
                   {[
                     { src: epsLogo, alt: "Eastern Pacific Shipping", h: "h-10" },
@@ -135,14 +135,14 @@ function WayshipHero() {
               <Link
                 to="/book-demo"
                 className="bg-[#0e3233] hover:bg-[#1a5052] text-white px-6 py-3 transition-colors duration-150 inline-flex items-center gap-2"
-                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
+                style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 15 }}
               >
                 Get a Demo
                 <ArrowUpRight size={15} />
               </Link>
               <a href="#meet-wayship"
                 className="text-[#2f615a] border-b border-[#2f615a] pb-0.5 hover:opacity-70 transition-opacity inline-flex items-center gap-1.5"
-                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}>
+                style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 15 }}>
                 See how it works
               </a>
             </motion.div>
@@ -226,7 +226,7 @@ function DriftCard({
           <p
             className="text-[#103435] leading-[1.25]"
             style={{
-              fontFamily: "'TT Hoves Pro', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontWeight: 500,
               fontSize: "clamp(15px, 1.35vw, 18px)",
             }}
@@ -238,7 +238,7 @@ function DriftCard({
           <p
             className="text-[#464646] leading-[1.55]"
             style={{
-              fontFamily: "'TT Hoves Pro', sans-serif",
+              fontFamily: "'Inter', sans-serif",
               fontWeight: 400,
               fontSize: "clamp(13px, 1.05vw, 15px)",
             }}
@@ -269,7 +269,7 @@ function InvisibleDriftSection() {
             <p
               className="text-[#464646] mb-4 md:mb-5 uppercase tracking-[0.12em]"
               style={{
-                fontFamily: "'TT Hoves Pro', sans-serif",
+                fontFamily: "'Inter', sans-serif",
                 fontWeight: 500,
                 fontSize: 11,
               }}
@@ -280,17 +280,17 @@ function InvisibleDriftSection() {
               className="text-[#103435] leading-[1.12] tracking-[-1.2px] mb-4 md:mb-5"
               style={{ fontSize: "clamp(28px, 3.4vw, 48px)" }}
             >
-              <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>
+              <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>
                 Your operational knowledge is{" "}
               </span>
-              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300 }}>
+              <span style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300 }}>
                 walking off the gangway
               </span>
             </h2>
             <p
               className="text-[#464646] leading-[1.65] mx-auto max-w-[600px]"
               style={{
-                fontFamily: "'TT Hoves Pro', sans-serif",
+                fontFamily: "'Inter', sans-serif",
                 fontWeight: 400,
                 fontSize: "clamp(14px, 1.1vw, 17px)",
               }}
@@ -388,7 +388,7 @@ function HeroCards() {
         </div>
         <div className="px-4 py-3">
           <p className="text-[#103435] font-mono leading-none mb-1"
-            style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: 32 }}>4,847</p>
+            style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300, fontSize: 32 }}>4,847</p>
           <p className="text-[#5a5a5a] text-[10px] leading-[1.5] mb-3">submissions logged across the fleet<br />in last 24 hours</p>
           <div className="h-1 bg-[#D9D9D9] overflow-hidden">
             <motion.div className="h-full bg-[#103435]"
@@ -503,10 +503,10 @@ function StorytellingSection() {
               scale: headingScale,
             }}
           >
-            <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, color: "rgba(16,52,53,0.75)" }}>
+            <span style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300, color: "rgba(16,52,53,0.75)" }}>
               {renderLettersStagger("Meet the all-new ", meetVisible)}
             </span>
-            <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, color: "#103435" }}>
+            <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, color: "#103435" }}>
               {renderLettersStagger("Wayship", meetVisible, "Meet the all-new ".length)}
             </span>
           </motion.h2>
@@ -517,11 +517,11 @@ function StorytellingSection() {
             initial={{ opacity: 0, y: 6 }}
             animate={meetVisible ? { opacity: 1, y: 0, transition: { duration: 0.4, delay: 0.3, ease: EASE } } : { opacity: 0, y: 6 }}
           >
-            <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>
+            <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>
               Purpose-built Wayship AI,
             </span>
             <br />
-            <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300 }}>
+            <span style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300 }}>
               designed from the ground up for seafarers
             </span>
           </motion.h3>
@@ -556,8 +556,8 @@ function StorytellingSection() {
             >
               <motion.div className="flex flex-col gap-8">
                 <motion.div className="flex flex-col gap-[clamp(8px,1vh,14px)]">
-                  <p className="text-black" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(16px, 1.5vw, 24px)", lineHeight: 1.15 }}>Speak ...<br />and its done!</p>
-                  <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.05vw, 16px)", color: "#85867b", lineHeight: 1.55 }}>
+                  <p className="text-black" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300, fontSize: "clamp(16px, 1.5vw, 24px)", lineHeight: 1.15 }}>Speak ...<br />and its done!</p>
+                  <p style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.05vw, 16px)", color: "#85867b", lineHeight: 1.55 }}>
                     Your crew shouldn't have to choose between doing the job and documenting it. Wayship's advanced automatic speech recognition turns the moment of observation into a structured, tagged, searchable entry — 4x faster than typing.
                   </p>
                 </motion.div>
@@ -565,8 +565,8 @@ function StorytellingSection() {
                 <div className="h-px w-full bg-[#D9D9D9]" />
 
                 <motion.div className="flex flex-col gap-[clamp(8px,1vh,14px)]">
-                  <p className="text-black" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(16px, 1.5vw, 24px)", lineHeight: 1.15 }}>Your data just got its voice.<br />And it has a lot to say.</p>
-                  <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.05vw, 16px)", color: "#85867b", lineHeight: 1.55 }}>
+                  <p className="text-black" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300, fontSize: "clamp(16px, 1.5vw, 24px)", lineHeight: 1.15 }}>Your data just got its voice.<br />And it has a lot to say.</p>
+                  <p style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.05vw, 16px)", color: "#85867b", lineHeight: 1.55 }}>
                     Ask anything about your vessel's full operational history in plain language — current state, past incidents, recorded observations across rotations, all in one connected space.
                   </p>
                 </motion.div>
@@ -603,8 +603,8 @@ function ProblemSection() {
           <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}>
             <Label>The challenge</Label>
             <SectionTitle className="mb-5">
-              <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Operational knowledge walks</span>{" "}
-              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>off the gangway</span>
+              <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>Operational knowledge walks</span>{" "}
+              <span style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300, fontStyle: "normal" }}>off the gangway</span>
             </SectionTitle>
             <Body className="mb-10 max-w-[440px]">
               Every crew rotation, vessel-specific knowledge disappears. What the outgoing engineer knew about that pump — the noise it makes at load, the fix that worked last time — it's gone. Until something breaks.
@@ -619,8 +619,8 @@ function ProblemSection() {
                     <span className="text-red-600/60 text-xs font-mono">✕</span>
                   </div>
                   <div>
-                    <p className="text-[#1d1d1d] mb-1.5" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}>{p.title}</p>
-                    <p className="text-[#5a5a5a] leading-[1.6]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 14 }}>{p.desc}</p>
+                    <p className="text-[#1d1d1d] mb-1.5" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 15 }}>{p.title}</p>
+                    <p className="text-[#5a5a5a] leading-[1.6]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 14 }}>{p.desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -720,7 +720,7 @@ function VoiceSection({ storyRef: _storyRef }: { storyRef: React.RefObject<HTMLD
             style={{ fontSize: "clamp(22px, 2.6vw, 36px)", lineHeight: 1.15 }}
           >
             <motion.span
-              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, display: "inline" }}
+              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, display: "inline" }}
               initial={{ opacity: 0, y: 8 }}
               animate={revealed ? { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.08, ease: EASE } } : { opacity: 0, y: 8 }}
             >
@@ -728,7 +728,7 @@ function VoiceSection({ storyRef: _storyRef }: { storyRef: React.RefObject<HTMLD
             </motion.span>
             <br />
             <motion.span
-              style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, display: "inline" }}
+              style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300, display: "inline" }}
               initial={{ opacity: 0, y: 8 }}
               animate={revealed ? { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.14, ease: EASE } } : { opacity: 0, y: 8 }}
             >
@@ -761,10 +761,10 @@ function VoiceSection({ storyRef: _storyRef }: { storyRef: React.RefObject<HTMLD
                   </span>
                 </div>
                 <div className="flex flex-col">
-                  <p className="text-white" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: 18, lineHeight: 1.55 }}>
+                  <p className="text-white" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300, fontSize: 18, lineHeight: 1.55 }}>
                     Ryan Chen
                   </p>
-                  <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 14, lineHeight: 1.565, color: "rgba(255,255,255,0.62)" }}>
+                  <p style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 14, lineHeight: 1.565, color: "rgba(255,255,255,0.62)" }}>
                     2nd officer
                   </p>
                 </div>
@@ -787,7 +787,7 @@ function VoiceSection({ storyRef: _storyRef }: { storyRef: React.RefObject<HTMLD
             {/* Voice quote */}
             <p
               className="text-white mt-6 sm:mt-10 text-center px-2 w-full max-w-[420px]"
-              style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(14px, 1.2vw, 17px)", lineHeight: 1.6 }}
+              style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300, fontSize: "clamp(14px, 1.2vw, 17px)", lineHeight: 1.6 }}
             >
               "Auxiliary Engine 2. Running hours, uh, 3585. Load is 61 percent. Lube oil is 92 degrees, hmm, that seems high. Fuel oil temperature, let me see, 123, viscosity 12."
             </p>
@@ -820,10 +820,10 @@ function VoiceSection({ storyRef: _storyRef }: { storyRef: React.RefObject<HTMLD
                     SPEECH AI
                   </p>
                 </div>
-                <p className="text-black" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(20px, 1.8vw, 26px)", lineHeight: 1.15 }}>
+                <p className="text-black" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300, fontSize: "clamp(20px, 1.8vw, 26px)", lineHeight: 1.15 }}>
                   Speak ...<br />and its done!
                 </p>
-                <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.05vw, 16px)", color: "#85867b", lineHeight: 1.6 }}>
+                <p style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.05vw, 16px)", color: "#85867b", lineHeight: 1.6 }}>
                   Your crew shouldn't have to choose between doing the job and documenting it. Wayship's advanced automatic speech recognition turns the moment of observation into a structured, tagged, searchable entry — 4x faster than typing.
                 </p>
               </div>
@@ -841,10 +841,10 @@ function VoiceSection({ storyRef: _storyRef }: { storyRef: React.RefObject<HTMLD
                     AI ASSISTANT
                   </p>
                 </div>
-                <p className="text-black" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(20px, 1.8vw, 26px)", lineHeight: 1.15, maxWidth: 340 }}>
+                <p className="text-black" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300, fontSize: "clamp(20px, 1.8vw, 26px)", lineHeight: 1.15, maxWidth: 340 }}>
                   Your data just got its voice. And it has a lot to say.
                 </p>
-                <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.05vw, 16px)", color: "#85867b", lineHeight: 1.6 }}>
+                <p style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1.05vw, 16px)", color: "#85867b", lineHeight: 1.6 }}>
                   Ask anything about your vessel's full operational history in plain language — current state, past incidents, recorded observations across rotations, all in one connected space.
                 </p>
               </div>
@@ -1123,9 +1123,9 @@ function CoreFeaturesSection() {
           variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}
         >
           <h2 className="text-[#1d1d1d] tracking-[-1.5px] max-w-[720px]" style={{ lineHeight: 1.15, fontSize: "clamp(28px, 3.2vw, 40px)" }}>
-            <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Your favorite Wayship experience,</span>
+            <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>Your favorite Wayship experience,</span>
             <br />
-            <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300 }}>now even better</span>
+            <span style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300 }}>now even better</span>
           </h2>
         </motion.div>
 
@@ -1150,13 +1150,13 @@ function CoreFeaturesSection() {
 
             {/* Text — below illustration on mobile, bottom-left on md+ */}
             <motion.div className="relative z-10 max-md:shrink-0 max-md:border-t max-md:border-[#D9D9D9] max-md:bg-[#f3f2ee] max-md:px-5 max-md:py-6 md:absolute md:left-[38px] md:bottom-[44px] md:max-w-[520px] md:px-0 md:py-0 md:bg-transparent">
-              <h3 className="text-black mb-3" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(20px, 2vw, 26px)", lineHeight: 1.25, letterSpacing: "-0.48px" }}>
+              <h3 className="text-black mb-3" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300, fontSize: "clamp(20px, 2vw, 26px)", lineHeight: 1.25, letterSpacing: "-0.48px" }}>
                 Single entry. Multi-system reporting.
               </h3>
-              <p className="mb-3 max-md:text-sm md:text-base" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, color: "#85867b", lineHeight: 1.55 }}>
+              <p className="mb-3 max-md:text-sm md:text-base" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, color: "#85867b", lineHeight: 1.55 }}>
                 Your crew shouldn't be filling the same voyage data separately for noon report, emissions compliance, cargo operations, BDN, and statement of facts.
               </p>
-              <p className="mb-5 max-md:text-sm md:text-base" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, color: "#85867b", lineHeight: 1.55 }}>
+              <p className="mb-5 max-md:text-sm md:text-base" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, color: "#85867b", lineHeight: 1.55 }}>
                 1Report captures all of it in a single, structured entry — then programmatically routes what's relevant to each party, via API or automated emails. IMOS, Signal, internal and external stakeholders — each gets exactly what they need, automatically.
               </p>
               <motion.div className="flex flex-wrap gap-2">
@@ -1186,10 +1186,10 @@ function CoreFeaturesSection() {
                 variants={fadeUp} initial="hidden" whileInView="visible"
                 viewport={{ once: true, margin: "-60px" }} custom={i * 0.07}
               >
-                <p className="text-[#1d1d1d]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 18 }}>
+                <p className="text-[#1d1d1d]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 18 }}>
                   {item.title}
                 </p>
-                <p style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 16, color: "#85867b", lineHeight: 1.55 }}>
+                <p style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 16, color: "#85867b", lineHeight: 1.55 }}>
                   {item.desc}
                 </p>
               </motion.div>
@@ -1298,10 +1298,10 @@ function FlagApprovalSection() {
             className="text-black tracking-[-0.8px]"
             style={{ fontSize: "clamp(26px, 2.8vw, 40px)", lineHeight: 1.15 }}
           >
-            <span className="block" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>
+            <span className="block" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>
               Approved for use on
             </span>
-            <span className="block" style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300 }}>
+            <span className="block" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300 }}>
               all vessel types
             </span>
           </h2>
@@ -1322,7 +1322,7 @@ function FlagApprovalSection() {
               <p
                 className="text-base sm:text-lg sm:whitespace-nowrap"
                 style={{
-                  fontFamily: "'TT Hoves Pro', sans-serif",
+                  fontFamily: "'Inter', sans-serif",
                   fontWeight: 500,
                   color: "#929389",
                   letterSpacing: "-0.36px",
@@ -1335,7 +1335,7 @@ function FlagApprovalSection() {
                 onClick={() => setFlagsDialogOpen(true)}
                 className="border-b border-black text-black self-start sm:self-auto bg-transparent cursor-pointer hover:opacity-70 transition-opacity"
                 style={{
-                  fontFamily: "'TT Hoves Pro', sans-serif",
+                  fontFamily: "'Inter', sans-serif",
                   fontSize: 14,
                   letterSpacing: "-0.28px",
                 }}
@@ -1347,13 +1347,13 @@ function FlagApprovalSection() {
             <Dialog open={flagsDialogOpen} onOpenChange={setFlagsDialogOpen}>
               <DialogContent
                 className="sm:max-w-[500px] bg-[#f3f2ee] border border-[#D9D9D9] rounded-none p-8 md:p-10 gap-8 max-md:max-h-[min(90dvh,640px)] max-md:overflow-hidden max-md:flex max-md:flex-col"
-                style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}
+                style={{ fontFamily: "'Inter', sans-serif" }}
               >
                 <DialogHeader className="text-center sm:text-center shrink-0">
                   <DialogTitle
                     className="text-black tracking-[-0.5px]"
                     style={{
-                      fontFamily: "'TT Hoves Pro', sans-serif",
+                      fontFamily: "'Inter', sans-serif",
                       fontWeight: 500,
                       fontSize: "clamp(22px, 2.4vw, 28px)",
                       lineHeight: 1.2,
@@ -1372,7 +1372,7 @@ function FlagApprovalSection() {
                       key={flag}
                       className="text-[#1d1d1d] shrink-0"
                       style={{
-                        fontFamily: "'TT Hoves Pro', sans-serif",
+                        fontFamily: "'Inter', sans-serif",
                         fontWeight: 400,
                         fontSize: 16,
                         lineHeight: 1.5,
@@ -1391,7 +1391,7 @@ function FlagApprovalSection() {
                           key={flag}
                           className="text-[#1d1d1d]"
                           style={{
-                            fontFamily: "'TT Hoves Pro', sans-serif",
+                            fontFamily: "'Inter', sans-serif",
                             fontWeight: 400,
                             fontSize: 16,
                             lineHeight: 1.5,
@@ -1440,13 +1440,13 @@ function FlagApprovalSection() {
             >
               <span
                 className="block"
-                style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300 }}
+                style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300 }}
               >
                 Type approved by
               </span>
               <span
                 className="block"
-                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}
+                style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
               >
                 American Bureau of Shipping
               </span>
@@ -1471,8 +1471,8 @@ function FeaturesSection() {
         <motion.div className="mb-10 sm:mb-14" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}>
           <Label>Platform capabilities</Label>
           <SectionTitle>
-            <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Six years of reliability</span>{" "}
-            <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>Now supercharged</span>
+            <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>Six years of reliability</span>{" "}
+            <span style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300, fontStyle: "normal" }}>Now supercharged</span>
           </SectionTitle>
           <Body className="mt-4 max-w-[500px]">
             The foundation that 2,000+ seafarers depend on every day — plus the AI layer that makes all that accumulated knowledge actually useful.
@@ -1495,10 +1495,10 @@ function FeaturesSection() {
                 style={{ background: "#eeece5" }}>
                 <Plus size={14} className="text-[#2f615a]" />
               </div>
-              <p className="text-[#1d1d1d] mb-2.5" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 16 }}>{f.title}</p>
-              <p className="text-[#5a5a5a] leading-[1.65] mb-4" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 13.5 }}>{f.desc}</p>
+              <p className="text-[#1d1d1d] mb-2.5" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 16 }}>{f.title}</p>
+              <p className="text-[#5a5a5a] leading-[1.65] mb-4" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 13.5 }}>{f.desc}</p>
               <span className="inline-block border border-[#D9D9D9] px-2.5 py-1 text-[#464646] group-hover:border-[#2f615a] group-hover:text-[#2f615a] transition-colors duration-150"
-                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 11 }}>
+                style={{ fontFamily: "'Inter', sans-serif", fontSize: 11 }}>
                 {f.chip}
               </span>
             </motion.div>
@@ -1526,8 +1526,8 @@ function ComplianceSection() {
           <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}>
             <Label>Compliance & approvals</Label>
             <SectionTitle className="mb-5">
-              <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Not just compliant</span>{" "}
-              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>Approved</span>
+              <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>Not just compliant</span>{" "}
+              <span style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300, fontStyle: "normal" }}>Approved</span>
             </SectionTitle>
             <Body className="mb-8 max-w-[420px]">
               Class approval and flag acceptance aren't features — they're procurement gates. Wayship clears them all.
@@ -1542,7 +1542,7 @@ function ComplianceSection() {
                     <Check size={9} className="text-emerald-600" />
                   </div>
                   <div>
-                    <p className="text-[#1d1d1d]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 14 }}>{item.title}</p>
+                    <p className="text-[#1d1d1d]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 14 }}>{item.title}</p>
                     <p className="text-[#5a5a5a] text-[11px] mt-0.5 font-mono">{item.sub}</p>
                   </div>
                 </motion.div>
@@ -1561,12 +1561,12 @@ function ComplianceSection() {
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <div className="p-4 border border-[#D9D9D9]" style={{ background: "#eeece5" }}>
                     <p className="text-[#103435] text-sm font-medium mb-1"
-                      style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>ABS</p>
+                      style={{ fontFamily: "'Inter', sans-serif" }}>ABS</p>
                     <p className="text-[#5a5a5a] text-[10px] font-mono">Type Approval · Electronic Logbook</p>
                   </div>
                   <div className="p-4 border border-[#D9D9D9]" style={{ background: "#eeece5" }}>
                     <p className="text-[#103435] text-sm font-medium mb-1"
-                      style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>ISO 21745</p>
+                      style={{ fontFamily: "'Inter', sans-serif" }}>ISO 21745</p>
                     <p className="text-[#5a5a5a] text-[10px] font-mono">Certified · Marine E-Logbooks</p>
                   </div>
                 </div>
@@ -1585,7 +1585,7 @@ function ComplianceSection() {
               </div>
             </div>
             <div className="p-5 border border-[#D9D9D9]" style={{ background: "rgba(16,185,129,0.04)" }}>
-              <p className="text-[#5a5a5a] leading-[1.65]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 14 }}>
+              <p className="text-[#5a5a5a] leading-[1.65]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 14 }}>
                 Wayship adapts to your SMS format and IT restrictions. Change management and data-sharing standards are built in — not bolted on.
               </p>
             </div>
@@ -1619,7 +1619,7 @@ function ROISection() {
                   {[["207", "Vessels active"], ["2,847", "Entries / month"], ["9", "Flagged critical"]].map(([v, l]) => (
                     <div key={l} className="p-3 border border-[#D9D9D9]" style={{ background: "#eeece5" }}>
                       <p className="text-[#103435] font-mono text-lg font-medium"
-                        style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300 }}>{v}</p>
+                        style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300 }}>{v}</p>
                       <p className="text-[#5a5a5a] text-[9px] uppercase tracking-widest font-mono mt-0.5">{l}</p>
                     </div>
                   ))}
@@ -1665,8 +1665,8 @@ function ROISection() {
             viewport={{ once: true, margin: "-80px" }} custom={0.1}>
             <Label>Real-world outcomes</Label>
             <SectionTitle className="mb-5">
-              <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Numbers your superintendent</span>{" "}
-              <span style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontStyle: "normal" }}>will notice</span>
+              <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>Numbers your superintendent</span>{" "}
+              <span style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300, fontStyle: "normal" }}>will notice</span>
             </SectionTitle>
             <Body className="mb-10 max-w-[420px]">
               Six years of deployment across 200+ vessels gives us data on what actually changes when knowledge stops walking off the gangway.
@@ -1679,12 +1679,12 @@ function ROISection() {
               ].map(([fig, title, desc]) => (
                 <div key={title as string} className="flex gap-6 items-start">
                   <p className="text-[#2f615a] font-mono leading-none shrink-0 mt-1"
-                    style={{ fontFamily: "'LT Cushion', serif", fontWeight: 300, fontSize: "clamp(28px, 2.5vw, 36px)" }}>
+                    style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 300, fontSize: "clamp(28px, 2.5vw, 36px)" }}>
                     {fig}
                   </p>
                   <div>
-                    <p className="text-[#1d1d1d] mb-1.5" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}>{title as string}</p>
-                    <p className="text-[#5a5a5a] leading-[1.65]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 13.5 }}>{desc as string}</p>
+                    <p className="text-[#1d1d1d] mb-1.5" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 15 }}>{title as string}</p>
+                    <p className="text-[#5a5a5a] leading-[1.65]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 13.5 }}>{desc as string}</p>
                   </div>
                 </div>
               ))}
@@ -1705,7 +1705,7 @@ function DeployStrip() {
         {items.map((item) => (
           <div key={item} className="flex items-center gap-2">
             <div className="w-1 h-1 rounded-full bg-[#2f615a]" />
-            <span className="text-[#464646]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 13 }}>{item}</span>
+            <span className="text-[#464646]" style={{ fontFamily: "'Inter', sans-serif", fontSize: 13 }}>{item}</span>
           </div>
         ))}
       </div>
