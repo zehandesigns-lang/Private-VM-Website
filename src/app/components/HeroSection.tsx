@@ -32,7 +32,7 @@ export function HeroSection() {
           >
             <span
               className="bg-[#ff9905] text-black px-4 py-1.5 rounded-full text-[12px] tracking-[1.2px] uppercase"
-              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600 }}
             >
               NEW
             </span>
@@ -53,7 +53,7 @@ export function HeroSection() {
               className="text-[#103435] leading-[1.0] tracking-[-2px]"
               style={{ fontSize: "clamp(42px, 5.5vw, 78px)" }}
             >
-              <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>
+              <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>
                 Celebrating 6 years of
               </span>
               <br />
@@ -84,7 +84,7 @@ export function HeroSection() {
               <p
                 className="text-[#262627] leading-[1.55]"
                 style={{
-                  fontFamily: "'Inter', sans-serif",
+                  fontFamily: "'TT Hoves Pro', sans-serif",
                   fontWeight: 450,
                   fontSize: 18,
                 }}
@@ -123,13 +123,13 @@ export function HeroSection() {
               <div>
                 <p
                   className="text-black"
-                  style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "clamp(17px, 1.3vw, 20px)" }}
+                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600, fontSize: "clamp(17px, 1.3vw, 20px)" }}
                 >
                   Nabo Ghosh
                 </p>
                 <p
                   className="text-[#464646] mt-1"
-                  style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1vw, 17px)" }}
+                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1vw, 17px)" }}
                 >
                   Captain, Eastern Pacific Company
                 </p>
@@ -140,7 +140,7 @@ export function HeroSection() {
             <p
               className="text-black leading-[1.4]"
               style={{
-                fontFamily: "'Inter', sans-serif",
+                fontFamily: "'TT Hoves Pro', sans-serif",
                 fontWeight: 500,
                 fontSize: "clamp(18px, 1.8vw, 26px)",
               }}

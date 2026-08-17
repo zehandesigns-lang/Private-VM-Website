@@ -71,7 +71,7 @@ function DropdownMenu({
                 i < items.length - 1 ? "border-b border-[#E4E2DC]" : ""
               }`}
               style={{
-                fontFamily: "'Inter', sans-serif",
+                fontFamily: "'TT Hoves Pro', sans-serif",
                 fontSize: 15,
                 fontWeight: 400,
               }}
@@ -146,7 +146,7 @@ function ProductsMegaMenu({
               <p
                 className="text-[#262627] mb-3"
                 style={{
-                  fontFamily: "'Inter', sans-serif",
+                  fontFamily: "'TT Hoves Pro', sans-serif",
                   fontWeight: 600,
                   fontSize: 13,
                   letterSpacing: "0.12em",
@@ -175,7 +175,7 @@ function ProductsMegaMenu({
                     <div className="flex items-center gap-2">
                       <p
                         className="text-[#0e3233] leading-tight"
-                        style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 18 }}
+                        style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 18 }}
                       >
                         {p.label}
                       </p>
@@ -195,7 +195,7 @@ function ProductsMegaMenu({
                   const description = (
                     <p
                       className="text-[#464646] mt-2 leading-[1.55] max-w-[380px]"
-                      style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 14 }}
+                      style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 14 }}
                     >
                       {p.description}
                     </p>
@@ -402,7 +402,7 @@ export function Header() {
                   {hasDropdown ? (
                     <button
                       className="group flex items-center gap-1 text-[#262627] hover:text-[#0e3233] transition-colors duration-150 ease-out bg-transparent border-none cursor-pointer"
-                      style={{ fontFamily: "'Inter', sans-serif", fontSize: 16, fontWeight: 500 }}
+                      style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 16, fontWeight: 500 }}
                     >
                       {link.label}
                       <motion.span
@@ -418,7 +418,7 @@ export function Header() {
                     <Link
                       to={link.href}
                       className="text-[#262627] hover:text-[#0e3233] transition-colors duration-150 ease-out"
-                      style={{ fontFamily: "'Inter', sans-serif", fontSize: 16, fontWeight: 500 }}
+                      style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 16, fontWeight: 500 }}
                     >
                       {link.label}
                     </Link>
@@ -460,7 +460,7 @@ export function Header() {
                   }
                 }}
                 className="bg-[#0e3233] hover:bg-[#416668] text-white px-5 py-2.5 text-[15px] will-change-transform transition-none inline-block"
-                style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, letterSpacing: "0.02em" }}
+                style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, letterSpacing: "0.02em" }}
               >
                 Get a Demo
               </Link>
@@ -551,7 +551,7 @@ export function Header() {
                             <button
                               className="flex items-center justify-between w-full py-4 text-[#262627] bg-transparent border-none cursor-pointer active:opacity-60 transition-opacity duration-100"
                               style={{
-                                fontFamily: "'Inter', sans-serif",
+                                fontFamily: "'TT Hoves Pro', sans-serif",
                                 fontSize: 16,
                                 fontWeight: 500,
                                 minHeight: 48,
@@ -609,7 +609,7 @@ export function Header() {
                                                   <p
                                                     className="text-[#0e3233] leading-snug"
                                                     style={{
-                                                      fontFamily: "'Inter', sans-serif",
+                                                      fontFamily: "'TT Hoves Pro', sans-serif",
                                                       fontWeight: 500,
                                                       fontSize: 14,
                                                     }}
@@ -619,7 +619,7 @@ export function Header() {
                                                   <p
                                                     className="text-[#464646] mt-0.5 leading-snug line-clamp-2"
                                                     style={{
-                                                      fontFamily: "'Inter', sans-serif",
+                                                      fontFamily: "'TT Hoves Pro', sans-serif",
                                                       fontWeight: 400,
                                                       fontSize: 12,
                                                     }}
@@ -650,7 +650,7 @@ export function Header() {
                                           }}
                                           className="text-[#464646] hover:text-[#0e3233] active:opacity-60 transition-colors duration-150 py-3 block pl-3"
                                           style={{
-                                            fontFamily: "'Inter', sans-serif",
+                                            fontFamily: "'TT Hoves Pro', sans-serif",
                                             fontSize: 15,
                                             fontWeight: 400,
                                             minHeight: 44,
@@ -670,7 +670,7 @@ export function Header() {
                             to={link.href}
                             className="flex items-center w-full py-4 text-[#262627] hover:text-[#0e3233] active:opacity-60 transition-colors duration-150"
                             style={{
-                              fontFamily: "'Inter', sans-serif",
+                              fontFamily: "'TT Hoves Pro', sans-serif",
                               fontSize: 16,
                               fontWeight: 500,
                               minHeight: 48,
@@ -705,7 +705,7 @@ export function Header() {
                       }}
                       className="bg-[#0e3233] text-white px-5 py-3.5 text-center block w-full active:bg-[#0c2829] transition-colors duration-150"
                       style={{
-                        fontFamily: "'Inter', sans-serif",
+                        fontFamily: "'TT Hoves Pro', sans-serif",
                         fontWeight: 500,
                         fontSize: 16,
                         minHeight: 52,

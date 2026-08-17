@@ -9,8 +9,8 @@ const EASE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 const PAGE_BG = "#f3f2ee";
 
 const lc = { fontFamily: "'Source Serif 4', serif", fontWeight: 300 as const };
-const tt = { fontFamily: "'Inter', sans-serif", fontWeight: 400 as const };
-const ttMed = { fontFamily: "'Inter', sans-serif", fontWeight: 500 as const };
+const tt = { fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400 as const };
+const ttMed = { fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 as const };
 
 export function ResourcesPage() {
   useEffect(() => {

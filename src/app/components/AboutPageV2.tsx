@@ -21,17 +21,17 @@ const ltCushion: CSSProperties = {
 };
 
 const ttHoves: CSSProperties = {
-  fontFamily: "'Inter', sans-serif",
+  fontFamily: "'TT Hoves Pro', sans-serif",
   fontWeight: 400,
 };
 
 const ttHovesMedium: CSSProperties = {
-  fontFamily: "'Inter', sans-serif",
+  fontFamily: "'TT Hoves Pro', sans-serif",
   fontWeight: 500,
 };
 
 const ttHovesBold: CSSProperties = {
-  fontFamily: "'Inter', sans-serif",
+  fontFamily: "'TT Hoves Pro', sans-serif",
   fontWeight: 600,
 };
 

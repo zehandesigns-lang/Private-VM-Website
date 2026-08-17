@@ -40,7 +40,7 @@ function Body({ children, className = "" }: { children: React.ReactNode; classNa
   return (
     <p
       className={`text-[#464646] leading-[1.65] ${className}`}
-      style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.05vw, 17px)" }}
+      style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.05vw, 17px)" }}
     >
       {children}
     </p>
@@ -66,7 +66,7 @@ function SplitHeading({
       className={`text-[#103435] leading-[1.08] tracking-[-1.5px] ${className}`}
       style={{ fontSize: as === "h1" ? "clamp(38px, 4.8vw, 70px)" : "clamp(30px, 3.2vw, 50px)", textWrap: "balance" }}
     >
-      <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>{sans}</span>
+      <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>{sans}</span>
       {inline ? " " : <br />}
       <span style={lc}>{serif}</span>
     </Tag>
@@ -82,7 +82,7 @@ function CaseStudyStatsIllustration() {
           <div className="mb-2 leading-none text-[#103435]" style={{ ...lc, fontSize: "clamp(40px, 4vw, 52px)" }}>
             $42<em className="not-italic text-[#2f615a]">M+</em>
           </div>
-          <p className="text-[13px] text-[#464646]" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <p className="text-[13px] text-[#464646]" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>
             Revenue processed through Smartport
           </p>
           <p className="mt-2 font-mono text-[10.5px] text-[#615D5D]">Complete GST-compliant audit trail · Zero cash leakage</p>
@@ -100,7 +100,7 @@ function CaseStudyStatsIllustration() {
               {n}
               <em className="not-italic text-[#2f615a]">{suffix}</em>
             </div>
-            <p className="text-[12px] text-[#464646]" style={{ fontFamily: "'Inter', sans-serif" }}>
+            <p className="text-[12px] text-[#464646]" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>
               {label}
             </p>
           </div>
@@ -110,7 +110,7 @@ function CaseStudyStatsIllustration() {
         <div className="shrink-0 leading-none text-[#2f615a]" style={{ ...lc, fontSize: 40 }}>
           34<em className="not-italic">+</em>
         </div>
-        <p className="text-[13px] leading-[1.65] text-[#464646]" style={{ fontFamily: "'Inter', sans-serif" }}>
+        <p className="text-[13px] leading-[1.65] text-[#464646]" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>
           <strong className="font-medium text-[#103435]">Major upgrades delivered in two years</strong> — ICEGATE, GST, lands, IES, HRMS, Data Lake. No system migrations.
         </p>
       </div>
@@ -150,7 +150,7 @@ function SmartportHero() {
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.15} className="mb-8 max-w-[560px]">
             <p
               className="text-[#464646] leading-[1.65]"
-              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 18 }}
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 18 }}
             >
               Smartport is the unified cloud platform that digitizes and automates the manual, paperwork-heavy business processes of secondary ports — from vessel call to cargo handling.
             </p>
@@ -165,7 +165,7 @@ function SmartportHero() {
             <Link
               to="/book-demo"
               className="inline-flex items-center gap-2 bg-[#0e3233] px-6 py-3 text-white transition-colors hover:bg-[#416668]"
-              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 15 }}
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
             >
               Get a Demo
               <ArrowUpRight size={15} />
@@ -173,7 +173,7 @@ function SmartportHero() {
             <a
               href="#case-study"
               className="inline-flex items-center border border-[#D9D9D9] px-6 py-3 text-[#464646] transition-colors hover:border-[#0e3233]/30"
-              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 15 }}
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}
             >
               See the APMB case study
             </a>
@@ -271,10 +271,10 @@ function UnifiedPlatformSection() {
               custom={i * 0.06}
               className="bg-[#f3f2ee] p-8 md:p-10"
             >
-              <h3 className="mb-3 text-[#1d1d1d] leading-snug" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: "clamp(15px, 1.2vw, 17px)" }}>
+              <h3 className="mb-3 text-[#1d1d1d] leading-snug" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: "clamp(15px, 1.2vw, 17px)" }}>
                 {c.title}
               </h3>
-              <p className="leading-[1.65] text-[#464646]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1vw, 14.5px)" }}>
+              <p className="leading-[1.65] text-[#464646]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(13px, 1vw, 14.5px)" }}>
                 {c.body}
               </p>
             </motion.div>
@@ -299,7 +299,7 @@ function CaseStudySection() {
           >
             <p
               className="mb-6 text-[#2f615a] underline decoration-[#2f615a] underline-offset-[6px]"
-              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" }}
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" }}
             >
               Case Study
             </p>
@@ -317,7 +317,7 @@ function CaseStudySection() {
             <Link
               to="/book-demo"
               className="inline-flex items-center gap-2 bg-[#0e3233] px-6 py-3 text-white transition-colors hover:bg-[#416668]"
-              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 15 }}
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
             >
               Request Case Study
               <ArrowUpRight size={15} />
@@ -372,13 +372,13 @@ function SmartportCTASection() {
               textShadow: "0 1px 24px rgba(0,0,0,0.25)",
             }}
           >
-            <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>Ready to transform</span>
+            <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>Ready to transform</span>
             <br />
             <span style={lc}>your port?</span>
           </h2>
           <p
             className="mb-10 leading-[1.65] text-[#f3f2ee]/80"
-            style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.1vw, 17px)" }}
+            style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.1vw, 17px)" }}
           >
             See how Smartport eliminates manual processes, unifies stakeholders, and gives your port the operational predictability.
           </p>
@@ -386,7 +386,7 @@ function SmartportCTASection() {
             <Link
               to="/book-demo"
               className="inline-flex items-center gap-2 bg-[#fcf7e3] px-7 py-3 text-[#0e3233] shadow-[0_8px_32px_rgba(0,0,0,0.2)] transition-colors hover:bg-white"
-              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 15 }}
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
             >
               Get a Demo
               <ArrowUpRight size={15} />

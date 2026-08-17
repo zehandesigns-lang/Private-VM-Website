@@ -25,14 +25,14 @@ const lc: CSSProperties = {
   fontStyle: "normal",
 };
 
-/** Inter Medium — paired with `lc` in section headlines */
+/** TT Hoves Pro Medium — paired with `lc` in section headlines */
 const ttHovesMedium: CSSProperties = {
-  fontFamily: "'Inter', sans-serif",
+  fontFamily: "'TT Hoves Pro', sans-serif",
   fontWeight: 500,
   fontStyle: "normal",
 };
 
-/** Mixed Inter + Source Serif 4 section headings */
+/** Mixed TT Hoves Pro + Source Serif 4 section headings */
 const mixedHeadlineTracking: Pick<CSSProperties, "letterSpacing"> = {
   letterSpacing: "-0.03em",
 };
@@ -102,7 +102,7 @@ function AdvantageTabs() {
               <span className="text-[#0e3233] text-xs font-semibold">W</span>
             </div>
             <div className="min-w-0">
-              <p className="text-[#103435] flex flex-wrap items-center gap-2" style={{ fontFamily: "'Inter', sans-serif", fontWeight: tab === "wayship" ? 500 : 400, fontSize: 15 }}>
+              <p className="text-[#103435] flex flex-wrap items-center gap-2" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: tab === "wayship" ? 500 : 400, fontSize: 15 }}>
                 Wayship
                 <span className="inline-block bg-[#2f615a]/15 px-1.5 py-0.5 text-[9px] font-mono uppercase tracking-wider text-[#0e3233]">
                   All-New
@@ -126,7 +126,7 @@ function AdvantageTabs() {
               <span className="text-[#0e3233] text-xs font-semibold">S</span>
             </div>
             <div className="min-w-0">
-              <p className="text-[#103435]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: tab === "smartport" ? 500 : 400, fontSize: 15 }}>
+              <p className="text-[#103435]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: tab === "smartport" ? 500 : 400, fontSize: 15 }}>
                 Smartport
               </p>
               <p className="text-[#615D5D] text-[11px] font-mono mt-0.5 hidden sm:block">Port productivity suite</p>
@@ -147,7 +147,7 @@ function AdvantageTabs() {
             >
               The operational intelligence layer your fleet always needed
             </h3>
-            <p className="text-[#464646] leading-[1.75] mb-8" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 14 }}>
+            <p className="text-[#464646] leading-[1.75] mb-8" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 14 }}>
               Maritime runs on institutional knowledge — and that knowledge walks off the gangway with every crew rotation. Wayship captures it, structures it, and makes it available to every officer and engineer who steps aboard, helping them get up to speed quickly, regardless of how many times they&apos;ve sailed on the vessel before.
             </p>
             <ul className="flex flex-col gap-3 mb-8">
@@ -157,7 +157,7 @@ function AdvantageTabs() {
                 "Full suite of digital records across deck and engine operations — with automatic validation, offline capability, and real-time sync when connected.",
                 "Unified dashboard across every vessel — consolidating operational records, compliance status, and crew performance into clear, actionable fleet-level reporting for shore teams.",
               ].map((line) => (
-                <li key={line} className="flex gap-2 text-[#464646] text-[13.5px] leading-snug" style={{ fontFamily: "'Inter', sans-serif" }}>
+                <li key={line} className="flex gap-2 text-[#464646] text-[13.5px] leading-snug" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-[#2f615a]" />
                   {line}
                 </li>
@@ -215,7 +215,7 @@ function AdvantageTabs() {
               When operations run on paper, inefficiency compounds with every vessel call.{" "}
               <em className="not-italic text-[#2f615a]">Smartport is here to fix that.</em>
             </h3>
-            <p className="text-[#464646] leading-[1.75] mb-8" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 14 }}>
+            <p className="text-[#464646] leading-[1.75] mb-8" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 14 }}>
               Secondary and emerging ports handle the long tail of global shipping — but they&apos;ve always competed with one hand tied behind their back. Smartport gives them the planning tools, analytics, and operator-facing visibility to attract more vessel calls and turn berths into revenue.
             </p>
             <ul className="flex flex-col gap-3 mb-8">
@@ -225,7 +225,7 @@ function AdvantageTabs() {
                 "Resource allocation tools that match port assets to vessel calls — dynamically, not on a spreadsheet.",
                 "Real-time analytics and reporting across all port operations — surfacing inefficiencies, turnaround trends, and revenue performance in one dashboard.",
               ].map((line) => (
-                <li key={line} className="flex gap-2 text-[#464646] text-[13.5px] leading-snug" style={{ fontFamily: "'Inter', sans-serif" }}>
+                <li key={line} className="flex gap-2 text-[#464646] text-[13.5px] leading-snug" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-[#416668]" />
                   {line}
                 </li>
@@ -234,7 +234,7 @@ function AdvantageTabs() {
             <Link
               to="/smartport"
               className="inline-flex items-center gap-2 text-[#2f615a] font-medium border-b border-[#2f615a] pb-0.5 hover:opacity-70 transition-opacity"
-              style={{ fontFamily: "'Inter', sans-serif", fontSize: 14 }}
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontSize: 14 }}
             >
               Learn more about Smartport
               <ArrowUpRight size={15} />
@@ -277,7 +277,7 @@ function AdvantageTabs() {
                         <div className="shrink-0 border-b border-[#D9D9D9] px-1.5 py-2">
                           <p
                             className="text-[#615D5D] leading-tight"
-                            style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: 8, letterSpacing: "0.04em" }}
+                            style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600, fontSize: 8, letterSpacing: "0.04em" }}
                           >
                             {col.title}
                           </p>
@@ -296,7 +296,7 @@ function AdvantageTabs() {
                               >
                                 <p
                                   className="text-[#103435] leading-snug"
-                                  style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 9.5 }}
+                                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 9.5 }}
                                 >
                                   {v}
                                 </p>
@@ -346,7 +346,7 @@ function HomeV2CTA() {
           <h2
             className="text-[#fcf7e3] leading-[1.1] tracking-[-1.5px] mb-5"
             style={{
-              fontFamily: "'Inter', sans-serif",
+              fontFamily: "'TT Hoves Pro', sans-serif",
               fontWeight: 500,
               fontSize: "clamp(32px, 3.5vw, 50px)",
               textShadow: "0 1px 24px rgba(0,0,0,0.25)",
@@ -357,7 +357,7 @@ function HomeV2CTA() {
           </h2>
           <p
             className="text-[#f3f2ee]/80 leading-[1.65] mb-10"
-            style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.1vw, 17px)" }}
+            style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.1vw, 17px)" }}
           >
             Whether you operate 5 vessels or 500, most fleets are less than 4 weeks from their first deployment — and a fundamentally better way of vessel operations.
           </p>
@@ -365,7 +365,7 @@ function HomeV2CTA() {
             <Link
               to="/book-demo"
               className="bg-[#fcf7e3] text-[#0e3233] px-7 py-3 hover:bg-white transition-colors duration-150 inline-flex items-center gap-2 shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
-              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 15 }}
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
             >
               Get a Demo
               <ArrowUpRight size={15} />
@@ -431,7 +431,7 @@ export function HomePageV2() {
                     textShadow: "0 1px 24px rgba(0,0,0,0.25)",
                   }}
                 >
-                  <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>
+                  <span style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}>
                     Celebrating 6 years of
                     <br />
                   </span>
@@ -445,7 +445,7 @@ export function HomePageV2() {
                   animate="visible"
                   custom={0.15}
                   className="text-[#f3f2ee]/80 max-w-[680px] mx-auto leading-[1.8] mb-8"
-                  style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 18 }}
+                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 18 }}
                 >
                   World's leading maritime teams rely on Wayship to transform vessel operations data into structured, searchable intelligence, and Smartport to run secondary ports at their fullest potential
                 </motion.p>
@@ -453,14 +453,14 @@ export function HomePageV2() {
                   <a
                     href="#rewind"
                     className="inline-flex items-center gap-2 bg-[#fcf7e3] text-[#0e3233] px-6 py-3 hover:bg-white transition-colors duration-150 shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
-                    style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 15 }}
+                    style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500, fontSize: 15 }}
                   >
                     Our story →
                   </a>
                   <a
                     href="#advantage"
                     className="inline-flex items-center border border-[#fcf7e3]/25 text-[#fcf7e3]/90 px-6 py-3 hover:border-[#fcf7e3]/45 hover:bg-[#fcf7e3]/5 transition-colors duration-150"
-                    style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 15 }}
+                    style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}
                   >
                     Explore products
                   </a>
@@ -488,7 +488,7 @@ export function HomePageV2() {
                     <span style={lc}>six years were like</span>
                   </h2>
                 </div>
-                <p className="text-[#464646] leading-[1.8]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 15 }}>
+                <p className="text-[#464646] leading-[1.8]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}>
                   From a hypothesis to $145m+ in value created — across vessel operations, crew performance, and port productivity.
                 </p>
               </div>
@@ -501,7 +501,7 @@ export function HomePageV2() {
                   >
                     350+
                   </div>
-                  <p className="text-[#464646] text-[13px] leading-snug" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  <p className="text-[#464646] text-[13px] leading-snug" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>
                     vessels rely on Wayship every single day
                   </p>
                   <p className="mt-3 inline-flex items-center gap-1.5 font-mono text-[11px] text-[#0e3233] bg-[#e7efe8] border border-[#2f615a]/25 px-2 py-1 rounded-full w-fit">
@@ -518,7 +518,7 @@ export function HomePageV2() {
                   >
                     $30b+
                   </div>
-                  <p className="text-[#464646] text-[13px] leading-snug" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  <p className="text-[#464646] text-[13px] leading-snug" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>
                     in maritime assets managed across our customer fleet
                   </p>
                 </StatCell>
@@ -529,7 +529,7 @@ export function HomePageV2() {
                   >
                     $100m+
                   </div>
-                  <p className="text-[#464646] text-[13px] leading-snug" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  <p className="text-[#464646] text-[13px] leading-snug" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>
                     of productivity unlocked by Wayship, bringing focus back to core operations
                   </p>
                 </StatCell>
@@ -540,7 +540,7 @@ export function HomePageV2() {
                   >
                     $45m+
                   </div>
-                  <p className="text-[#464646] text-[13px] leading-snug" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  <p className="text-[#464646] text-[13px] leading-snug" style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}>
                     of additional revenue generated for specialised secondary ports via Smartport
                   </p>
                 </StatCell>
@@ -562,7 +562,7 @@ export function HomePageV2() {
                   <span style={ttHovesMedium}>Customers who trusted us to help </span>
                   <span style={lc}>transform their operations</span>
                 </h2>
-                <p className="text-[#464646] leading-[1.8]" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 15 }}>
+                <p className="text-[#464646] leading-[1.8]" style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 15 }}>
                   Eight world-class operators — from Asia Pacific to Europe
                 </p>
               </div>
