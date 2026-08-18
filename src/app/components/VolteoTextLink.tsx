@@ -6,7 +6,7 @@ const linkClass =
   "inline-flex items-center gap-1.5 border-b border-[#2f615a] pb-0.5 text-[#2f615a] transition-opacity hover:opacity-70";
 
 const linkStyle: CSSProperties = {
-  fontFamily: "'Inter', sans-serif",
+  fontFamily: "'TT Hoves Pro', sans-serif",
   fontWeight: 400,
   fontSize: 15,
 };

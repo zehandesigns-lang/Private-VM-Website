@@ -83,7 +83,7 @@ function WayshipPreview() {
       <div className="flex items-center justify-between gap-2 shrink-0">
         <span
           className="text-[11px] font-semibold tracking-tight text-[#0e3233]"
-          style={{ fontFamily: "'Inter', sans-serif" }}
+          style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}
         >
           Wayship
         </span>
@@ -103,7 +103,7 @@ function WayshipPreview() {
         <div className="flex flex-col items-center justify-end w-[72px] shrink-0 rounded-md border border-[#D9D9D9]/80 bg-white/60 backdrop-blur-[2px] px-1 pt-2 pb-2">
           <span
             className="text-[9px] uppercase tracking-[0.08em] text-[#0e3233]/55 mb-1 text-center leading-tight"
-            style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
+            style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600 }}
           >
             Voice AI
           </span>
@@ -114,7 +114,7 @@ function WayshipPreview() {
           <div className="rounded-md border border-[#D9D9D9]/80 bg-white/70 px-2.5 py-2 shadow-sm">
             <p
               className="text-[9px] uppercase tracking-wide text-[#0e3233]/50 mb-1"
-              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600 }}
             >
               AI Assistant
             </p>
@@ -142,7 +142,7 @@ function WayshipPreview() {
           <div className="rounded-md border border-[#D9D9D9]/80 bg-[#0e3233]/[0.04] px-2.5 py-1.5 flex-1 min-h-0">
             <p
               className="text-[9px] uppercase tracking-wide text-[#0e3233]/55 mb-1"
-              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600 }}
             >
               Digital Records
             </p>
@@ -186,7 +186,7 @@ function SmartportPreview() {
       <div className="flex items-center justify-between shrink-0">
         <span
           className="text-[11px] font-semibold tracking-tight text-[#0e3233]"
-          style={{ fontFamily: "'Inter', sans-serif" }}
+          style={{ fontFamily: "'TT Hoves Pro', sans-serif" }}
         >
           Smartport
         </span>

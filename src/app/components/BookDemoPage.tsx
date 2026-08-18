@@ -13,7 +13,7 @@ import { cn } from "./ui/utils";
 
 const EASE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
-const tt = { fontFamily: "'Inter', sans-serif" } as const;
+const tt = { fontFamily: "'TT Hoves Pro', sans-serif" } as const;
 const lc = { fontFamily: "'Source Serif 4', serif", fontWeight: 300 as const };
 
 const CTA_RADIAL_STACK = `

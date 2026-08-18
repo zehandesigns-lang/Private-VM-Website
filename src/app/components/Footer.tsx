@@ -68,7 +68,7 @@ export function Footer() {
               <div key={category}>
                 <p
                   className="text-[#103435] mb-4"
-                  style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: 14 }}
+                  style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 600, fontSize: 14 }}
                 >
                   {category}
                 </p>
@@ -80,7 +80,7 @@ export function Footer() {
                     const className =
                       "text-[#464646] hover:text-[#103435] transition-colors duration-200";
                     const style = {
-                      fontFamily: "'Inter', sans-serif",
+                      fontFamily: "'TT Hoves Pro', sans-serif",
                       fontWeight: 400,
                       fontSize: 14,
                     } as const;
@@ -129,7 +129,7 @@ export function Footer() {
           >
             <span
               className="text-[#103435]"
-              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
+              style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 500 }}
             >
               #NoPaper
             </span>
@@ -150,7 +150,7 @@ export function Footer() {
       <div className="mx-auto max-w-[1512px] px-8 md:px-16 lg:px-[115px] py-5">
         <p
           className="text-[#888]"
-          style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: 13 }}
+          style={{ fontFamily: "'TT Hoves Pro', sans-serif", fontWeight: 400, fontSize: 13 }}
         >
           © {new Date().getFullYear()} Volteo Maritime Pte Limited. All rights reserved.
         </p>
