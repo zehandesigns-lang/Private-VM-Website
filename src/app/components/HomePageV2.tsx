@@ -413,10 +413,10 @@ export function HomePageV2() {
                   <div className="inline-flex flex-wrap items-center justify-center gap-2 border border-[#fcf7e3]/20 bg-[#fcf7e3]/10 px-3 py-2">
                     <span className="h-1.5 w-1.5 shrink-0 bg-[#fcf7e3]/90 animate-pulse" aria-hidden />
                     <VolteoTextLink
-                      href="/event-monitor"
+                      href="https://www.linkedin.com/posts/surendral_are-you-attending-smm-2026-in-hamburg-from-activity-7498403161968361473-RyBw?utm_source=share&utm_medium=member_desktop&rcm=ACoAAChOIjEB5AXR3cUbJmj2Peh8dth3H8Q_adQ"
                       className="!border-[#fcf7e3]/45 !text-[#fcf7e3] hover:!opacity-80"
                     >
-                      Meet us at Booth S05, Singapore Maritime Week 2026
+                      Meet us at SMM Hamburg 2026
                     </VolteoTextLink>
                   </div>
                 </motion.div>
