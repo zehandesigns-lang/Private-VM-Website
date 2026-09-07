@@ -54,6 +54,8 @@ export default defineConfig(({ mode }) => {
   const pa = powerAutomateProxyTarget(env.POWER_AUTOMATE_HTTP_URL)
 
   return {
+  // Set by the GitHub Pages workflow to serve from the repo subpath; defaults to root for Vercel.
+  base: env.GH_PAGES_BASE || '/',
   plugins: [
     // The React and Tailwind plugins are both required for Make, even if
     // Tailwind is not being actively used – do not remove them
