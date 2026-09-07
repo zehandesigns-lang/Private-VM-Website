@@ -11,6 +11,7 @@ import { ResourcesPage } from "./components/ResourcesPage";
 import { PledgeWallPage } from "./components/PledgeWallPage";
 import { LoadingScreen } from "./components/LoadingScreen";
 import { EventMonitorPage } from "./components/EventMonitorPage";
+import { WaytidePage } from "./components/WaytidePage";
 
 /** Persists for SPA session so client nav back to `/` does not replay the full site loader. */
 let volteoSiteIntroDoneGlobal = false;
@@ -58,6 +59,7 @@ export default function App() {
       { path: "/resources", element: <ResourcesPage /> },
       { path: "/pledge", element: <PledgeWallPage /> },
       { path: "/event-monitor", element: <EventMonitorPage /> },
+      { path: "/waytide", element: <WaytidePage /> },
     ],
   );
 
