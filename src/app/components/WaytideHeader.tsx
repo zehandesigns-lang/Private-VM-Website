@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "motion/react";
 import { WayMascot } from "./WayMascot";
 
-const navItems = ["Meet Way", "Threads", "Daily Checkins", "How Way works", "FAQ's"];
+const navItems = ["Ropes", "Threads", "Daily Checkins", "How Way works", "FAQ's"];
 
 const navTextStyle = {
   fontFamily: "'Geist', sans-serif",
