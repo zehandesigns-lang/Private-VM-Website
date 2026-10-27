@@ -19,6 +19,11 @@ function buildNavLinks(pathname: string) {
       ],
     },
     {
+      label: "VAI",
+      href: "/vai",
+      items: [],
+    },
+    {
       label: "Resources",
       href: "/resources",
       items: [],
@@ -380,12 +385,10 @@ export function Header() {
           >
             {navLinks.map((link) => {
               const hasDropdown = link.items.length > 0;
-              const isAboutLink = link.href === "/about";
-              const isResourcesLink = link.href === "/resources";
               const showUnderline =
-                (openDropdown === link.label || hoveredNav === link.label) ||
-                (isAboutLink && location.pathname === "/about") ||
-                (isResourcesLink && location.pathname === "/resources");
+                openDropdown === link.label ||
+                hoveredNav === link.label ||
+                (!hasDropdown && location.pathname === link.href);
 
               return (
                 <div
